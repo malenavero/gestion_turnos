@@ -1,18 +1,51 @@
+# Instrucciones generales
 
-// hacer super user
-python manage.py createsuperuser
+### Ejecución inicial:
 
-// crear migraciones
-python manage.py makemigrations 
+1. Crear migraciones:
+    ```bash
+    python manage.py makemigrations
+    ```
 
-// correr migraciones
-python manage.py migrate
+2. Correr migraciones:
+    ```bash
+    python manage.py migrate
+    ```
 
-// correr script inicial
-python 
+3. Crear superusuario:
+    ```bash
+    python manage.py createsuperuser
+    ```
+    - **User**: admin
+    - **Email**: Dejar en blanco
+    - **Pass**: admin
+    - Cuando te pregunte si querés usar una contraseña insegura, responde `sí`.
 
-// correr el proyecto 
-python manage.py runserver
+4. Correr el script inicial:
+    ```bash
+    python manage.py generar_datos_prueba
+    ```
 
+5. Ejecutar el proyecto:
+    ```bash
+    python manage.py runserver
+    ```
 
+---
 
+### Pasos para levantar después de algún cambio en algún modelo:
+
+1. Crear migraciones:
+    ```bash
+    python manage.py makemigrations
+    ```
+
+2. Correr migraciones:
+    ```bash
+    python manage.py migrate
+    ```
+
+3. Ejecutar el proyecto:
+    ```bash
+    python manage.py runserver
+    ```
