@@ -3,3 +3,7 @@ __pycache__/
 *.pyc
 *.sqlite3
 .vscode/
+*.pyc
+*.log
+*.pot
+

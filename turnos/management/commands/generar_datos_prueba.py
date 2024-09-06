@@ -1,7 +1,11 @@
+from django.contrib.auth.models import Group, Permission
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 from django.core.management.base import BaseCommand
 from turnos.models import Medico, Paciente, Especialidad
 import random
 
+User = get_user_model()
 
 class Command(BaseCommand):
     help = 'Genera datos de prueba para médicos, especialidades y pacientes'
@@ -17,13 +21,41 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Datos de prueba generados exitosamente.'))
 
     def create_especialidades(self):
-        especialidades = ['Cardiología', 'Dermatología', 'Ginecología', 'Pediatría', 'Neurología']
-        for especialidad in especialidades:
-            _, created = Especialidad.objects.get_or_create(nombre=especialidad)
-            if created:
-                self.especialidades.append(Especialidad.objects.get(nombre=especialidad))
-        self.stdout.write(self.style.SUCCESS('Especialidades creadas.'))
+        especialidades = [
+            {
+                'nombre': 'Kinesiologia',
+                'duracion_turno': 25,
+                'valor_turno': 10000
+            },
+            {
+                'nombre': 'Salud Mental',
+                'duracion_turno': 30,
+                'valor_turno': 12000
+            },
+            {
+                'nombre': 'Clinica',
+                'duracion_turno': 15,
+                'valor_turno': 8000
+            },
+            {
+                'nombre': 'Cardiologia',
+                'duracion_turno': 15,
+                'valor_turno': 10000
+            }
+        ]
 
+        for especialidad in especialidades:
+            _, created = Especialidad.objects.get_or_create(
+                nombre=especialidad['nombre'], 
+                defaults={
+                    'duracion_turno': especialidad['duracion_turno'], 
+                    'valor_turno': especialidad['valor_turno']
+                }
+            )
+            if created:
+                self.especialidades.append(Especialidad.objects.get(nombre=especialidad['nombre']))
+
+            self.stdout.write(self.style.SUCCESS('Especialidades creadas.'))
 
     def create_medicos(self, cantidad):
         for i in range(cantidad):
@@ -63,3 +95,47 @@ class Command(BaseCommand):
                 pais='Argentina'
             )
             self.stdout.write(f'Paciente creado: {paciente}')
+
+    def create_groups(self):
+        # Creamos los grupos para roles
+        recepcionistas_group, _ = Group.objects.get_or_create(name='Recepcionistas')
+        medicos_group, _ = Group.objects.get_or_create(name='Medicos')
+
+        # Definimos los permisos
+        recepcionista_permissions = [
+            'view_user',
+            'view_session',
+            'add_medico',
+            'change_medico',
+            'delete_medico',
+            'view_medico',
+            'add_paciente',
+            'change_paciente',
+            'delete_paciente',
+            'view_paciente',
+            'change_turno',
+            'view_turno',
+            'add_especialidad',
+            'change_especialidad',
+            'delete_especialidad',
+            'view_especialidad'
+        ]
+        medico_permissions = ['view_turno']
+
+        # Asignamos permisos
+        for permiso_codename in recepcionista_permissions:
+            perm = Permission.objects.get(codename=permiso_codename)
+            recepcionistas_group.permissions.add(perm)
+
+        for permiso_codename in medico_permissions:
+            perm = Permission.objects.get(codename=permiso_codename)
+            medicos_group.permissions.add(perm)
+
+        self.stdout.write(self.style.SUCCESS('Grupos creados y permisos asignados exitosamente.'))
+
+    def create_users(self):
+        # Create users
+        recepcionista_user = User.objects.create_user('recepcion', 'recepcion@example.com', 'recepcion')
+        recepcionista_user.groups.add(Group.objects.get(name='Recepcionistas'))
+
+        self.stdout.write(self.style.SUCCESS('Usuarios creados exitosamente.'))
