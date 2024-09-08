@@ -20,11 +20,6 @@ class MedicoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'apellido', 'dni', 'especialidad', 'matricula')
     search_fields = ('nombre', 'apellido', 'dni', 'especialidad')
 
-    def save_model(self, request, obj, form, change):
-        super().save_model(request, obj, form, change)
-        if not change:  # Solo cuando se crea un nuevo médico
-            Medico.generar_turnos(obj)
-
 
 @admin.register(Turno)
 class TurnoAdmin(admin.ModelAdmin):

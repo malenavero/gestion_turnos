@@ -1,6 +1,8 @@
+# turnos/models/medico.py
 from datetime import datetime, timedelta
 
 from django.db import models
+from django.contrib.auth.models import User, Group
 
 from turnos.models.especialidad import Especialidad
 
@@ -23,6 +25,32 @@ class Medico(models.Model):
     def __str__(self):
         return f"Dr/a. {self.apellido}, {self.nombre} - {self.especialidad}"
     
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None  # Comprueba si el médico es nuevo
+        super().save(*args, **kwargs)  # Llama al método save original
+
+        if is_new:
+            # Creamos turnos para el próximo mes
+            self.generar_turnos()
+
+            # Generamos un user en el grupo medicos con su primer nombre y apellido
+            first_name = self.nombre.split()[0].lower()
+            last_name = self.apellido.split()[0].lower()
+
+            username = f"{first_name}.{last_name}"
+            email = f"{username}@seprice.com"
+            password = 'medico'
+
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
+
+            medicos_group = Group.objects.get(name='Medicos')
+            user.groups.add(medicos_group)
+
+            user.save()
     @staticmethod
     def getNextDay(current_date):
         next_day = current_date + timedelta(days=1)
