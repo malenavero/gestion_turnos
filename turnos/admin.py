@@ -29,7 +29,7 @@ class TurnoAdmin(admin.ModelAdmin):
     search_fields = ('medico__nombre', 'paciente__apellido')
 
     def duracion_display(self, obj):
-        return f"{obj.duracion} minutos"
+        return f"{obj.medico.especialidad.duracion_turno} minutos"
     duracion_display.short_description = 'Duración'
 
     class Media:
@@ -48,8 +48,8 @@ class TurnoAdmin(admin.ModelAdmin):
         return filters
 
     def get_queryset(self, request):
+        # eso es para poder buscar fecha
         qs = super().get_queryset(request)
-        # You can filter the queryset here if needed
         return qs
     
     def save_model(self, request, obj, form, change):

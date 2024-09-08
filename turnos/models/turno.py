@@ -12,7 +12,6 @@ class Turno(models.Model):
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True)
     fecha_hora = models.DateTimeField()
-    duracion = models.DurationField(default=timedelta(minutes=15))
     
     ESTADO_CHOICES = [
         ('disponible', 'Disponible'),
@@ -27,13 +26,10 @@ class Turno(models.Model):
             raise ValidationError('Ya existe un turno asignado para este médico en el mismo horario.')
 
     def save(self, *args, **kwargs):
-       # fecha_hora consistente con zona horaria
+       # fecha_hora consistente con zona horaria (esto es para evitar un warning)
         if timezone.is_naive(self.fecha_hora):
             self.fecha_hora = timezone.make_aware(self.fecha_hora, timezone.get_current_timezone())
         
-        if self.duracion != timedelta(minutes=15):
-            raise ValidationError('La duración del turno debe ser exactamente 15 minutos.')
-
         # limpia y valida
         self.full_clean()
         

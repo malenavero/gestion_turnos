@@ -73,5 +73,5 @@ Pass: *medico*
 
 
 ### Consideraciones:
-- Cuando se crea un médico se le crean automaticamente los turnos para los siguientes 30 días. 
+- Cuando se crea un médico se le crean automaticamente los turnos para los siguientes 30 días en el espacio de 8 a 17hrs. 
 - Cuando se crea un médico se le crea un user con la pass "medico" y el user nombre.apellido

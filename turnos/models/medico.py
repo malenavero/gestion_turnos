@@ -33,6 +33,7 @@ class Medico(models.Model):
             # Creamos turnos para el próximo mes
             self.generar_turnos()
 
+
             # Generamos un user en el grupo medicos con su primer nombre y apellido
             first_name = self.nombre.split()[0].lower()
             last_name = self.apellido.split()[0].lower()
@@ -42,6 +43,8 @@ class Medico(models.Model):
             password = 'medico'
 
             create_user(username, password, email, True, False, 'Medicos')
+
+
 
     @staticmethod
     def getNextDay(current_date):
@@ -75,10 +78,10 @@ class Medico(models.Model):
                         fecha_hora=current_date,
                         defaults={'estado': 'disponible'}
                     )
-                    current_date += timedelta(minutes=15)
+                    # Avanzar la cantidad de minutos que dura el turno
+                    current_date += timedelta(minutes=medico.especialidad.duracion_turno)
                 
                 # Mover al siguiente dia siempre y cuando se encuentre en el mes
-
                 current_date = Medico.getNextDay(current_date)
                 
 

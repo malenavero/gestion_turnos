@@ -1,5 +1,4 @@
 from django.contrib.auth.models import Group, Permission
-from django.utils import timezone
 from django.core.management.base import BaseCommand
 from turnos.models import Medico, Paciente, Especialidad
 from turnos.utils import create_user
@@ -67,7 +66,7 @@ class Command(BaseCommand):
 
         # Los usuarios de médicos se crean cuando se crea el medico
 
-        self.stdout.write(self.style.SUCCESS('Usuarios creados exitosamente.'))
+        self.stdout.write(self.style.SUCCESS('Usuarios admin y recepcion creados exitosamente.'))
 
     def create_especialidades(self):
         especialidades = [
@@ -109,7 +108,7 @@ class Command(BaseCommand):
     def create_medicos(self):
         for especialidad in self.especialidades:
             for i in range(3):
-                medico = Medico.objects.create(
+                Medico.objects.create(
                     nombre=f'Medico{i}',
                     apellido=especialidad.nombre,
                     dni=str(random.randint(3000000, 90000000)),
@@ -123,13 +122,13 @@ class Command(BaseCommand):
                     provincia='Provincia',
                     pais='Argentina'
                 )
-                self.stdout.write(f'Médico creado: {medico}')
-                Medico.generar_turnos(medico)
+        self.stdout.write(self.style.SUCCESS(f'Medicos creados exitosamente, con sus correspondientes turnos y usuarios'))
+
 
     def create_pacientes(self, cantidad):
         for i in range(cantidad):
             dni = str(random.randint(1000000, 99999999))
-            paciente = Paciente.objects.create(
+            Paciente.objects.create(
                 nombre=f'Paciente{i}',
                 apellido=f'Apellido{i}',
                 dni=dni,
@@ -141,6 +140,6 @@ class Command(BaseCommand):
                 provincia='Provincia',
                 pais='Argentina'
             )
-            self.stdout.write(f'Paciente creado: {paciente}')
+        self.stdout.write(self.style.SUCCESS(f'Pacientes creados exitosamente'))
 
 
