@@ -1,11 +1,10 @@
 from django.contrib.auth.models import Group, Permission
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.core.management.base import BaseCommand
 from turnos.models import Medico, Paciente, Especialidad
+from turnos.utils import create_user
 import random
 
-User = get_user_model()
 
 class Command(BaseCommand):
     help = 'Genera datos de prueba para médicos, especialidades y pacientes'
@@ -61,23 +60,10 @@ class Command(BaseCommand):
 
     def create_users(self):
         # Crear superusuario
-        User.objects.get_or_create(username='admin', defaults={
-            'is_superuser': True,
-            'is_staff': True,
-            'email': '',
-            'password': 'admin'
-        })
-
+        create_user('admin', 'admin', '', True, True, None)
+   
         # Crear usuario recepcionista
-        recepcionista_user, created = User.objects.get_or_create(username='recepcion', defaults={
-            'is_superuser': False,
-            'is_staff': True,
-            'email': 'recepcion@seprice.com',
-            'password': 'recepcion'
-            
-        })
-        if created:
-            recepcionista_user.groups.add(Group.objects.get(name='Recepcionistas'))
+        create_user('recepcion', 'recepcion', 'recepcion@seprice.com', True, False, 'Recepcionistas')
 
         # Los usuarios de médicos se crean cuando se crea el medico
 
@@ -121,7 +107,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Especialidades creadas.'))
 
     def create_medicos(self):
-        print(f'PRINTTT{self.especialidades}')
         for especialidad in self.especialidades:
             for i in range(3):
                 medico = Medico.objects.create(

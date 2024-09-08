@@ -1,5 +1,6 @@
 # turnos/admin.py
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib import admin
 
 # Register your models here.
@@ -81,7 +82,7 @@ class DateRangeFilter(SimpleListFilter):
 
     def queryset(self, request, queryset):
         value = self.value()
-        now = datetime.now()
+        now = timezone.now() 
         if value == 'week':
             start_date = now - timedelta(days=now.weekday())
             end_date = start_date + timedelta(days=7)

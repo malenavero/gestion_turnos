@@ -1,10 +1,10 @@
 # turnos/models/medico.py
-from datetime import datetime, timedelta
-
+from datetime import timedelta
 from django.db import models
-from django.contrib.auth.models import User, Group
+from django.utils import timezone
 
 from turnos.models.especialidad import Especialidad
+from turnos.utils import create_user
 
 class Medico(models.Model):
     nombre = models.CharField(max_length=100)
@@ -41,16 +41,8 @@ class Medico(models.Model):
             email = f"{username}@seprice.com"
             password = 'medico'
 
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password
-            )
+            create_user(username, password, email, True, False, 'Medicos')
 
-            medicos_group = Group.objects.get(name='Medicos')
-            user.groups.add(medicos_group)
-
-            user.save()
     @staticmethod
     def getNextDay(current_date):
         next_day = current_date + timedelta(days=1)
@@ -65,9 +57,9 @@ class Medico(models.Model):
     def generar_turnos(cls, medico=None):
         from turnos.models.turno import Turno
 
-        start_date = datetime.now().replace(hour=8, minute=0, second=0, microsecond=0)
-        end_date = datetime.now().replace(hour=17, minute=0, second=0, microsecond=0)
-        next_month = datetime.now() + timedelta(days=30)
+        start_date = timezone.now().replace(hour=8, minute=0, second=0, microsecond=0)
+        end_date = timezone.now().replace(hour=17, minute=0, second=0, microsecond=0)
+        next_month = timezone.now() + timedelta(days=30)
         
         if medico:
             medicos = [medico]
