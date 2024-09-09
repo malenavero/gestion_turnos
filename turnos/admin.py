@@ -2,14 +2,8 @@
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib import admin
+from .models import Paciente, Medico, Turno, Especialidad
 
-# Register your models here.
-# admin.py
-
-from django.contrib import admin
-
-from turnos.models.especialidad import Especialidad
-from .models import Paciente, Medico, Turno
 
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
@@ -20,7 +14,6 @@ class PacienteAdmin(admin.ModelAdmin):
 class MedicoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'apellido', 'dni', 'especialidad', 'matricula')
     search_fields = ('nombre', 'apellido', 'dni', 'especialidad')
-
 
 @admin.register(Turno)
 class TurnoAdmin(admin.ModelAdmin):
@@ -33,38 +26,29 @@ class TurnoAdmin(admin.ModelAdmin):
     duracion_display.short_description = 'Duración'
 
     class Media:
-        js = ('admin/js/turno_admin.js',)
-    
+        js = ('admin/js/turno_admin.js',)  # Script para la lógica interactiva
+        
     def get_readonly_fields(self, request, obj=None):
         if obj:  # Si estamos editando un turno existente
-            return self.readonly_fields + ('duracion_display',)
+            return self.readonly_fields + ('duracion_display', 'medico', 'fecha_hora')
         return self.readonly_fields
-
     
     def get_list_filter(self, request):
-        # Add a filter for the date range
+        # Agregamos un filtro para los rangos de fechas
         filters = super().get_list_filter(request)
         filters = list(filters) + [DateRangeFilter]
         return filters
 
     def get_queryset(self, request):
-        # eso es para poder buscar fecha
+        # Permitir buscar turnos por fecha
         qs = super().get_queryset(request)
         return qs
     
-    def save_model(self, request, obj, form, change):
-        if obj.paciente:
-            obj.estado = 'ocupado'
-        else:
-            obj.estado = 'disponible'
-        super().save_model(request, obj, form, change)
-
 
 @admin.register(Especialidad)
 class EspecialidadAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'duracion_turno')
     search_fields = ('nombre',)
-
 
 # Custom filter for date range
 from django.utils.translation import gettext_lazy as _
