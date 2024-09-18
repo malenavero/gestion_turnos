@@ -19,7 +19,7 @@ class MedicoAdmin(admin.ModelAdmin):
 class TurnoAdmin(admin.ModelAdmin):
     list_display = ('medico', 'fecha_hora', 'estado', 'paciente')
     list_filter = ('estado', 'medico__especialidad', 'medico')
-    search_fields = ('medico__nombre', 'paciente__apellido')
+    search_fields = ('medico__nombre', 'paciente__apellido', 'paciente__nombre')
 
     def duracion_display(self, obj):
         return f"{obj.medico.especialidad.duracion_turno} minutos"

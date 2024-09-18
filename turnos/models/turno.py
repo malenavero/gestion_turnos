@@ -12,6 +12,8 @@ class Turno(models.Model):
         ('disponible', 'Disponible'),
         ('ocupado', 'Ocupado'),
         ('bloqueado', 'Bloqueado'),
+        ('sala-espera', 'En sala de espera'),
+        ('atendido', 'Atendido')
     ]
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True)

@@ -11,9 +11,9 @@
     ```bash
     python manage.py migrate
     ```
-3. Correr el script inicial:
+3. Correr el script inicial para generar datos de prueba y super admin:
     ```bash
-    python manage.py generar_datos_prueba y superadmin
+    python manage.py generar_datos_prueba
     ```
 
 5. Ejecutar el proyecto:

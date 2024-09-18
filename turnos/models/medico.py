@@ -59,9 +59,11 @@ class Medico(models.Model):
     @classmethod
     def generar_turnos(cls, medico=None):
         from turnos.models.turno import Turno
+        inicio_turno = 8
+        fin_turno = 10
 
-        start_date = timezone.now().replace(hour=8, minute=0, second=0, microsecond=0)
-        end_date = timezone.now().replace(hour=17, minute=0, second=0, microsecond=0)
+        start_date = timezone.now().replace(hour=inicio_turno, minute=0, second=0, microsecond=0)
+        end_date = timezone.now().replace(hour=fin_turno, minute=0, second=0, microsecond=0)
         next_month = timezone.now() + timedelta(days=30)
         
         if medico:

@@ -27,11 +27,7 @@ class Command(BaseCommand):
 
         # Definimos los permisos
         recepcionista_permissions = [
-            'view_user',
             'view_session',
-            'add_medico',
-            'change_medico',
-            'delete_medico',
             'view_medico',
             'add_paciente',
             'change_paciente',
@@ -39,10 +35,11 @@ class Command(BaseCommand):
             'view_paciente',
             'change_turno',
             'view_turno',
-            'add_especialidad',
-            'change_especialidad',
-            'delete_especialidad',
-            'view_especialidad'
+            'view_especialidad',
+            'add_sobreturno',
+            'change_sobreturno',
+            'delete_sobreturno',
+            'view_sobreturno'
         ]
         medico_permissions = ['view_turno']
 
@@ -123,7 +120,6 @@ class Command(BaseCommand):
                     pais='Argentina'
                 )
         self.stdout.write(self.style.SUCCESS(f'Medicos creados exitosamente, con sus correspondientes turnos y usuarios'))
-
 
     def create_pacientes(self, cantidad):
         for i in range(cantidad):
