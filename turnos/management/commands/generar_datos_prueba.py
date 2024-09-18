@@ -35,11 +35,7 @@ class Command(BaseCommand):
             'view_paciente',
             'change_turno',
             'view_turno',
-            'view_especialidad',
-            'add_sobreturno',
-            'change_sobreturno',
-            'delete_sobreturno',
-            'view_sobreturno'
+            'view_especialidad'
         ]
         medico_permissions = ['view_turno']
 

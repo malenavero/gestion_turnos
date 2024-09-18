@@ -48,6 +48,7 @@
 ```bash
     python manage.py makemigrations
     python manage.py migrate
+    python manage.py generar_datos_prueba
     python manage.py runserver
 ```
 
