@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Panel Principal</h1>
+<button onclick="window.location.href='{% url 'fabrica' %}'">Fabrica</button>
+<button onclick="window.location.href='{% url 'gestion_turnos' %}'">Gestión Turnos</button>
+<button onclick="window.location.href='{% url 'atencion' %}'">Atención</button>
+<button onclick="window.location.href='{% url 'liquidacion' %}'">Liquidación Honorarios</button>
+{% endblock %}
+
+<!-- <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal</title>
+</head>
+<body>
+    <h1>Panel Principal</h1>
+    <button onclick="window.location.href='{% url 'fabrica' %}'">Fabrica</button>
+    <button onclick="window.location.href='{% url 'gestion_turnos' %}'">Gestión Turnos</button>
+    <button onclick="window.location.href='{% url 'atencion' %}'">Atención</button>
+    <button onclick="window.location.href='{% url 'liquidacion' %}'">Liquidación Honorarios</button>
+</body>
+</html> -->

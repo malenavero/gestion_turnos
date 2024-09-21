@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Fabrica</h1>
+    <button onclick="window.location.href='{% url 'crear_especialidad' %}'">Especialidad</button>
+    <button onclick="window.location.href='{% url 'crear_medico' %}'">Medico</button>
+    <button onclick="window.location.href='{% url 'crear_paciente' %}'">Paciente</button>
+{% endblock %}

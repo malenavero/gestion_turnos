@@ -15,11 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.urls import include, path
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
-from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # Aca seteo que el admin se abra por default, si hacemos una vista hay que sacarlo
-    path('', lambda request: redirect('admin/', permanent=True)),
+    path('', lambda request: redirect('main' if request.user.is_authenticated else 'login')),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('turnos/', include('turnos.urls')),
+    path('admin/', admin.site.urls)
 ]

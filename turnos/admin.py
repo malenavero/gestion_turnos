@@ -26,7 +26,7 @@ class TurnoAdmin(admin.ModelAdmin):
     duracion_display.short_description = 'Duración'
 
     class Media:
-        js = ('admin/js/turno_admin.js',)  # Script para la lógica interactiva
+        js = ('admin/js/turno_admin.js',) 
         
     def get_readonly_fields(self, request, obj=None):
         if obj:  # Si estamos editando un turno existente
