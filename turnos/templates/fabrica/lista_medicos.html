@@ -5,9 +5,8 @@
 
     <div class="filter-container">
         <form method="GET" class="filter-form">
-            <label for="especialidad">Filtrar por especialidad:</label>
             <select name="especialidad" id="especialidad">
-                <option value="">Todas</option>
+                <option value="">Especialidad...</option>
                 {% for especialidad in especialidades %}
                     <option value="{{ especialidad.id }}" {% if especialidad.id|stringformat:"s" == selected_especialidad %}selected{% endif %}>
                         {{ especialidad.nombre }}

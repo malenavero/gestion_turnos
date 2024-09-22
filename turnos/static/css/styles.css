@@ -143,11 +143,13 @@ a {
 .filter-form select {
     margin-left: 10px; /* Space between label and select */
     margin-right: 10px; /* Space between select and button */
+    width: 220px;
 }
 
 .filter-form input {
     margin-left: 10px; /* Space between label and select */
     margin-right: 10px; /* Space between select and button */
+    width: 220px;
 }
 
 /* Add Button */
