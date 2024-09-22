@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1 class="page-title">Reservar Turno</h1>
+
 <div class="filter-form-container">
     <form method="get" class="filter-form">
         <label for="medico">Médico:</label>
@@ -27,7 +28,16 @@
     </form>
 </div>
 
+
 <div class="table-container">
+    {% if messages %}
+    <div class="success-alert" id="successAlert">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        <button class="success-alert-close-btn" onclick="closeAlert('successAlert')">✖</button>
+    </div>
+{% endif %}
     <table>
         <thead>
             <tr>

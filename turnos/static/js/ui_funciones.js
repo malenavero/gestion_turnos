@@ -4,3 +4,8 @@
 function closeErrorMessage() {
     document.getElementById('errorMessage').style.display = 'none';
 }
+
+// Close Alert
+function closeAlert(idAlert) {
+    document.getElementById(idAlert).style.display = 'none';
+}

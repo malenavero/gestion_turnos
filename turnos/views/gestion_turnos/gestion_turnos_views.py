@@ -3,8 +3,7 @@
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse
-from django.urls import reverse
+from django.contrib import messages
 
 from turnos.models import Especialidad, Medico, Paciente, Turno
 from turnos.utils import filtrar_turnos
@@ -40,6 +39,7 @@ def turnero_reservar(request):
 
         try:
             turno.reservar(paciente)
+            messages.success(request, 'Turno agendado con éxito.')
             return redirect('turnero_reservar')  # Redirigir a la misma página sin filtros
         except ValidationError as e:
             error_message = str(e)

@@ -8,25 +8,34 @@ function openConfirmacionModal(titulo, mensaje, urlAccion) {
 
 function modelarInfoTurno(turnoDetalles) {
     const turnoInfo = document.createElement('div');
-    
+    turnoInfo.classList.add('turno-info'); // Añade una clase para estilos
+
+    // Crear un contenedor para los detalles
+    const detailsContainer = document.createElement('div');
+    detailsContainer.classList.add('details-container');
+
+    // Crear elementos para los detalles
     const fechaInfo = document.createElement('p');
-    fechaInfo.textContent = `Fecha: ${turnoDetalles.fecha_hora.split(' ')[0]}`; // Extraer solo la fecha
-    turnoInfo.appendChild(fechaInfo);
+    fechaInfo.innerHTML = `<strong>Fecha:</strong> ${turnoDetalles.fecha_hora.split(' ')[0]}`;
+    detailsContainer.appendChild(fechaInfo);
 
     const horaInfo = document.createElement('p');
-    horaInfo.textContent = `Hora: ${turnoDetalles.fecha_hora.split(' ')[1]}`; // Extraer solo la hora
-    turnoInfo.appendChild(horaInfo);
+    horaInfo.innerHTML = `<strong>Hora:</strong> ${turnoDetalles.fecha_hora.split(' ')[1]}`;
+    detailsContainer.appendChild(horaInfo);
 
     const especialidadInfo = document.createElement('p');
-    especialidadInfo.textContent = `Especialidad: ${turnoDetalles.medico.especialidad}`; // Usar el atributo de médico
-    turnoInfo.appendChild(especialidadInfo);
+    especialidadInfo.innerHTML = `<strong>Especialidad:</strong> ${turnoDetalles.medico.especialidad}`;
+    detailsContainer.appendChild(especialidadInfo);
 
     const medicoInfo = document.createElement('p');
-    medicoInfo.textContent = `Médico: ${turnoDetalles.medico.nombre} ${turnoDetalles.medico.apellido}`; // Usar los atributos de médico
-    turnoInfo.appendChild(medicoInfo);
+    medicoInfo.innerHTML = `<strong>Médico:</strong> ${turnoDetalles.medico.nombre} ${turnoDetalles.medico.apellido}`;
+    detailsContainer.appendChild(medicoInfo);
 
-    return turnoInfo; // Devuelve el contenedor con la info del turno
+    turnoInfo.appendChild(detailsContainer);
+    
+    return turnoInfo; 
 }
+
 
 function openPacienteModal(turno, pacientes) {
     const modalContent = document.getElementById('modalContent');
