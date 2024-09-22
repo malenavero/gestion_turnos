@@ -1,5 +1,11 @@
 # Instrucciones generales
 
+### Activar el ambiente
+```bash
+source env/bin/activate (linux)
+.\env\Scripts\activate (win)
+```
+
 ### Ejecución inicial:
 
 1. Crear migraciones:
