@@ -1,11 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion turnos</title>
-</head>
-<body>
-    <h2>Gestion turnos</h2>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Panel Principal</h1>
+<div class="content-container">
+    <div class="card-container">
+
+        <div class="card" onclick="window.location.href='{% url 'turnero' %}'">
+            <div class="card-icon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <h3>Turnero</h3>
+            <p>Reservar, cancelar, bloquear</p>
+        </div>
+        
+        <div class="card" onclick="window.location.href='{% url 'dar_presente' %}'">
+            <div class="card-icon">
+                <i class="fa fa-check" aria-hidden="true"></i>
+            </div>
+            <h3>Presente</h3>
+            <p>Dar el presente.</p>
+        </div>
+        
+        
+        <div class="card" onclick="window.location.href='{% url 'sala_espera' %}'">
+            <div class="card-icon">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+            <h3>Sala de espera</h3>
+            <p>Próximos pacientes</p>
+        </div>
+    
+    </div>
+</div>
+{% endblock %}
+

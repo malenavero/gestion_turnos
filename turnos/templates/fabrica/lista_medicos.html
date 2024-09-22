@@ -1,25 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Lista de Médicos</h1>
+    <h1 class="page-title">Lista de Médicos</h1>
 
-    <div class="filter-container">
-        <form method="GET" class="filter-form">
-            <select name="especialidad" id="especialidad">
-                <option value="">Especialidad...</option>
-                {% for especialidad in especialidades %}
-                    <option value="{{ especialidad.id }}" {% if especialidad.id|stringformat:"s" == selected_especialidad %}selected{% endif %}>
-                        {{ especialidad.nombre }}
-                    </option>
-                {% endfor %}
-            </select>
-            <button type="submit">Filtrar</button>
-        </form>
-
-        <a href="{% url 'crear_medico' %}" title="Crear Médico" class="add-button">
-            <i class="fa fa-plus" aria-hidden="true"></i> Crear Médico
-        </a>
+    <div class="filter-and-add-container">
+        <div class="filter-form-container">
+            <form method="GET" class="filter-form">
+                <label for="especialidad">Especialidad:</label>
+                <select name="especialidad" id="especialidad">
+                    {% for especialidad in especialidades %}
+                        <option value="{{ especialidad.id }}" {% if especialidad.id|stringformat:"s" == selected_especialidad %}selected{% endif %}>
+                            {{ especialidad.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+        <div class="add-button-container">
+            <a href="{% url 'crear_medico' %}" title="Crear Médico" class="add-button">
+                <i class="fa fa-plus" aria-hidden="true"></i> Crear Médico
+            </a>
+        </div>
     </div>
+
+
 
     {% if error_message %}
     <div class="error-message" id="errorMessage">
@@ -58,7 +63,7 @@
     
                                 <!-- Delete Icon -->
                                 <a href="javascript:void(0);" title="Eliminar" 
-                                    onclick="openModal('Eliminar Médico', '¿Estás seguro de que deseas eliminar el médico {{ medico.nombre }} {{ medico.nombre }}?', '{% url 'eliminar_medico' medico.pk %}')">
+                                    onclick="openConfirmacionModal('Eliminar Médico', '¿Estás seguro de que deseas eliminar el médico {{ medico.nombre }} {{ medico.nombre }}?', '{% url 'eliminar_medico' medico.pk %}')">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>

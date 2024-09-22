@@ -127,54 +127,9 @@ a {
     margin: 0 5px; /* Espacio entre enlaces */
 }
 
-/* Filter Container */
-.filter-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px; /* Add some space below the filter */
-}
 
-.filter-form {
-    display: flex;
-    align-items: center;
-    margin-right: 20px; /* Space between form and button */
-}
 
-.filter-form select {
-    margin-left: 10px; /* Space between label and select */
-    margin-right: 10px; /* Space between select and button */
-    width: 220px;
-}
 
-.filter-form input {
-    margin-left: 10px; /* Space between label and select */
-    margin-right: 10px; /* Space between select and button */
-    width: 220px;
-}
-
-/* Add Button */
-.add-button, .add-button-without-filter {
-    display: inline-block;
-    padding: 8px 16px; /* Ajusta el tamaño del botón */
-    background-color: var(--button-color); /* Color de fondo */
-    color: white; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s ease; /* Efecto de transición */
-    font-weight: bold; /* Texto en negrita */
-}
-
-.add-button i, .add-button-without-filter-container {
-    margin-right: 5px; /* Espacio entre icono y texto */
-}
-
-.add-button:hover, .add-button-without-filter:hover {
-    background-color: var(--hover-color); /* Darker green on hover */
-}
-
-.add-button-without-filter-container {
-    margin-bottom: 20px; /* Espacio debajo del botón */
-}
 
 
 form {
@@ -356,3 +311,51 @@ input, select, textarea {
     cursor: pointer;
 }
 
+
+/* FILTROS DE LISTA */
+
+/* Contenedor general que contiene los filtros y el botón de agregar */
+.filter-and-add-container {
+    display: flex; /* Activamos flexbox */
+    justify-content: space-between; /* Espacio entre los elementos para alinear a los extremos */
+    align-items: center; /* Alineamos verticalmente los elementos en el centro */
+}
+
+.filter-form-container {
+    padding: 20px; /* Espacio interno alrededor de la tabla */
+    margin: 20px; /* Espacio externo */
+}
+.filter-form {
+    min-width: 400px;
+    max-width: 600px; /* Ajusta este valor según sea necesario */
+    margin: 0; /* Centra el formulario */
+}
+
+.filter-form label,
+.filter-form select {
+    display: block; /* Cada elemento en una nueva línea */
+    margin: 5px 0; /* Espaciado vertical entre elementos */
+    width: 100%; /* Ocupa el 100% del contenedor */
+}
+.filter-form input {
+    display: block; /* Cada elemento en una nueva línea */
+    margin: 5px 0; /* Espaciado vertical entre elementos */
+    width: 100%; /* Ocupa el 100% del contenedor */
+}
+
+/* BOTON AGREGAR */
+.add-button {
+    display: inline-block;
+    padding: 8px 16px; /* Ajusta el tamaño del botón */
+    background-color: var(--button-color); /* Color de fondo */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Efecto de transición */
+    font-weight: bold; /* Texto en negrita */
+}
+
+.add-button-container {
+    padding: 20px; /* Espacio interno alrededor de la tabla */
+    margin: 20px; /* Espacio externo */
+}

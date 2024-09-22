@@ -3,13 +3,10 @@
 from django.urls import path
 from .views.base_views import panel_principal
 from .views.fabrica.fabrica_views import fabrica
-from .views.fabrica.fabrica_views import  ver_paciente, ver_medico, ver_especialidad
-from .views.fabrica.fabrica_views import crear_especialidad, crear_paciente, crear_medico
-from .views.fabrica.fabrica_views import lista_especialidades, lista_medicos, lista_pacientes
-from .views.fabrica.fabrica_views import eliminar_especialidad, eliminar_medico, eliminar_paciente
-from .views.fabrica.fabrica_views import  editar_paciente, editar_medico, editar_especialidad
+from .views.fabrica.fabrica_views import  *
+from .views.gestion_turnos.gestion_turnos_views import *
 
-from .views.gestion_turnos.gestion_turnos_views import gestion_turnos
+
 from .views.atencion.atencion_views import atencion
 from .views.liquidacion.liquidacion_views import liquidacion_honorarios
 
@@ -41,6 +38,15 @@ urlpatterns = [
 
     #gestion_turnos
     path('gestion-turnos/', gestion_turnos, name='gestion_turnos'),
+
+    path('turnero/', turnero, name='turnero'),
+    path('turnero_reservar/', turnero_reservar, name='turnero_reservar'),
+    path('turnero_cancelar/', turnero_cancelar, name='turnero_cancelar'),
+    path('turnero_bloquear/', turnero_bloquear, name='turnero_bloquear'),
+    
+    path('dar_presente/', dar_presente, name='dar_presente'),
+    
+    path('sala_espera/', sala_espera, name='sala_espera'),
     
     #atencion
     path('atencion/', atencion, name='atencion'),

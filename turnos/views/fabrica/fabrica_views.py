@@ -5,8 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from turnos.forms.fabrica.forms import EspecialidadForm, PacienteForm, MedicoForm
-from turnos.models import Especialidad, Medico, Paciente
-from turnos.models.turno import Turno
+from turnos.models import Especialidad, Medico, Paciente, Turno
 
 @login_required
 def fabrica(request):
@@ -97,8 +96,6 @@ def lista_pacientes(request):
     }
     return render(request, 'fabrica/lista_pacientes.html', context)
 
-
-    
 
 @login_required
 def editar_paciente(request, pk):

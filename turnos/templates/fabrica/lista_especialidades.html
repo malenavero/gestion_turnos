@@ -4,8 +4,8 @@
 <h1>Lista de Especialidades</h1>
 
 
-<div class="add-button-without-filter-container">
-    <a href="{% url 'crear_especialidad' %}" title="Crear Especialidad" class="add-button-without-filter">
+<div class="add-button-container">
+    <a href="{% url 'crear_especialidad' %}" title="Crear Especialidad" class="add-button">
         <i class="fa fa-plus" aria-hidden="true"></i> Crear Especialidad
     </a>
 </div>
@@ -43,7 +43,7 @@
                             </a>
          
                             <a href="javascript:void(0);" title="Eliminar" 
-                               onclick="openModal('Eliminar Especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
+                               onclick="openConfirmacionModal('Eliminar Especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                             

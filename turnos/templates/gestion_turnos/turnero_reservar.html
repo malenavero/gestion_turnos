@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Reservar Turno</h1>
+<div class="filter-form-container">
+    <form method="get" class="filter-form">
+        <label for="medico">Médico:</label>
+        <select name="medico" id="medico">
+            <option value="">-- Seleccionar --</option>
+            {% for medico in medicos %}
+            <option value="{{ medico.id }}" {% if medico.id|stringformat:"s" == selected_medico %}selected{% endif %}>{{ medico }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="especialidad">Especialidad:</label>
+        <select name="especialidad" id="especialidad">
+            <option value="">-- Seleccionar --</option>
+            {% for especialidad in especialidades %}
+            <option value="{{ especialidad.id }}" {% if especialidad.id|stringformat:"s" == selected_especialidad %}selected{% endif %}>{{ especialidad }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" id="fecha" value="{{ selected_date }}">
+    
+        <button type="submit">Filtrar</button>
+    </form>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Médico</th>
+                <th>Especialidad</th>
+                <th>Reservar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for turno in turnos %}
+            <tr>
+                <td>{{ turno.fecha_hora|date:"Y-m-d" }}</td>
+                <td>{{ turno.fecha_hora|time:"H:i" }}</td>
+                <td>{{ turno.medico.nombre }} {{ turno.medico.apellido }}</td>
+                <td>{{ turno.medico.especialidad }}</td>
+                <td>
+                    <button onclick="openPacienteModal({
+                        id: {{ turno.id }},
+                        fecha_hora: '{{ turno.fecha_hora|date:"Y-m-d H:i" }}',
+                        medico: {
+                            nombre: '{{ turno.medico.nombre }}',
+                            apellido: '{{ turno.medico.apellido }}',
+                            especialidad: '{{ turno.medico.especialidad }}'
+                        }
+                    }, {{ pacientes|safe }})">Seleccionar Paciente</button>
+                </td>                             
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay turnos disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

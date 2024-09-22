@@ -1,3 +1,4 @@
+ # turnos/utils.py
 
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
@@ -28,3 +29,13 @@ def create_user(username, password, email, is_staff, is_superuser, group_name):
             print(f"El grupo '{group_name}' no existe.")
     
     print(f"Usuario creado: {username}")
+
+
+def filtrar_turnos(turnos, especialidad_id=None, medico_id=None, fecha=None):
+    if especialidad_id:
+        turnos = turnos.filter(medico__especialidad__id=especialidad_id)
+    if medico_id:
+        turnos = turnos.filter(medico__id=medico_id)
+    if fecha:
+        turnos = turnos.filter(fecha_hora__date=fecha)
+    return turnos

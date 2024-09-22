@@ -41,5 +41,26 @@ class Turno(models.Model):
         super().save(*args, **kwargs)
 
 
+    def reservar(self, paciente):
+        if self.estado != 'disponible':
+            raise ValidationError('El turno no está disponible.')
+        self.paciente = paciente
+        self.estado = 'ocupado'
+        print(self)
+        self.save()
+
+    def cancelar(self):
+        if self.estado != 'ocupado':
+            raise ValidationError('El turno no está ocupado.')
+        self.paciente = None
+        self.estado = 'disponible'
+        self.save()
+
+    def bloquear(self):
+        if self.estado != 'disponible':
+            raise ValidationError('El turno no está disponible para bloquear.')
+        self.estado = 'bloqueado'
+        self.save()
+        
     def __str__(self):
         return f"Turno con {self.medico} el {self.fecha_hora} - {self.get_estado_display()}"

@@ -1,0 +1,40 @@
+<!-- Modal de Confirmación -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Confirmación</h2>
+        <p id="modalMessage"></p>
+        <form id="modalForm" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn update-btn">Eliminar</button>
+            <button type="button" class="btn cancel-btn" onclick="closeModal()">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para Seleccionar Paciente -->
+<div id="pacienteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Seleccionar Paciente</h2>
+        
+        <div id="modalContent">
+            <!-- Información del turno se mostrará aquí -->
+        </div>
+
+        <form id="pacienteModalForm" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="turnoId" name="turno_id">
+            
+            <label for="pacienteSelect">Seleccionar Paciente:</label>
+            <select id="pacienteSelect" name="paciente_id">
+                <option value="" disabled selected>Seleccione un paciente</option>
+                <!-- Opciones de pacientes se llenarán dinámicamente -->
+            </select>
+
+            <button type="submit" class="btn update-btn">Confirmar</button>
+            <button type="button" class="btn cancel-btn" onclick="closeModal()">Cerrar</button>
+        </form>
+    </div>
+</div>
+
