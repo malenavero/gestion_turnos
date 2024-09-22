@@ -2,8 +2,8 @@ from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
 from turnos.models import Medico, Paciente, Especialidad
 from turnos.utils import create_user
+from faker import Faker
 import random
-
 
 class Command(BaseCommand):
     help = 'Genera datos de prueba para médicos, especialidades y pacientes'
@@ -11,6 +11,7 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.especialidades = []
+        self.fake = Faker(['es_AR'])
 
     def handle(self, *args, **kwargs):
         self.create_groups()
@@ -22,10 +23,28 @@ class Command(BaseCommand):
 
     def create_groups(self):
         # Creamos los grupos para roles
+        jefatura_recepcion_group, _ = Group.objects.get_or_create(name='Jefatura Recepcion')
         recepcionistas_group, _ = Group.objects.get_or_create(name='Recepcionistas')
         medicos_group, _ = Group.objects.get_or_create(name='Medicos')
 
         # Definimos los permisos
+        jefatura_recepcion_permissions = [
+            'view_session',
+            'view_medico',
+            'add_medico',
+            'change_medico',
+            'delete_medico',
+            'view_paciente',
+            'add_paciente',
+            'change_paciente',
+            'delete_paciente',          
+            'view_especialidad',
+            'add_especialidad',
+            'change_especialidad',
+            'delete_especialidad',
+            'view_turno',
+            'change_turno',
+        ]
         recepcionista_permissions = [
             'view_session',
             'view_medico',
@@ -40,6 +59,11 @@ class Command(BaseCommand):
         medico_permissions = ['view_turno']
 
         # Asignamos permisos
+
+        for permiso_codename in jefatura_recepcion_permissions:
+            perm = Permission.objects.get(codename=permiso_codename)
+            jefatura_recepcion_group.permissions.add(perm)
+
         for permiso_codename in recepcionista_permissions:
             perm = Permission.objects.get(codename=permiso_codename)
             recepcionistas_group.permissions.add(perm)
@@ -53,6 +77,9 @@ class Command(BaseCommand):
     def create_users(self):
         # Crear superusuario
         create_user('admin', 'admin', '', True, True, None)
+
+        # Crear usuario jefe recepcion
+        create_user('jefe-recepcion', 'jefe-recepcion', 'jefe-recepcion@seprice.com', True, False, 'Jefatura Recepcion')
    
         # Crear usuario recepcionista
         create_user('recepcion', 'recepcion', 'recepcion@seprice.com', True, False, 'Recepcionistas')
@@ -102,8 +129,8 @@ class Command(BaseCommand):
         for especialidad in self.especialidades:
             for i in range(3):
                 Medico.objects.create(
-                    nombre=f'Medico{i}',
-                    apellido=especialidad.nombre,
+                    nombre=self.fake.first_name(),
+                    apellido=self.fake.last_name(),
                     dni=str(random.randint(3000000, 90000000)),
                     matricula=str(random.randint(10000, 99999)),
                     especialidad=especialidad,
@@ -121,8 +148,8 @@ class Command(BaseCommand):
         for i in range(cantidad):
             dni = str(random.randint(1000000, 99999999))
             Paciente.objects.create(
-                nombre=f'Paciente{i}',
-                apellido=f'Apellido{i}',
+                nombre=self.fake.first_name(),
+                apellido=self.fake.last_name(),
                 dni=dni,
                 telefono=f'123456789{i}',
                 email=f'paciente{i}@example.com',

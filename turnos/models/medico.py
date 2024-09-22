@@ -94,7 +94,6 @@ class Medico(models.Model):
                         fecha_hora=current_date,
                         defaults={'estado': 'disponible'}
                     )
-                    print(medico)
                     # Avanzar la cantidad de minutos que dura el turno
                     current_date += timedelta(minutes=medico.especialidad.duracion_turno)
                 
