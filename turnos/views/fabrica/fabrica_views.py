@@ -62,7 +62,6 @@ def eliminar_especialidad(request, pk):
                 'error_message': str(e)
             })
 
-    return render(request, 'fabrica/confirmar_eliminacion_especialidad.html', {'especialidad': especialidad})
 
 
 @login_required
@@ -113,7 +112,6 @@ def eliminar_paciente(request, pk):
             'error_message': str(e)
         })
 
-    return render(request, 'fabrica/confirmar_eliminacion_paciente.html', {'paciente': paciente})
 
 @login_required
 def ver_medico(request, pk):
@@ -177,7 +175,6 @@ def eliminar_medico(request, pk):
             'medicos': Medico.objects.all().order_by('apellido', 'nombre'),
             'error_message': str(e)
         })
-    return render(request, 'fabrica/confirmar_eliminacion_medico.html', {'medico': medico})
 
 
 

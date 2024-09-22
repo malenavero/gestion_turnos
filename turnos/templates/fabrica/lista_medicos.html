@@ -50,8 +50,9 @@
                             </a>
 
                             <!-- Delete Icon -->
-                            <a href="{% url 'eliminar_medico' medico.pk %}" title="Eliminar">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            <a href="javascript:void(0);" title="Eliminar" 
+                                onclick="openModal('Eliminar Médico', '¿Estás seguro de que deseas eliminar el médico {{ medico.nombre }} {{ medico.nombre }}?', '{% url 'eliminar_medico' medico.pk %}')">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>
                     </tr>

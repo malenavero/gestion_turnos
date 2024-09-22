@@ -40,7 +40,8 @@
                         </a>
 
                         <!-- Delete Icon -->
-                        <a href="{% url 'eliminar_paciente' paciente.pk %}" title="Eliminar">
+                        <a href="javascript:void(0);" title="Eliminar" 
+                           onclick="openModal('Eliminar Paciente', '¿Estás seguro de que deseas eliminar el paciente {{ paciente.nombre }} {{ paciente.nombre }}?', '{% url 'eliminar_paciente' paciente.pk %}')">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </td>
