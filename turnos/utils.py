@@ -31,11 +31,14 @@ def create_user(username, password, email, is_staff, is_superuser, group_name):
     print(f"Usuario creado: {username}")
 
 
-def filtrar_turnos(turnos, especialidad_id=None, medico_id=None, fecha=None):
-    if especialidad_id:
-        turnos = turnos.filter(medico__especialidad__id=especialidad_id)
-    if medico_id:
-        turnos = turnos.filter(medico__id=medico_id)
-    if fecha:
-        turnos = turnos.filter(fecha_hora__date=fecha)
+def filtrar_turnos(turnos, query):
+    if 'especialidad_id' in query and query['especialidad_id']:
+        turnos = turnos.filter(medico__especialidad__id=query['especialidad_id'])
+    if 'medico_id' in query and query['medico_id']:
+        turnos = turnos.filter(medico__id=query['medico_id'])
+    if 'paciente_id' in query and query['paciente_id']:
+        turnos = turnos.filter(paciente__id=query['paciente_id'])
+    if 'fecha' in query and query['fecha']:
+        turnos = turnos.filter(fecha_hora__date=query['fecha'])
     return turnos
+

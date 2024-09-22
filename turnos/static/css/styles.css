@@ -380,22 +380,28 @@ input, select, textarea {
 
 
 /* Tirno agendado con exito */
-.success-alert {
+.alert {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Para alinear el botón de cierre */
+}
+
+.alert.success {
     background-color: #d4edda; /* Verde claro */
     color: #155724; /* Verde oscuro */
-    padding: 10px;
-    margin: 20px 0;
     border: 1px solid #c3e6cb; /* Borde verde claro */
-    border-radius: 5px;
-    font-size: 1.2em; /* Tamaño de fuente más grande */
-    display: flex; /* Usar flex para centrar contenido */
-    align-items: center; /* Centrar verticalmente */
 }
 
-
-.success-alert p {
-    margin: 0; /* Sin margen en el párrafo */
+.alert.error {
+    background-color: #f8d7da; /* Rojo claro */
+    color: #721c24; /* Rojo oscuro */
+    border: 1px solid #f5c6cb; /* Borde rojo claro */
 }
+
 
 .success-alert-close-btn {
     background: none;

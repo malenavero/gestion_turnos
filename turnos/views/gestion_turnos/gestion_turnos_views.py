@@ -27,9 +27,16 @@ def turnero_reservar(request):
     selected_medico = request.GET.get('medico')
     selected_date = request.GET.get('fecha')
 
+    
+    query = {
+        'especialidad_id': selected_especialidad,
+        'medico_id': selected_medico,
+        'fecha': selected_date
+    }
+
     # Filtrar turnos disponibles
     turnos_disponibles = Turno.objects.filter(estado='disponible')
-    turnos_disponibles = filtrar_turnos(turnos_disponibles, selected_especialidad, selected_medico, selected_date)
+    turnos_disponibles = filtrar_turnos(turnos_disponibles, query)
 
     if request.method == 'POST':
         turno_id = request.POST.get('turno_id')
@@ -61,8 +68,48 @@ def turnero_reservar(request):
 
 
 @login_required
-def turnero_cancelar(request):
-    return render(request, 'gestion_turnos/turnero_cancelar.html')
+def turnero_cancelar(request, turno_id=None):
+
+    medicos = Medico.objects.all().order_by('apellido', 'nombre')
+    pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
+
+    # Obtener filtros de la URL
+    selected_paciente = request.GET.get('paciente')
+    selected_medico = request.GET.get('medico')
+    selected_date = request.GET.get('fecha')
+
+    query = {
+        'paciente_id': selected_paciente,
+        'medico_id': selected_medico,
+        'fecha': selected_date
+    }
+
+    # Filtrar turnos ocupados
+    turnos_ocupados = Turno.objects.filter(estado='ocupado')
+    turnos_ocupados = filtrar_turnos(turnos_ocupados, query)
+
+    if request.method == 'POST' and turno_id:
+        turno = get_object_or_404(Turno, id=turno_id)
+
+        try:
+            turno.cancelar()
+            messages.success(request, 'Turno cancelado con éxito!')
+            return redirect('turnero_cancelar')
+        except ValidationError as e:
+            messages.error(request, str(e))
+            return render(request, 'gestion_turnos/turnero_cancelar.html', {'turnos': turnos_ocupados})
+
+    context = {
+        'turnos': turnos_ocupados,
+        'pacientes': pacientes,
+        'medicos': medicos,
+        'selected_paciente': selected_paciente,
+        'selected_medico': selected_medico,
+        'selected_date': selected_date,
+        'error': locals().get('error_message', None),  # Mensaje de error si existe
+    }
+    return render(request, 'gestion_turnos/turnero_cancelar.html', context)
+
 
 @login_required
 def turnero_bloquear(request):
