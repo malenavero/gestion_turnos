@@ -101,8 +101,17 @@ h1 {
 
 table {
     width: 100%; /* Full width */
-    border-collapse: collapse; /* Collapsing borders */
+    border-collapse: collapse; /* Collapsing borders */ 
+
 }
+.table-container {
+    padding: 20px; /* Espacio interno alrededor de la tabla */
+    margin: 20px; /* Espacio externo */
+    background-color: #fff; /* Color de fondo opcional */
+    border-radius: 5px; /* Bordes redondeados opcionales */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+}
+
 
 th, td {
     border: 1px solid #ddd;

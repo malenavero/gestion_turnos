@@ -30,42 +30,44 @@
     {% endif %}
 
     {% if medicos %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Especialidad</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for medico in medicos %}
+        <div class="table-container">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ medico.nombre }}</td>
-                        <td>{{ medico.apellido }}</td>
-                        <td>{{ medico.especialidad }}</td>
-                        <td>
-                            <!-- View Icon -->
-                            <a href="{% url 'ver_medico' medico.pk %}" title="Ver detalles">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                            </a>
-
-                            <!-- Edit Icon -->
-                            <a href="{% url 'editar_medico' medico.pk %}" title="Editar">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-
-                            <!-- Delete Icon -->
-                            <a href="javascript:void(0);" title="Eliminar" 
-                                onclick="openModal('Eliminar Médico', '¿Estás seguro de que deseas eliminar el médico {{ medico.nombre }} {{ medico.nombre }}?', '{% url 'eliminar_medico' medico.pk %}')">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </td>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Especialidad</th>
+                        <th>Acciones</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for medico in medicos %}
+                        <tr>
+                            <td>{{ medico.nombre }}</td>
+                            <td>{{ medico.apellido }}</td>
+                            <td>{{ medico.especialidad }}</td>
+                            <td>
+                                <!-- View Icon -->
+                                <a href="{% url 'ver_medico' medico.pk %}" title="Ver detalles">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+    
+                                <!-- Edit Icon -->
+                                <a href="{% url 'editar_medico' medico.pk %}" title="Editar">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+    
+                                <!-- Delete Icon -->
+                                <a href="javascript:void(0);" title="Eliminar" 
+                                    onclick="openModal('Eliminar Médico', '¿Estás seguro de que deseas eliminar el médico {{ medico.nombre }} {{ medico.nombre }}?', '{% url 'eliminar_medico' medico.pk %}')">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
         <p>No hay médicos disponibles.</p>
     {% endif %}

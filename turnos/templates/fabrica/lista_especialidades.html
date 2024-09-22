@@ -16,41 +16,43 @@
     </div>
 {% endif %}
 {% if especialidades %}
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Valor de Turno</th>
-                <th>Duración de Turno</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for especialidad in especialidades %}
+    <div class="table-container">
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ especialidad.nombre }}</td>
-                    <td>${{ especialidad.valor_turno }}</td>
-                    <td>{{ especialidad.duracion_turno }} mins</td>
-                    <td>
-                        <a  href="{% url 'ver_especialidad' especialidad.pk %}" 
-                            title="Ver detalles">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                        </a>
-                        <a  href="{% url 'editar_especialidad' especialidad.pk %}" 
-                            title="Editar">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </a>
-     
-                        <a href="javascript:void(0);" title="Eliminar" 
-                           onclick="openModal('Eliminar Especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </a>
-                        
-                    </td>
+                    <th>Nombre</th>
+                    <th>Valor de Turno</th>
+                    <th>Duración de Turno</th>
+                    <th>Acciones</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for especialidad in especialidades %}
+                    <tr>
+                        <td>{{ especialidad.nombre }}</td>
+                        <td>${{ especialidad.valor_turno }}</td>
+                        <td>{{ especialidad.duracion_turno }} mins</td>
+                        <td>
+                            <a  href="{% url 'ver_especialidad' especialidad.pk %}" 
+                                title="Ver detalles">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            <a  href="{% url 'editar_especialidad' especialidad.pk %}" 
+                                title="Editar">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+         
+                            <a href="javascript:void(0);" title="Eliminar" 
+                               onclick="openModal('Eliminar Especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                            
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% else %}
     <p>No hay especialidades disponibles.</p>
 {% endif %}
