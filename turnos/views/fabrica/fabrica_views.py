@@ -3,6 +3,7 @@
 from django.forms import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from turnos.forms.fabrica.forms import EspecialidadForm, PacienteForm, MedicoForm
 from turnos.models import Especialidad, Medico, Paciente
 from turnos.models.turno import Turno
@@ -82,10 +83,22 @@ def crear_paciente(request):
 
 @login_required
 def lista_pacientes(request):
+    query = request.GET.get('query', '') 
+    # Filtra los pacientes por nombre o apellido
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
-    return render(request, 'fabrica/lista_pacientes.html', {
-        'pacientes': pacientes
-    })
+    if query:
+        pacientes = pacientes.filter(
+            Q(nombre__icontains=query) | Q(apellido__icontains=query)
+        )
+
+    context = {
+        'pacientes': pacientes,
+        'error_message': None if pacientes.exists() else 'No hay pacientes disponibles.'
+    }
+    return render(request, 'fabrica/lista_pacientes.html', context)
+
+
+    
 
 @login_required
 def editar_paciente(request, pk):

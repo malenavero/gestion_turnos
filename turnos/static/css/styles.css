@@ -136,6 +136,11 @@ a {
     margin-right: 10px; /* Space between select and button */
 }
 
+.filter-form input {
+    margin-left: 10px; /* Space between label and select */
+    margin-right: 10px; /* Space between select and button */
+}
+
 /* Add Button */
 .add-button, .add-button-without-filter {
     display: inline-block;
@@ -159,6 +164,7 @@ a {
 .add-button-without-filter-container {
     margin-bottom: 20px; /* Espacio debajo del botón */
 }
+
 
 form {
     margin: 20px;
@@ -238,6 +244,7 @@ h1.page-title {
 
 input, select, textarea {
     width: 100%; /* Ancho completo */
+    margin: 2px;
     padding: 12px; /* Aumenta el padding para más espacio interno */
     margin-bottom: 15px; /* Espacio entre campos */
     border: 1px solid #ddd; /* Borde sutil */
