@@ -30,7 +30,7 @@ class Medico(models.Model):
         # Verificar si el médico tiene turnos que no estén en estado 'disponible'
         from turnos.models.turno import Turno
         if Turno.objects.filter(medico=self).exclude(estado='disponible').exists():
-            raise ValidationError("No se puede eliminar el médico porque tiene turnos asociados que no están disponibles.")
+            raise ValidationError("No se puede eliminar el médico porque tiene turnos asociados.")
 
         # Si todos los turnos están disponibles, eliminar los turnos y luego el médico
         Turno.objects.filter(medico=self).delete()

@@ -55,7 +55,7 @@ def eliminar_especialidad(request, pk):
     if request.method == "POST":
         try:
             especialidad.delete()
-            return redirect('lista_especialidades')  # Cambia aquí
+            return redirect('lista_especialidades')
         except ValidationError as e:
             return render(request, 'fabrica/lista_especialidades.html', {
                 'especialidades': Especialidad.objects.all().order_by('nombre'),
@@ -103,14 +103,15 @@ def editar_paciente(request, pk):
 @login_required
 def eliminar_paciente(request, pk):
     paciente = get_object_or_404(Paciente, pk=pk)
-
-    try:
-        paciente.delete()  # La validación ocurre en el método delete del modelo
-    except ValidationError as e:
-        return render(request, 'fabrica/lista_pacientes.html', {
-            'pacientes': Paciente.objects.all().order_by('apellido', 'nombre'),
-            'error_message': str(e)
-        })
+    if request.method == "POST":    
+        try:
+            paciente.delete()
+            return redirect('lista_medicos')
+        except ValidationError as e:
+            return render(request, 'fabrica/lista_pacientes.html', {
+                'pacientes': Paciente.objects.all().order_by('apellido', 'nombre'),
+                'error_message': str(e)
+            })
 
 
 @login_required
@@ -164,17 +165,22 @@ def editar_medico(request, pk):
     })
 
 
+
 @login_required
 def eliminar_medico(request, pk):
     medico = get_object_or_404(Medico, pk=pk)
 
-    try:
+    if request.method == "POST":
+        try:
             medico.delete()
-    except ValidationError as e:
-        return render(request, 'fabrica/lista_medicos.html', {
-            'medicos': Medico.objects.all().order_by('apellido', 'nombre'),
-            'error_message': str(e)
-        })
+            return redirect('lista_medicos')
+        except ValidationError as e:
+            # Mostrar el error en la lista de médicos si ocurre un problema de validación
+            return render(request, 'fabrica/lista_medicos.html', {
+                'medicos': Medico.objects.all().order_by('apellido', 'nombre'),
+                'error_message': str(e)
+            })
+
 
 
 

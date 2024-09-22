@@ -34,17 +34,6 @@
         </div>
     </div>
 
-    <script>
-        function openModal(title, message, actionUrl) {
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalMessage').textContent = message;
-            document.getElementById('modalForm').action = actionUrl;
-            document.getElementById('confirmationModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        }
-    </script>
+    <script src="{% static 'js/ui-funciones.js' %}"></script>
 </body>
 </html>

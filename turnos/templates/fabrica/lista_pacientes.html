@@ -13,6 +13,12 @@
         <i class="fa fa-plus" aria-hidden="true"></i> Crear Paciente
     </a>
 </div>
+{% if error_message %}
+<div class="error-message" id="errorMessage">
+    <button class="close-btn" onclick="closeErrorMessage()">&times;</button>
+    <p id="errorText">{{error_message}}</p>
+</div>
+{% endif %}
 
 {% if pacientes %}
     <table>
@@ -53,7 +59,4 @@
     <p>No hay pacientes disponibles.</p>
 {% endif %}
 
-{% if error_message %}
-    <p style="color:red;">{{ error_message }}</p>
-{% endif %}
 {% endblock %}

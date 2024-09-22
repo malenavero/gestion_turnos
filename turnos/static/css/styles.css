@@ -312,3 +312,29 @@ input, select, textarea {
     text-decoration: none;
     cursor: pointer;
 }
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 01px; /* Aumenta el espacio interno para más separación */
+    border-radius: 5px;
+    max-width: 600px; /* Máximo ancho del mensaje */
+    position: relative; /* Necesario para el botón de cierre */
+    font-size: 14px;
+    text-align: center;
+    margin: 5px;
+}
+
+.error-message .close-btn {
+    position: absolute;
+    top: 50%; /* Centra verticalmente */
+    right: 15px; /* Distancia desde el borde derecho */
+    transform: translateY(-50%); /* Ajusta el posicionamiento vertical */
+    background: none;
+    border: none;
+    color: #721c24;
+    font-size: 20px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Hace el texto más negrita */
+    cursor: pointer;
+}
+
