@@ -381,19 +381,16 @@ input, select, textarea {
 
 /* Tirno agendado con exito */
 .alert {
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    font-size: 1.2em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Para alinear el botón de cierre */
-}
-
-.alert.success {
     background-color: #d4edda; /* Verde claro */
     color: #155724; /* Verde oscuro */
+    padding: 10px;
+    margin: 20px 0;
     border: 1px solid #c3e6cb; /* Borde verde claro */
+    border-radius: 5px;
+    font-size: 1em; /* Tamaño de fuente más grande */
+    display: flex; /* Usar flex para centrar contenido */
+    align-items: center; /* Centrar verticalmente */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 .alert.error {
@@ -402,12 +399,23 @@ input, select, textarea {
     border: 1px solid #f5c6cb; /* Borde rojo claro */
 }
 
+.alert svg {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
+.alert p {
+    margin: 0; /* Sin margen en el párrafo */
+}
 
 .success-alert-close-btn {
     background: none;
     border: none;
-    color: #155724; /* Color verde oscuro */
-    font-size: 1em; /* Tamaño de fuente grande */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    color: inherit; /* Hereda el color del texto */
+    font-size: 1em; /* Aumenta el tamaño del botón */
+    cursor: pointer;
     margin-left: auto; /* Empuja el botón a la derecha */
+}
+
+.success-alert-close-btn:hover {
+    color: #721c24; /* Cambia el color al pasar el mouse */
 }
