@@ -1,4 +1,7 @@
+# turnos/models/especialidad.py
+
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class Especialidad(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
@@ -12,3 +15,13 @@ class Especialidad(models.Model):
 
     def __str__(self):
         return self.nombre
+       
+    
+    def clean(self):
+        # Validar que no haya médicos asociados a esta especialidad
+        if self.pk and self.medico_set.exists():
+            raise ValidationError("No se puede eliminar la especialidad porque está asociada a uno o más médicos.")
+
+    def delete(self, *args, **kwargs):
+            self.clean()  # Llama a la validación antes de eliminar
+            super().delete(*args, **kwargs)  # Llama al método delete original
