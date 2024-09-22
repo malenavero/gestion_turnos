@@ -2,24 +2,39 @@
 
 {% block content %}
 <h1>Panel Principal</h1>
-<button onclick="window.location.href='{% url 'fabrica' %}'">Fabrica</button>
-<button onclick="window.location.href='{% url 'gestion_turnos' %}'">Gestión Turnos</button>
-<button onclick="window.location.href='{% url 'atencion' %}'">Atención</button>
-<button onclick="window.location.href='{% url 'liquidacion' %}'">Liquidación Honorarios</button>
+<div class="content-container">
+    <div class="card-container">
+        <div class="card" onclick="window.location.href='{% url 'fabrica' %}'">
+            <div class="card-icon">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </div>
+            <h3>Fábrica</h3>
+            <p>Gestioná especialidades, pacientes y médicos.</p>
+        </div>
+        
+        <div class="card" onclick="window.location.href='{% url 'gestion_turnos' %}'">
+            <div class="card-icon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <h3>Gestión Turnos</h3>
+            <p>Reservas, cancelaciones y bloqueos.</p>
+        </div>
+        
+        <div class="card" onclick="window.location.href='{% url 'atencion' %}'">
+            <div class="card-icon">
+                <i class="fa fa-stethoscope" aria-hidden="true"></i>
+            </div>
+            <h3>Atención</h3>
+            <p>Proporciona atención al paciente.</p>
+        </div>
+        
+        <div class="card" onclick="window.location.href='{% url 'liquidacion' %}'">
+            <div class="card-icon">
+                <i class="fa fa-dollar-sign" aria-hidden="true"></i>
+            </div>
+            <h3>Liquidación Honorarios</h3>
+            <p>Administrá los pagos de los médicos.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
-
-<!-- <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Principal</title>
-</head>
-<body>
-    <h1>Panel Principal</h1>
-    <button onclick="window.location.href='{% url 'fabrica' %}'">Fabrica</button>
-    <button onclick="window.location.href='{% url 'gestion_turnos' %}'">Gestión Turnos</button>
-    <button onclick="window.location.href='{% url 'atencion' %}'">Atención</button>
-    <button onclick="window.location.href='{% url 'liquidacion' %}'">Liquidación Honorarios</button>
-</body>
-</html> -->

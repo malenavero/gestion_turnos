@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Lista de Pacientes</h1>
+<div class="filter-container">
+    <form method="GET" class="filter-form">
+        <label for="nombre">Filtrar por nombre:</label>
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre del paciente">
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <a href="{% url 'crear_paciente' %}" title="Crear Paciente" class="add-button">
+        <i class="fa fa-plus" aria-hidden="true"></i> Crear Paciente
+    </a>
+</div>
+
+{% if pacientes %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paciente in pacientes %}
+                <tr>
+                    <td>{{ paciente.nombre }}</td>
+                    <td>{{ paciente.apellido }}</td>
+                    <td>
+                        <!-- View Icon -->
+                        <a href="{% url 'ver_paciente' paciente.pk %}" title="Ver detalles">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+
+                        <!-- Edit Icon -->
+                        <a href="{% url 'editar_paciente' paciente.pk %}" title="Editar">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+
+                        <!-- Delete Icon -->
+                        <a href="{% url 'eliminar_paciente' paciente.pk %}" title="Eliminar">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay pacientes disponibles.</p>
+{% endif %}
+
+{% if error_message %}
+    <p style="color:red;">{{ error_message }}</p>
+{% endif %}
+{% endblock %}

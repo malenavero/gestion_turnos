@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Detalles de la Especialidad</h1>
+
+<div class="details-container">
+    <p><strong>Nombre:</strong> {{ especialidad.nombre }}</p>
+    <p><strong>Duración de Turno:</strong> {{ especialidad.duracion_turno }} minutos</p>
+    <p><strong>Valor de Turno:</strong> ${{ especialidad.valor_turno }}</p>
+
+    <div class="action-buttons">
+        <a class="btn edit-btn" href="{% url 'editar_especialidad' especialidad.pk %}" title="Editar">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+        </a>
+        <a class="btn delete-btn" href="{% url 'eliminar_especialidad' especialidad.pk %}" title="Eliminar">
+            <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
+        </a>
+        <a class="btn back-btn" href="{% url 'lista_especialidades' %}">← Volver a la lista</a>
+    </div>
+</div>
+{% endblock %}

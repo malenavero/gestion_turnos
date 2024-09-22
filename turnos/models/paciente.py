@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 class Paciente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -17,7 +18,14 @@ class Paciente(models.Model):
     provincia = models.CharField(max_length=50, null=True, blank=True)
     pais = models.CharField(max_length=50, null=True, blank=True)
     
-    
+    def delete(self, *args, **kwargs):
+        from turnos.models.turno import Turno
+        # Verificar si el paciente tiene turnos asociados
+        if Turno.objects.filter(paciente=self).exists():
+            raise ValidationError("No se puede eliminar el paciente porque tiene turnos asociados.")
+        
+        super().delete(*args, **kwargs)
+
 
     def save(self, *args, **kwargs):
         if not self.nro_historia_clinica:

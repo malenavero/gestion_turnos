@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Detalles del Médico</h1>
+
+<div class="details-container">
+    <p><strong>Nombre:</strong> {{ medico.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ medico.apellido }}</p>
+    <p><strong>Especialidad:</strong> {{ medico.especialidad }}</p>
+    <p><strong>Teléfono:</strong> {{ medico.telefono }}</p>
+    <p><strong>Email:</strong> {{ medico.email }}</p>
+
+    <div class="action-buttons">
+        <a class="btn edit-btn" href="{% url 'editar_medico' medico.pk %}" title="Editar">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+        </a>
+        <a class="btn delete-btn" href="{% url 'eliminar_medico' medico.pk %}" title="Eliminar">
+            <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
+        </a>
+        <a class="btn back-btn" href="{% url 'lista_medicos' %}">← Volver a la lista</a>
+    </div>
+</div>
+{% endblock %}

@@ -45,4 +45,6 @@ class MedicoForm(forms.ModelForm):
     
     especialidad = forms.ModelChoiceField(queryset=Especialidad.objects.all(), empty_label="Seleccione Especialidad")
 
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['especialidad'].widget.attrs.update({'class': 'form-control'})

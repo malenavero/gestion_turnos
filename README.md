@@ -21,6 +21,11 @@
     python manage.py runserver
     ```
 
+6. Abrir backoffice(opcional):
+    ```bash
+    /admin
+    ```
+
 ---
 
 ### Pasos para levantar después de algún cambio en algún modelo:

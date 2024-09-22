@@ -1,8 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Fabrica</h1>
-    <button onclick="window.location.href='{% url 'lista_especialidades' %}'">Especialidad</button>
-    <button onclick="window.location.href='{% url 'crear_medico' %}'">Medico</button>
-    <button onclick="window.location.href='{% url 'crear_paciente' %}'">Paciente</button>
+<h1>Panel Principal</h1>
+<div class="content-container">
+    <div class="card-container">
+
+        <div class="card" onclick="window.location.href='{% url 'lista_medicos' %}'">
+            <div class="card-icon">
+                <i class="fa fa-user-md" aria-hidden="true"></i>
+            </div>
+            <h3>Médicos</h3>
+            <p>Gestioná médicos</p>
+        </div>
+        
+        <div class="card" onclick="window.location.href='{% url 'lista_especialidades' %}'">
+            <div class="card-icon">
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </div>
+            <h3>Especialidades</h3>
+            <p>Gestioná especialidades.</p>
+        </div>
+        
+        
+        <div class="card" onclick="window.location.href='{% url 'lista_pacientes' %}'">
+            <div class="card-icon">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <h3>Pacientes</h3>
+            <p>Gestioná pacientes.</p>
+        </div>
+    
+    </div>
+</div>
 {% endblock %}
+

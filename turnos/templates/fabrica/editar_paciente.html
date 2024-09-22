@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Editar Paciente</h1>
+<form method="POST" class="edit-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn update-btn">Actualizar</button>
+    <button type="button" class="btn cancel-btn" onclick="window.location.href='{% url 'fabrica' %}'">Cancelar</button>
+
+</form>
+{% endblock %}

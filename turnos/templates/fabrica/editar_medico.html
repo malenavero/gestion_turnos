@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Editar Médico</h1>
+<form method="POST" class="edit-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn update-btn">Actualizar</button>
+
+    {% if disable_especialidad %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('id_especialidad').disabled = true; // Deshabilita el campo de especialidad
+            });
+        </script>
+        <p>La especialidad está deshabilitada porque hay turnos asociados.</p>
+    {% endif %}
+    <button type="button" class="btn cancel-btn" onclick="window.location.href='{% url 'fabrica' %}'">Cancelar</button>
+
+</form>
+{% endblock %}
+

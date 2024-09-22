@@ -1,29 +1,50 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Especialidades</title>
-</head>
-<body>
-    <h1>Lista de Especialidades</h1>
-    
-    <a href="{% url 'crear_especialidad' %}">✖ Crear Especialidad</a>  <!-- Cruz para crear -->
+{% extends "base.html" %}
 
-    {% if especialidades %}
-        <ul>
+{% block content %}
+<h1>Lista de Especialidades</h1>
+
+
+<div class="add-button-without-filter-container">
+    <a href="{% url 'crear_especialidad' %}" title="Crear Especialidad" class="add-button-without-filter">
+        <i class="fa fa-plus" aria-hidden="true"></i> Crear Especialidad
+    </a>
+</div>
+{% if especialidades %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Valor de Turno</th>
+                <th>Duración de Turno</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for especialidad in especialidades %}
-                <li>
-                    {{ especialidad.nombre }} - ${{ especialidad.valor_turno }} - {{ especialidad.duracion_turno }} mins
-                    <a href="{% url 'eliminar_especialidad' especialidad.pk %}">🗑️ Eliminar</a>
-                </li>
+                <tr>
+                    <td>{{ especialidad.nombre }}</td>
+                    <td>${{ especialidad.valor_turno }}</td>
+                    <td>{{ especialidad.duracion_turno }} mins</td>
+                    <td>
+                        <a href="{% url 'ver_especialidad' especialidad.pk %}" title="Ver detalles">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'editar_especialidad' especialidad.pk %}" title="Editar">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'eliminar_especialidad' especialidad.pk %}" title="Eliminar">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No hay especialidades disponibles.</p>
-    {% endif %}
-    {% if error_message %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay especialidades disponibles.</p>
+{% endif %}
+
+{% if error_message %}
     <p style="color:red;">{{ error_message }}</p>
-    {% endif %}
-</body>
-</html>
+{% endif %}
+{% endblock %}

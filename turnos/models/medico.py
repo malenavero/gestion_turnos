@@ -1,6 +1,7 @@
 # turnos/models/medico.py
 from datetime import timedelta
 from django.db import models
+from django.forms import ValidationError
 from django.utils import timezone
 
 from turnos.models.especialidad import Especialidad
@@ -24,14 +25,27 @@ class Medico(models.Model):
        
     def __str__(self):
         return f"Dr/a. {self.apellido}, {self.nombre} - {self.especialidad}"
-    
+
+    def delete(self, *args, **kwargs):
+        # Verificar si el médico tiene turnos que no estén en estado 'disponible'
+        from turnos.models.turno import Turno
+        if Turno.objects.filter(medico=self).exclude(estado='disponible').exists():
+            raise ValidationError("No se puede eliminar el médico porque tiene turnos asociados que no están disponibles.")
+
+        # Si todos los turnos están disponibles, eliminar los turnos y luego el médico
+        Turno.objects.filter(medico=self).delete()
+
+        super().delete(*args, **kwargs)
+
+        
     def save(self, *args, **kwargs):
         is_new = self.pk is None  # Comprueba si el médico es nuevo
-        super().save(*args, **kwargs)  # Llama al método save original
-
+        super().save(*args, **kwargs)  
         if is_new:
+            print(f"Especialidad del médico: {self.especialidad} {self.especialidad.pk}")
+
             # Creamos turnos para el próximo mes
-            self.generar_turnos()
+            self.generar_turnos(self)
 
 
             # Generamos un user en el grupo medicos con su primer nombre y apellido
@@ -43,7 +57,6 @@ class Medico(models.Model):
             password = 'medico'
 
             create_user(username, password, email, True, False, 'Medicos')
-
 
 
     @staticmethod
@@ -58,6 +71,7 @@ class Medico(models.Model):
     
     @classmethod
     def generar_turnos(cls, medico=None):
+
         from turnos.models.turno import Turno
         inicio_turno = 8
         fin_turno = 10
@@ -80,6 +94,7 @@ class Medico(models.Model):
                         fecha_hora=current_date,
                         defaults={'estado': 'disponible'}
                     )
+                    print(medico)
                     # Avanzar la cantidad de minutos que dura el turno
                     current_date += timedelta(minutes=medico.especialidad.duracion_turno)
                 

@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Panel Principal{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{% url 'main' %}">Home</a></li>
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="back-button"><a href="javascript:history.back()" title="Volver"><i class="fas fa-arrow-left"></i></a></li>
+            <li class="spacer"></li>
+            <li><a href="{% url 'main' %}" title="Home"><i class="fas fa-home"></i></a></li>
             {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                <li><a href="{% url 'logout' %}" title="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></a></li>
             {% endif %}
         </ul>
     </nav>

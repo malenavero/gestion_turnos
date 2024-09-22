@@ -17,11 +17,8 @@ class Especialidad(models.Model):
         return self.nombre
        
     
-    def clean(self):
+    def delete(self, *args, **kwargs):
         # Validar que no haya médicos asociados a esta especialidad
         if self.pk and self.medico_set.exists():
             raise ValidationError("No se puede eliminar la especialidad porque está asociada a uno o más médicos.")
-
-    def delete(self, *args, **kwargs):
-            self.clean()  # Llama a la validación antes de eliminar
-            super().delete(*args, **kwargs)  # Llama al método delete original
+        super().delete(*args, **kwargs) 
