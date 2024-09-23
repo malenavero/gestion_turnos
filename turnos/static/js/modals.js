@@ -72,6 +72,12 @@ function openCancelTurnoModal(turnoId, urlAccion) {
     document.getElementById('cancelTurnoModal').style.display = 'block';
 }
 
+// Función para abrir el Modal de Confirmación de Bloquear Turno
+function openBlockTurnoModal(turnoId, urlAccion) {
+    const urlFinal = urlAccion.replace('0', turnoId);
+    document.getElementById('blockModalForm').action = urlFinal;
+    document.getElementById('blockTurnoModal').style.display = 'block';
+}
 
 
 // Función para cerrar cualquier modal
@@ -79,5 +85,5 @@ function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
     document.getElementById('pacienteModal').style.display = 'none';
     document.getElementById('cancelTurnoModal').style.display = 'none';
-
+    document.getElementById('blockTurnoModal').style.display = 'none';
 }

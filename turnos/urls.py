@@ -44,7 +44,8 @@ urlpatterns = [
     path('turnero_cancelar/', turnero_cancelar, name='turnero_cancelar'),
     path('turnero_cancelar/<int:turno_id>/', turnero_cancelar, name='turnero_cancelar'),
     path('turnero_bloquear/', turnero_bloquear, name='turnero_bloquear'),
-    
+    path('turnero_bloquear/<int:turno_id>/', turnero_bloquear, name='turnero_bloquear'),
+       
     path('dar_presente/', dar_presente, name='dar_presente'),
     
     path('sala_espera/', sala_espera, name='sala_espera'),

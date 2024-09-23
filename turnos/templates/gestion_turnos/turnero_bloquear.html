@@ -1,1 +1,73 @@
-<h1>Bloquear</h1>
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Bloquear Turno</h1>
+
+<div class="filter-form-container">
+    <form method="get" class="filter-form">
+        <label for="medico">Médico:</label>
+        <select name="medico" id="medico">
+            <option value="">-- Seleccionar --</option>
+            {% for medico in medicos %}
+            <option value="{{ medico.id }}" {% if medico.id|stringformat:"s" == selected_medico %}selected{% endif %}>{{ medico }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" id="fecha" value="{{ selected_date }}">
+    
+        <button type="submit">Filtrar</button>
+    </form>
+</div>
+
+
+<div class="table-container">
+    {% if messages %}
+        <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}" id="successAlert">
+            <span class="alert-icon">
+                {% if message.tags == 'success' %}
+                    ✅
+                {% elif message.tags == 'error' %}
+                    ❌
+                {% endif %}
+            </span>
+            <div class="alert-content">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <button class="success-alert-close-btn" onclick="closeAlert('successAlert')">✖</button>
+        </div>
+    {% endif %}
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Médico</th>
+                <th>Especialidad</th>
+                <th>Bloquear</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for turno in turnos %}
+            <tr>
+                <td>{{ turno.fecha_hora|date:"Y-m-d" }}</td>
+                <td>{{ turno.fecha_hora|time:"H:i" }}</td>
+                <td>{{ turno.medico.nombre }} {{ turno.medico.apellido }}</td>
+                <td>{{ turno.medico.especialidad }}</td>
+                <td>
+                    <button onclick="openBlockTurnoModal({{ turno.id }}, '{% url 'turnero_bloquear' 0 %}')">Bloquear</button>
+                </td>
+                                                         
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay turnos disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -69,7 +69,6 @@ def turnero_reservar(request):
 
 @login_required
 def turnero_cancelar(request, turno_id=None):
-
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
 
@@ -94,7 +93,7 @@ def turnero_cancelar(request, turno_id=None):
         try:
             turno.cancelar()
             messages.success(request, 'Turno cancelado con éxito!')
-            return redirect('turnero_cancelar')  # Asegúrate de que redirijas correctamente
+            return redirect('turnero_cancelar')
         except ValidationError as e:
             messages.error(request, str(e))
 
@@ -111,8 +110,40 @@ def turnero_cancelar(request, turno_id=None):
 
 
 @login_required
-def turnero_bloquear(request):
-    return render(request, 'gestion_turnos/turnero_bloquear.html')
+def turnero_bloquear(request, turno_id=None):   
+    medicos = Medico.objects.all().order_by('apellido', 'nombre')
+
+    # Obtener filtros de la URL
+    selected_medico = request.GET.get('medico')
+    selected_date = request.GET.get('fecha')
+
+    query = {
+        'medico_id': selected_medico,
+        'fecha': selected_date
+    }
+
+    # Filtrar turnos ocupados
+    turnos_disponibles = Turno.objects.filter(estado='disponible')
+    turnos_disponibles = filtrar_turnos(turnos_disponibles, query)
+
+    if request.method == 'POST' and turno_id:
+        turno = get_object_or_404(Turno, id=turno_id)
+
+        try:
+            turno.bloquear()
+            messages.success(request, 'Turno bloqueado con éxito!')
+            return redirect('turnero_bloquear') 
+        except ValidationError as e:
+            messages.error(request, str(e))
+
+    context = {
+        'turnos': turnos_disponibles,
+        'medicos': medicos,
+        'selected_medico': selected_medico,
+        'selected_date': selected_date,
+        'error': locals().get('error_message', None), 
+    }
+    return render(request, 'gestion_turnos/turnero_bloquear.html', context)
 
 @login_required
 def dar_presente(request):
