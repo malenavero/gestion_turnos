@@ -94,10 +94,9 @@ def turnero_cancelar(request, turno_id=None):
         try:
             turno.cancelar()
             messages.success(request, 'Turno cancelado con éxito!')
-            return redirect('turnero_cancelar')
+            return redirect('turnero_cancelar')  # Asegúrate de que redirijas correctamente
         except ValidationError as e:
             messages.error(request, str(e))
-            return render(request, 'gestion_turnos/turnero_cancelar.html', {'turnos': turnos_ocupados})
 
     context = {
         'turnos': turnos_ocupados,

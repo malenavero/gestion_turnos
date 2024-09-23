@@ -1,4 +1,4 @@
-// Función para abrir el Modal de Confirmación
+// Función para abrir el Modal de Confirmación de eliminacion
 function openConfirmacionModal(titulo, mensaje, urlAccion) {
     document.getElementById('modalTitle').textContent = titulo;
     document.getElementById('modalMessage').textContent = mensaje;
@@ -65,9 +65,19 @@ function openPacienteModal(turno, pacientes) {
 }
 
 
+// Función para abrir el Modal de Confirmación de Cancelar Turno
+function openCancelTurnoModal(turnoId, urlAccion) {
+    const urlFinal = urlAccion.replace('0', turnoId);
+    document.getElementById('cancelModalForm').action = urlFinal;
+    document.getElementById('cancelTurnoModal').style.display = 'block';
+}
+
+
 
 // Función para cerrar cualquier modal
 function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
     document.getElementById('pacienteModal').style.display = 'none';
+    document.getElementById('cancelTurnoModal').style.display = 'none';
+
 }

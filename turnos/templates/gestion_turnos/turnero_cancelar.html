@@ -32,9 +32,18 @@
 <div class="table-container">
     {% if messages %}
         <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}" id="successAlert">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+            <span class="alert-icon">
+                {% if message.tags == 'success' %}
+                    ✅
+                {% elif message.tags == 'error' %}
+                    ❌
+                {% endif %}
+            </span>
+            <div class="alert-content">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
             <button class="success-alert-close-btn" onclick="closeAlert('successAlert')">✖</button>
         </div>
     {% endif %}
@@ -59,9 +68,9 @@
                 <td>{{ turno.medico.especialidad }}</td>
                 <td>{{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</td>
                 <td>
-                    <button onclick="openConfirmacionModal('Cancelar turno', '¿Estás seguro de que deseas cancelar el turno?', '{% url 'turnero_cancelar' %}')">Cancelar</button>
-
-                </td>                             
+                    <button onclick="openCancelTurnoModal({{ turno.id }}, '{% url 'turnero_cancelar' 0 %}')">Cancelar</button>
+                </td>
+                                                         
             </tr>
             {% empty %}
             <tr>
