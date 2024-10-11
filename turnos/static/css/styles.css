@@ -419,3 +419,14 @@ input, select, textarea {
 .success-alert-close-btn:hover {
     color: #721c24; /* Cambia el color al pasar el mouse */
 }
+
+.bloquear-btn {
+    background-color: red;
+    color: white;
+}
+
+.desbloquear-btn {
+    background-color: green;
+    color: white;
+}
+

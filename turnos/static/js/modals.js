@@ -1,3 +1,5 @@
+//turnos/static/js/modals.js
+
 // Función para abrir el Modal de Confirmación de eliminacion
 function openConfirmacionModal(titulo, mensaje, urlAccion) {
     document.getElementById('modalTitle').textContent = titulo;
@@ -72,9 +74,25 @@ function openCancelTurnoModal(turnoId, urlAccion) {
     document.getElementById('cancelTurnoModal').style.display = 'block';
 }
 
-// Función para abrir el Modal de Confirmación de Bloquear Turno
-function openBlockTurnoModal(turnoId, urlAccion) {
+// Función para abrir el Modal de Bloqueo/Desbloqueo de Turno
+function openBlockTurnoModal(turnoId, urlAccion, esBloqueado) {
     const urlFinal = urlAccion.replace('0', turnoId);
+    const modalTitle = document.getElementById('blockModalTitle');
+    const modalButton = document.getElementById('blockModalButton');
+    
+    // Ajustar título y botón según el estado del turno
+    if (esBloqueado) {
+        modalTitle.textContent = 'Desbloquear Turno';
+        modalButton.textContent = 'Desbloquear';
+        modalButton.classList.remove('bloquear-btn');
+        modalButton.classList.add('desbloquear-btn');
+    } else {
+        modalTitle.textContent = 'Bloquear Turno';
+        modalButton.textContent = 'Bloquear';
+        modalButton.classList.remove('desbloquear-btn');
+        modalButton.classList.add('bloquear-btn');
+    }
+    
     document.getElementById('blockModalForm').action = urlFinal;
     document.getElementById('blockTurnoModal').style.display = 'block';
 }

@@ -116,23 +116,37 @@ def turnero_bloquear(request, turno_id=None):
     # Obtener filtros de la URL
     selected_medico = request.GET.get('medico')
     selected_date = request.GET.get('fecha')
+    selected_estado = request.GET.get('estado')
 
     query = {
         'medico_id': selected_medico,
         'fecha': selected_date
     }
 
-    # Filtrar turnos ocupados
-    turnos_disponibles = Turno.objects.filter(estado='disponible')
+
+    # Filtrar turnos según estado
+    if selected_estado == 'bloqueable':
+        turnos_disponibles = Turno.objects.filter(estado='disponible')
+    elif selected_estado == 'desbloqueable':
+        turnos_disponibles = Turno.objects.filter(estado='bloqueado')
+    else:
+        # Si no hay estado seleccionado, traer tanto bloqueados como disponibles
+        turnos_disponibles = Turno.objects.filter(estado__in=['disponible', 'bloqueado'])
+
+
     turnos_disponibles = filtrar_turnos(turnos_disponibles, query)
 
     if request.method == 'POST' and turno_id:
         turno = get_object_or_404(Turno, id=turno_id)
 
         try:
-            turno.bloquear()
-            messages.success(request, 'Turno bloqueado con éxito!')
-            return redirect('turnero_bloquear') 
+            if turno.estado == 'disponible':
+                turno.bloquear()
+                messages.success(request, 'Turno bloqueado con éxito!')
+            elif turno.estado == 'bloqueado':
+                turno.desbloquear()
+                messages.success(request, 'Turno desbloqueado con éxito!')
+            return redirect('turnero_bloquear')
         except ValidationError as e:
             messages.error(request, str(e))
 
@@ -141,6 +155,7 @@ def turnero_bloquear(request, turno_id=None):
         'medicos': medicos,
         'selected_medico': selected_medico,
         'selected_date': selected_date,
+        'selected_estado': selected_estado,
         'error': locals().get('error_message', None), 
     }
     return render(request, 'gestion_turnos/turnero_bloquear.html', context)

@@ -28,15 +28,15 @@
 
 
 <!-- Modal de Confirmación para Bloquear Turno -->
-<div id="blockTurnoModal" class="modal">
+<div id="blockTurnoModal" class="modal" style="display:none;">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 id="blockModalTitle">Confirmación de Bloqueo</h2>
-        <p id="blockModalMessage">¿Estás seguro de que deseas bloquear este turno?</p>
-        <form id="blockModalForm" method="POST">
+        <h2 id="blockModalTitle">Confirmar Acción</h2>
+        <p id="modalMessage">¿Estás seguro de que deseas realizar esta acción?</p>
+        <form id="blockModalForm" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn update-btn">Confirmar</button>
-            <button type="button" class="btn cancel-btn" onclick="closeModal()">Cancelar</button>
+            <input type="hidden" id="turnoId" name="turno_id" value="">
+            <button type="submit" id="blockModalButton">Confirmar</button>
+            <button type="button" onclick="closeModal()">Cancelar</button>
         </form>
     </div>
 </div>

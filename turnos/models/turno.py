@@ -61,6 +61,12 @@ class Turno(models.Model):
             raise ValidationError('El turno no está disponible para bloquear.')
         self.estado = 'bloqueado'
         self.save()
-        
+
+    def desbloquear(self):
+        if self.estado != 'bloqueado':
+            raise ValidationError('El turno no está bloqueado.')
+        self.estado = 'disponible'
+        self.save()
+                
     def __str__(self):
         return f"Turno con {self.medico} el {self.fecha_hora} - {self.get_estado_display()}"
