@@ -66,7 +66,6 @@ function openPacienteModal(turno, pacientes) {
     document.getElementById('pacienteModal').style.display = 'block';
 }
 
-
 // Función para abrir el Modal de Confirmación de Cancelar Turno
 function openCancelTurnoModal(turnoId, urlAccion) {
     const urlFinal = urlAccion.replace('0', turnoId);
@@ -97,6 +96,32 @@ function openBlockTurnoModal(turnoId, urlAccion, esBloqueado) {
     document.getElementById('blockTurnoModal').style.display = 'block';
 }
 
+// Función para abrir el Modal de llamado al consultorio
+function openConsultorioModal(turnoId) {
+    document.getElementById('consultorioTurnoId').textContent = `ID del Turno: ${turnoId}`;
+    document.getElementById('consultorioModal').style.display = 'block';
+}
+
+function handleLLamadoConsultorioOption(option) {
+    const turnoId = document.getElementById('consultorioTurnoId').textContent.split(': ')[1];
+    
+    // Aquí puedes manejar cada opción como desees
+    switch (option) {
+        case 'llamar':
+            console.log(`Llamar nuevamente el turno ID: ${turnoId}`);
+            break;
+        case 'ausente':
+            console.log(`Marcar como ausente el turno ID: ${turnoId}`);
+            break;
+        case 'atender':
+            console.log(`Comenzar a atender el turno ID: ${turnoId}`);
+            break;
+    }
+    
+    // Cerrar el modal después de hacer clic en cualquier botón
+    closeModal();
+}
+
 
 // Función para cerrar cualquier modal
 function closeModal() {
@@ -104,4 +129,6 @@ function closeModal() {
     document.getElementById('pacienteModal').style.display = 'none';
     document.getElementById('cancelTurnoModal').style.display = 'none';
     document.getElementById('blockTurnoModal').style.display = 'none';
+    document.getElementById('consultorioModal').style.display = 'none';
+
 }

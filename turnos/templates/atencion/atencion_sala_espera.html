@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="page-title">Sala de espera</h1>
-
+<h1 class="page-title">Atención - Sala de Espera</h1>
+<div class="date-banner">
+    <p><span class="selected-date">{{ selected_date|date:"Y-m-d" }}</span></p>
+</div>
 <div class="filter-form-container">
     <form method="get" class="filter-form">
         <label for="medico">Médico:</label>
@@ -20,10 +22,10 @@
             <option value="{{ paciente.id }}" {% if paciente.id|stringformat:"s" == selected_paciente %}selected{% endif %}>{{ paciente }}</option>
             {% endfor %}
         </select>
+    
         <button type="submit">Filtrar</button>
     </form>
 </div>
-
 
 <div class="table-container">
     {% if messages %}
@@ -52,7 +54,7 @@
                 <th>Médico</th>
                 <th>Especialidad</th>
                 <th>Paciente</th>
-                <th>LLamar al consultorio</th>
+                <th>Llamar a Consultorio</th>
             </tr>
         </thead>
         <tbody>
@@ -64,16 +66,20 @@
                 <td>{{ turno.medico.especialidad }}</td>
                 <td>{{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</td>
                 <td>
-                    <button onclick="callPacienteModal({{ turno.id }}, '{% url 'turnero_cancelar' 0 %}')">Cancelar</button>
+                    <button onclick="openConsultorioModal({{ turno.id }})">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                    </button>
                 </td>
-                                                         
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">No hay pacientes en sala de espera.</td>
+                <td colspan="6">No hay turnos en sala de espera.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+
+
 {% endblock %}

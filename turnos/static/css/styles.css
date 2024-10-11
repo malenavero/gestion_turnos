@@ -426,7 +426,29 @@ input, select, textarea {
 }
 
 .desbloquear-btn {
-    background-color: green;
+    background-color: var(--button-color);
     color: white;
+}
+.date-banner {
+    background-color: #f8f9fa; /* Color de fondo suave */
+    border: 1px solid #ced4da; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espaciado inferior para separación */
+    display: flex; /* Para alinear elementos */
+    justify-content: center; /* Centrar horizontalmente el contenido */
+    align-items: center; /* Centrar verticalmente */
+    text-align: center; /* Alinear el texto al centro */
+}
+
+.date-banner p {
+    margin: 0; /* Eliminar margen para un mejor ajuste */
+    font-size: 1.2em; /* Tamaño de fuente ligeramente más grande */
+}
+
+
+.selected-date {
+    font-weight: bold; /* Negrita para resaltar la fecha */
+    color: var(--text-color); /* Usar el color de texto definido */
 }
 
