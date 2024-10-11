@@ -1,4 +1,4 @@
-# turnos.views.gestion_turnos_views.py
+# turnos.views.recepcion.recepcion_views.py
 
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,12 +9,12 @@ from turnos.models import Especialidad, Medico, Paciente, Turno
 from turnos.utils import filtrar_turnos
 
 @login_required
-def gestion_turnos(request):
-    return render(request, 'gestion_turnos/gestion_turnos.html')
+def recepcion(request):
+    return render(request, 'recepcion/recepcion.html')
 
 @login_required
 def turnero(request):
-    return render(request, 'gestion_turnos/turnero.html')
+    return render(request, 'recepcion/turnero.html')
 
 @login_required
 def turnero_reservar(request):
@@ -40,6 +40,7 @@ def turnero_reservar(request):
 
     if request.method == 'POST':
         turno_id = request.POST.get('turno_id')
+        print(turno_id, "TURNO ID")
         paciente_id = request.POST.get('paciente_id')
         turno = get_object_or_404(Turno, id=turno_id)
         paciente = get_object_or_404(Paciente, id=paciente_id)
@@ -63,9 +64,7 @@ def turnero_reservar(request):
         'error': locals().get('error_message', None),  # Mensaje de error si existe
     }
     
-    return render(request, 'gestion_turnos/turnero_reservar.html', context)
-
-
+    return render(request, 'recepcion/turnero_reservar.html', context)
 
 @login_required
 def turnero_cancelar(request, turno_id=None):
@@ -106,8 +105,7 @@ def turnero_cancelar(request, turno_id=None):
         'selected_date': selected_date,
         'error': locals().get('error_message', None),  # Mensaje de error si existe
     }
-    return render(request, 'gestion_turnos/turnero_cancelar.html', context)
-
+    return render(request, 'recepcion/turnero_cancelar.html', context)
 
 @login_required
 def turnero_bloquear(request, turno_id=None):   
@@ -158,12 +156,9 @@ def turnero_bloquear(request, turno_id=None):
         'selected_estado': selected_estado,
         'error': locals().get('error_message', None), 
     }
-    return render(request, 'gestion_turnos/turnero_bloquear.html', context)
+    return render(request, 'recepcion/turnero_bloquear.html', context)
 
 @login_required
 def dar_presente(request):
-    return render(request, 'gestion_turnos/dar_presente.html')
+    return render(request, 'recepcion/dar_presente.html')
 
-@login_required
-def sala_espera(request):
-    return render(request, 'gestion_turnos/sala_espera.html')

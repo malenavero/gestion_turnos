@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Panel Principal</h1>
+<h1>Recepción</h1>
 <div class="content-container">
     <div class="card-container">
 
@@ -19,17 +19,7 @@
             </div>
             <h3>Presente</h3>
             <p>Dar el presente.</p>
-        </div>
-        
-        
-        <div class="card" onclick="window.location.href='{% url 'sala_espera' %}'">
-            <div class="card-icon">
-                <i class="fa fa-users" aria-hidden="true"></i>
-            </div>
-            <h3>Sala de espera</h3>
-            <p>Próximos pacientes</p>
-        </div>
-    
+        </div>    
     </div>
 </div>
 {% endblock %}

@@ -1,11 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atencion</title>
-</head>
-<body>
-    <h2>Atencion</h2>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Panel Principal</h1>
+<div class="content-container">
+    <div class="card-container">
+
+        <div class="card" onclick="window.location.href='{% url 'atencion_sala_espera' %}'">
+            <div class="card-icon">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+            <h3>Sala de espera</h3>
+            <p>Próximos pacientes</p>
+        </div>
+        
+        <div class="card" onclick="window.location.href='{% url 'atencion_sala_espera' %}'">
+            <div class="card-icon">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+            <h3>Historia Clínica</h3>
+            <p>Busqueda por paciente</p>
+        </div>        
+    </div>
+</div>
+{% endblock %}
+

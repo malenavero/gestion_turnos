@@ -13,7 +13,9 @@ class Turno(models.Model):
         ('ocupado', 'Ocupado'),
         ('bloqueado', 'Bloqueado'),
         ('sala-espera', 'En sala de espera'),
-        ('atendido', 'Atendido')
+        ('consultorio', 'En consultorio'),
+        ('atendido', 'Atendido'),
+        ('ausente', 'Ausente')
     ]
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True)
@@ -67,6 +69,6 @@ class Turno(models.Model):
             raise ValidationError('El turno no está bloqueado.')
         self.estado = 'disponible'
         self.save()
-                
+
     def __str__(self):
         return f"Turno con {self.medico} el {self.fecha_hora} - {self.get_estado_display()}"

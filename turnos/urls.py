@@ -4,10 +4,9 @@ from django.urls import path
 from .views.base_views import panel_principal
 from .views.fabrica.fabrica_views import fabrica
 from .views.fabrica.fabrica_views import  *
-from .views.gestion_turnos.gestion_turnos_views import *
+from .views.recepcion.recepcion_views import *
 
-
-from .views.atencion.atencion_views import atencion
+from .views.atencion.atencion_views import atencion, atencion_sala_espera
 from .views.liquidacion.liquidacion_views import liquidacion_honorarios
 
 urlpatterns = [
@@ -36,8 +35,8 @@ urlpatterns = [
 
 
 
-    #gestion_turnos
-    path('gestion-turnos/', gestion_turnos, name='gestion_turnos'),
+    #recepcion
+    path('recepcion/', recepcion, name='recepcion'),
 
     path('turnero/', turnero, name='turnero'),
     path('turnero_reservar/', turnero_reservar, name='turnero_reservar'),
@@ -48,10 +47,10 @@ urlpatterns = [
        
     path('dar_presente/', dar_presente, name='dar_presente'),
     
-    path('sala_espera/', sala_espera, name='sala_espera'),
     
     #atencion
     path('atencion/', atencion, name='atencion'),
+    path('atencion_sala_espera/', atencion_sala_espera, name='atencion_sala_espera'),
     
     #liquidacion
     path('liquidacion/', liquidacion_honorarios, name='liquidacion')
