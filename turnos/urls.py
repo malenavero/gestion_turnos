@@ -6,7 +6,7 @@ from .views.fabrica.fabrica_views import fabrica
 from .views.fabrica.fabrica_views import  *
 from .views.recepcion.recepcion_views import *
 
-from .views.atencion.atencion_views import atencion, atencion_sala_espera
+from .views.atencion.atencion_views import atencion, atencion_sala_espera, atencion_historia_clinica, atencion_historia_clinica_detail
 from .views.liquidacion.liquidacion_views import liquidacion_honorarios
 
 urlpatterns = [
@@ -54,6 +54,9 @@ urlpatterns = [
     #atencion
     path('atencion/', atencion, name='atencion'),
     path('atencion_sala_espera/', atencion_sala_espera, name='atencion_sala_espera'),
+    path('atencion_historia_clinica/', atencion_historia_clinica, name='atencion_historia_clinica'),
+    path('atencion_historia_clinica/<int:hc_id>/', atencion_historia_clinica_detail, name='atencion_historia_clinica_detail'),
+
     
     #liquidacion
     path('liquidacion/', liquidacion_honorarios, name='liquidacion')

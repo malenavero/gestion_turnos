@@ -2,12 +2,12 @@
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib import admin
-from .models import Paciente, Medico, Turno, Especialidad
+from .models import Paciente, Medico, Turno, Especialidad, HistoriaClinica, EntradaHistoria
 
 
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellido', 'dni', 'nro_historia_clinica')
+    list_display = ('nombre', 'apellido', 'dni')
     search_fields = ('nombre', 'apellido', 'dni')
 
 @admin.register(Medico)
@@ -49,6 +49,8 @@ class TurnoAdmin(admin.ModelAdmin):
 class EspecialidadAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'duracion_turno')
     search_fields = ('nombre',)
+
+admin.site.register(HistoriaClinica)
 
 # Custom filter for date range
 from django.utils.translation import gettext_lazy as _

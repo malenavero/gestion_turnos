@@ -5,6 +5,9 @@
     --button-color: #4CAF50; /* Verde */
     --hover-color: #45a049; /* Verde más oscuro para hover */
     --text-color: #333;
+    --font-family: 'Helvetica', sans-serif; 
+    --danger-color:#ed4e14;
+
 }
 
 /* Navbar */
@@ -42,6 +45,8 @@
 
 /* Main Body */
 body {
+    font-family: var(--font-family); 
+    line-height: 1.6;
     display: flex;
     flex-direction: column; /* Mantener la navegación y el contenido en columna */
     height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
@@ -61,7 +66,7 @@ h1 {
     color: var(--text-color);
     margin-bottom: 20px; /* Espacio debajo del título */
     text-align: center; /* Centrar el título */
-    font-family: 'Arial', sans-serif; /* Fuente del título */
+    font-family: var(--font-family); 
     font-size: 2rem; /* Tamaño de fuente más grande */
 }
 
@@ -91,12 +96,7 @@ h1 {
     transform: translateY(-3px); /* Elevar la tarjeta ligeramente */
 }
 
-/* Card Icon */
-.card-icon {
-    font-size: 30px; /* Tamaño del icono */
-    margin-bottom: 10px; /* Espacio debajo del icono */
-    color: var(--button-color); /* Color del icono */
-}
+
 
 
 table {
@@ -160,16 +160,6 @@ button:hover {
 
 .action-buttons {
     margin-top: 20px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    margin-right: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
-    transition: background-color 0.3s;
 }
 
 .edit-btn {
@@ -252,7 +242,7 @@ input, select, textarea {
 }
 
 /* Estilos del Modal */
-.modal {
+.modal {    
     display: none; /* Oculto por defecto */
     position: fixed; /* Mantiene el modal en la pantalla */
     z-index: 1000; /* Asegura que esté encima de otros elementos */
@@ -421,7 +411,7 @@ input, select, textarea {
 }
 
 .bloquear-btn {
-    background-color: red;
+    background-color: var(--danger-color);
     color: white;
 }
 
@@ -452,3 +442,76 @@ input, select, textarea {
     color: var(--text-color); /* Usar el color de texto definido */
 }
 
+/* Historia clinica */
+
+.page-title {
+    font-size: 2rem;
+    margin: 20px;
+    color: #333;
+}
+
+.historia-clinica {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+.entradas-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.entrada-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.entrada-details p {
+    margin: 5px 0;
+}
+
+.no-entradas {
+    color: #777;
+    font-style: italic;
+}
+
+.nueva-entrada {
+    margin-top: 20px;
+}
+
+.entrada-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.entrada-form label {
+    margin-top: 10px;
+}
+
+.entrada-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+/* Card Icon */
+.card-icon {
+    font-size: 30px; /* Tamaño del icono */
+    margin-bottom: 10px; /* Espacio debajo del icono */
+    color: var(--button-color); /* Color del icono */
+}
+
+.btn-icon {
+    font-size: 20px; /* Tamaño del icono */
+    min-width: 40px; /* Ajusta este valor según el tamaño del ícono y el padding deseado */
+    padding: 5px; /* Agrega padding para mejorar la apariencia */   
+}
+
+.btn-icon-danger {
+    background-color: var(--danger-color);
+}

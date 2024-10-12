@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Atención - Historia Clínica</h1>
+<div class="filter-form-container">
+    <form method="get" class="filter-form">
+        <label for="paciente">Paciente:</label>
+        <select name="paciente" id="paciente">
+            <option value="">-- Seleccionar --</option>
+            {% for paciente in pacientes %}
+            <option value="{{ paciente.id }}" {% if paciente.id|stringformat:"s" == selected_paciente %}selected{% endif %}>{{ paciente }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+</div>
+
+<div class="table-container">
+    {% if pacientes_lista %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paciente in pacientes_lista %}
+                <tr>
+                    <td>{{ paciente.nombre }}</td>
+                    <td>{{ paciente.apellido }}</td>
+                    <td>{{ paciente.dni }}</td>
+                    <td>
+
+                        <!-- Ver detalles del paciente -->
+                        <button class="btn-icon" onclick="window.location.href='{% url 'ver_paciente' paciente.pk %}'">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button>
+                      
+                        
+                        <!-- Ver historia clínica del paciente -->
+                        <button class="btn-icon" onclick="window.location.href='{% url 'atencion_historia_clinica_detail' paciente.pk %}'">
+                            <i class=" fa fa-file-medical" aria-hidden="true"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
