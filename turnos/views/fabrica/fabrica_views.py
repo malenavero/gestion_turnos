@@ -116,7 +116,7 @@ def eliminar_paciente(request, pk):
     if request.method == "POST":    
         try:
             paciente.delete()
-            return redirect('lista_medicos')
+            return redirect('lista_pacientes')
         except ValidationError as e:
             return render(request, 'fabrica/lista_pacientes.html', {
                 'pacientes': Paciente.objects.all().order_by('apellido', 'nombre'),
