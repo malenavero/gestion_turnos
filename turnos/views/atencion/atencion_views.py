@@ -49,7 +49,7 @@ def atencion_sala_espera(request, turno_id=None, accion=None):
             if accion == 'llamar':
                 messages.info(request, f"Llamando nuevamente al paciente {turno.paciente.nombre} {turno.paciente.apellido}")
             elif accion == 'ausente':
-                turno.marcar_ausente()
+                turno.marcar_ausente_acreditado()
                 messages.success(request, 'Turno marcado como ausente.')
                 return redirect('atencion_sala_espera')
             elif accion == 'atender':

@@ -17,7 +17,9 @@ class Turno(models.Model):
         ('acreditado', 'En sala de espera'),
         ('consultorio', 'En consultorio'),
         ('atendido', 'Atendido'),
-        ('ausente', 'Ausente')
+        ('ausente', 'Ausente'),
+        ('ausente_acreditado', 'Ausente acreditado')
+
     ]
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True)
@@ -89,6 +91,12 @@ class Turno(models.Model):
         if self.estado != 'acreditado':
             raise ValidationError('El turno no está en sala de espera.')
         self.estado = 'ausente'
+        self.save()
+
+    def marcar_ausente_acreditado(self):
+        if self.estado != 'acreditado':
+            raise ValidationError('El turno no está en sala de espera.')
+        self.estado = 'ausente_acreditado'
         self.save()
     
     def atender(self):
