@@ -1,5 +1,6 @@
  # turnos/utils.py
 
+from django.utils import timezone
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -40,5 +41,8 @@ def filtrar_turnos(turnos, query):
         turnos = turnos.filter(paciente__id=query['paciente_id'])
     if 'fecha' in query and query['fecha']:
         turnos = turnos.filter(fecha_hora__date=query['fecha'])
+    else:
+         # Si la fecha está vacía, filtrar desde hoy en adelante
+        turnos = turnos.filter(fecha_hora__gte=timezone.now())
     return turnos
 
