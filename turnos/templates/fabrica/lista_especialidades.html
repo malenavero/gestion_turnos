@@ -33,20 +33,20 @@
                         <td>${{ especialidad.valor_turno }}</td>
                         <td>{{ especialidad.duracion_turno }} mins</td>
                         <td>
-                            <a  href="{% url 'ver_especialidad' especialidad.pk %}" 
-                                title="Ver detalles">
+                            <!-- Ver detalles del especialidad -->
+                            <button class="btn-icon" title="Ver detalles" onclick="window.location.href='{% url 'ver_especialidad' especialidad.pk %}'">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
-                            </a>
-                            <a  href="{% url 'editar_especialidad' especialidad.pk %}" 
-                                title="Editar">
+                            </button>
+                    
+                            <!-- Editar detalles de especialidad -->
+                            <button class="btn-icon" title="Editar" onclick="window.location.href='{% url 'editar_especialidad' especialidad.pk %}'">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-         
-                            <a href="javascript:void(0);" title="Eliminar" 
-                               onclick="openConfirmacionModal('Eliminar Especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
+                            </button>
+
+                            <!-- Eliminar especialidad -->
+                            <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                            
+                            </button>                            
                         </td>
                     </tr>
                 {% endfor %}

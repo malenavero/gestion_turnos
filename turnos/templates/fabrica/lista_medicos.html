@@ -51,21 +51,20 @@
                             <td>{{ medico.apellido }}</td>
                             <td>{{ medico.especialidad }}</td>
                             <td>
-                                <!-- View Icon -->
-                                <a href="{% url 'ver_medico' medico.pk %}" title="Ver detalles">
+                                <!-- Ver detalles del medico -->
+                                <button class="btn-icon" title="Ver detalles" onclick="window.location.href='{% url 'ver_medico' medico.pk %}'">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
-                                </a>
-    
-                                <!-- Edit Icon -->
-                                <a href="{% url 'editar_medico' medico.pk %}" title="Editar">
+                                </button>
+                        
+                                <!-- Editar detalles del medico -->
+                                <button class="btn-icon" title="Editar" onclick="window.location.href='{% url 'editar_medico' medico.pk %}'">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
-                                </a>
-    
-                                <!-- Delete Icon -->
-                                <a href="javascript:void(0);" title="Eliminar" 
-                                    onclick="openConfirmacionModal('Eliminar Médico', '¿Estás seguro de que deseas eliminar el médico {{ medico.nombre }} {{ medico.nombre }}?', '{% url 'eliminar_medico' medico.pk %}')">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                </button>
+
+                                <!-- Eliminar medico -->
+                                <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar medico', '¿Estás seguro de que deseas eliminar el medico {{ medico.nombre }} {{ medico.apellido }}?', '{% url 'eliminar_medico' medico.pk %}')">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>                
                             </td>
                         </tr>
                     {% endfor %}

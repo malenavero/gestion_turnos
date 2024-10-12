@@ -65,7 +65,7 @@
                 <td>{{ turno.medico.especialidad }}</td>
                 <td>{{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</td>
                 <td>
-                    <button onclick="openAcreditacionModal({{ turno.id }}, '{% url 'dar_presente' 0 %}')">
+                    <button class="btn-icon" onclick="openAcreditacionModal({{ turno.id }}, '{% url 'dar_presente' 0 %}')">
                         <i class="fas fa-user-check" aria-hidden="true"></i>
                     </button>
                 </td>

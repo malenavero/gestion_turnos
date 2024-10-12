@@ -39,18 +39,20 @@
                     <td>{{ paciente.nombre }}</td>
                     <td>{{ paciente.apellido }}</td>
                     <td>
-                        <a href="{% url 'ver_paciente' paciente.pk %}" title="Ver detalles">
+                        <!-- Ver detalles del paciente -->
+                        <button class="btn-icon" title="Ver detalles" onclick="window.location.href='{% url 'ver_paciente' paciente.pk %}'">
                             <i class="fa fa-eye" aria-hidden="true"></i>
-                        </a>
-
-                        <a href="{% url 'editar_paciente' paciente.pk %}" title="Editar">
+                        </button>
+                
+                        <!-- Editar detalles del paciente -->
+                        <button class="btn-icon" title="Editar" onclick="window.location.href='{% url 'editar_paciente' paciente.pk %}'">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </a>
+                        </button>
 
-                        <a href="javascript:void(0);" title="Eliminar" 
-                           onclick="openConfirmacionModal('Eliminar Paciente', '¿Estás seguro de que deseas eliminar el paciente {{ paciente.nombre }} {{ paciente.nombre }}?', '{% url 'eliminar_paciente' paciente.pk %}')">
+                        <!-- Eliminar paciente -->
+                        <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar Paciente', '¿Estás seguro de que deseas eliminar el paciente {{ paciente.nombre }} {{ paciente.nombre }}?', '{% url 'eliminar_paciente' paciente.pk %}')">
                             <i class="fa fa-trash" aria-hidden="true"></i>
-                        </a>
+                        </button>                       
                     </td>
                 </tr>
             {% endfor %}
