@@ -52,16 +52,21 @@ source env/bin/activate (linux)
     ```
 
 ### Resetear base de datos:
+Puede ejecutarse el siguiente comando:
+```bash
+    python reset_db.py
+```
+El script se encarga de ejecutar los siguientes pasos:
 1. Borrar las migraciones (SALVO __ INIT __.py)
 2. Borrar el archivo db.sqlite3
-3. Remover la DB del gestor que se esté utilizando
-4. Correr las migraciones y el script nuevamente:
+3. Correr las migraciones y el script nuevamente:
 ```bash
     python manage.py makemigrations
     python manage.py migrate
     python manage.py generar_datos_prueba
-    python manage.py runserver
 ```
+*¡Importante!* No olvidar actualizar la DB en el gestor que se esté utilizando
+
 
 ### Usuarios para pruebas:
 
@@ -73,15 +78,10 @@ Pass: *admin*
 User: *recepcion*
 Pass: *recepcion*
 
-##### Médicos
-User: *medico0.kinesiologia*
+##### Médico
+User: *medico.test*
 Pass: *medico*
 
-User: *medico0.salud_mental*
-Pass: *medico*
-
-User: *medico0.clinica*
-Pass: *medico*
 
 
 ### Consideraciones:
