@@ -3,11 +3,13 @@ from datetime import timedelta
 from django.db import models
 from django.forms import ValidationError
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from turnos.models.especialidad import Especialidad
 from turnos.utils import create_user
 
 class Medico(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     dni = models.CharField(max_length=8, unique=True)
@@ -47,7 +49,6 @@ class Medico(models.Model):
             # Creamos turnos para el próximo mes
             self.generar_turnos(self)
 
-
             # Generamos un user en el grupo medicos con su primer nombre y apellido
             first_name = self.nombre.split()[0].lower()
             last_name = self.apellido.split()[0].lower()
@@ -56,8 +57,12 @@ class Medico(models.Model):
             email = f"{username}@seprice.com"
             password = 'medico'
 
-            create_user(username, password, email, True, False, 'Medicos')
+            user = create_user(username, password, email, True, False, 'Medicos')
+            self.user = user
+            self.email = email  # Asignar el email creado al campo de correo del médico
+            self.save(update_fields=['user', 'email'])
 
+            self.save(update_fields=['user'])
 
     @staticmethod
     def getNextDay(current_date):

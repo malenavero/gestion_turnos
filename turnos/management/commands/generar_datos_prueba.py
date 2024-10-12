@@ -125,7 +125,8 @@ class Command(BaseCommand):
 
             self.stdout.write(self.style.SUCCESS('Especialidades creadas.'))
 
-    def create_medicos(self):
+    def create_medicos(self):       
+        # crear medicos para pruebas varias
         for especialidad in self.especialidades:
             for i in range(3):
                 Medico.objects.create(
@@ -143,6 +144,21 @@ class Command(BaseCommand):
                     pais='Argentina'
                 )
         self.stdout.write(self.style.SUCCESS(f'Medicos creados exitosamente, con sus correspondientes turnos y usuarios'))
+
+        # crear medico inicial de prueba
+        Medico.objects.create(
+                    nombre="Medico",
+                    apellido="Test",
+                    dni=str(random.randint(3000000, 90000000)),
+                    matricula=str(random.randint(10000, 99999)),
+                    especialidad=self.especialidades[0],
+                    telefono=f'123456789',
+                    domicilio_calle='Calle Falsa',
+                    domicilio_numero=str(random.randint(1, 100)),
+                    codigo_postal=str(random.randint(1000, 9999)),
+                    provincia='Provincia',
+                    pais='Argentina'
+                )
 
     def create_pacientes(self, cantidad):
         for i in range(cantidad):
