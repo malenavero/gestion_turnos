@@ -29,13 +29,8 @@ class Turno(models.Model):
         if Turno.objects.filter(medico=self.medico, fecha_hora=self.fecha_hora).exclude(id=self.id).exists():
             raise ValidationError('Ya existe un turno asignado para este médico en el mismo horario.')
 
-    def save(self, *args, **kwargs):
-       
-        # fecha_hora consistente con zona horaria (esto es para evitar un warning)
-        if timezone.is_naive(self.fecha_hora):
-            self.fecha_hora = timezone.make_aware(self.fecha_hora, timezone.get_current_timezone())
-
-        # limpia y valida
+    def save(self, *args, **kwargs):  
+        # Limpia y valida
         try:
             self.full_clean()
         except ValidationError as e:

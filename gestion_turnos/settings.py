@@ -113,7 +113,6 @@ LOGIN_REDIRECT_URL = '/turnos/main/'
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Argentina/Buenos_Aires'
-USE_I18N = True
 
 USE_TZ = True
 

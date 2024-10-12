@@ -1,6 +1,7 @@
  # turnos/utils.py
 
 from django.utils import timezone
+from datetime import datetime, time
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -33,6 +34,7 @@ def create_user(username, password, email, is_staff, is_superuser, group_name):
 
 
 def filtrar_turnos(turnos, query):
+
     if 'especialidad_id' in query and query['especialidad_id']:
         turnos = turnos.filter(medico__especialidad__id=query['especialidad_id'])
     if 'medico_id' in query and query['medico_id']:
@@ -42,8 +44,11 @@ def filtrar_turnos(turnos, query):
     if 'fecha' in query and query['fecha']:
         turnos = turnos.filter(fecha_hora__date=query['fecha'])
     else:
-         # Si la fecha está vacía, filtrar desde hoy en adelante
-        turnos = turnos.filter(fecha_hora__gte=timezone.now())
+        # Filtrar desde hoy a las 8 AM
+        hoy = timezone.localtime().date()
+        fecha_inicio = timezone.make_aware(datetime.combine(hoy, time(8, 0)))  # 8 AM de hoy
+        turnos = turnos.filter(fecha_hora__gte=fecha_inicio)
+
     return turnos
 
 def gestionar_cobro():
