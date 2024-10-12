@@ -98,15 +98,22 @@
         </form>
     </div>
 </div>
+
+<!-- Modal de Consultorio -->
 <!-- Modal de Consultorio -->
 <div id="consultorioModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('consultorioModal')">&times;</span>
         <h2>Opciones para el Turno</h2>
-        <p id="consultorioTurnoId"></p>
-        <button onclick="handleLLamadoConsultorioOption('llamar')">Llamar nuevamente</button>
-        <button onclick="handleLLamadoConsultorioOption('ausente')">Marcar como ausente</button>
-        <button onclick="handleLLamadoConsultorioOption('atender')">Comenzar a atender</button>
+        <form id="acreditacionObraSocialModalForm" method="POST">
+            {% csrf_token %}
+            <button type="button" onclick="handleLLamadoConsultorioOption('llamar', '{% url 'atencion_sala_espera' 0 'accion' %}')">Llamar nuevamente</button>
+            <button type="button" onclick="handleLLamadoConsultorioOption('ausente', '{% url 'atencion_sala_espera' 0 'accion' %}')">Marcar como ausente</button>
+            <button type="button" onclick="handleLLamadoConsultorioOption('atender', '{% url 'atencion_sala_espera' 0 'accion' %}')">Comenzar a atender</button>
+            <button type="button" class="btn cancel-btn" onclick="closeModal('consultorioModal')">Cancelar</button>
+        </form>
     </div>
 </div>
+
+
 

@@ -2,6 +2,8 @@
 
 from datetime import date
 from django.forms import ValidationError
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -18,7 +20,7 @@ def atencion(request):
 
 
 @login_required
-def atencion_sala_espera(request, turno_id=None):
+def atencion_sala_espera(request, turno_id=None, accion=None):
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
 
@@ -41,11 +43,20 @@ def atencion_sala_espera(request, turno_id=None):
 
     if request.method == 'POST' and turno_id:
         turno = get_object_or_404(Turno, id=turno_id)
+        pacienteId = turno.paciente.id
 
         try:
-            # logica
-            pass
-            
+            if accion == 'llamar':
+                print(f"Llamando nuevamente al turno {turno_id}")
+                # Lógica para llamar nuevamente
+            elif accion == 'ausente':
+                turno.marcar_ausente()
+                messages.success(request, 'Turno marcado como ausente.')
+                return redirect('atencion_sala_espera')
+            elif accion == 'atender':
+                turno.atender()
+                url = reverse('atencion_historia_clinica_detail', args=[pacienteId])
+                return HttpResponseRedirect(f"{url}?turno_id={turno_id}")        
         except ValidationError as e:
             messages.error(request, str(e))
 
@@ -59,6 +70,7 @@ def atencion_sala_espera(request, turno_id=None):
         'error': locals().get('error_message', None),  # Mensaje de error si existe
     }
     return render(request, 'atencion/atencion_sala_espera.html', context)
+
 
 @login_required
 def atencion_historia_clinica(request):
@@ -77,11 +89,11 @@ def atencion_historia_clinica(request):
     }
     return render(request, 'atencion/atencion_historia_clinica.html', context)
 
-
 @login_required
-def atencion_historia_clinica_detail(request, hc_id):
-    paciente = get_object_or_404(Paciente, id=hc_id)
+def atencion_historia_clinica_detail(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
     historia_clinica, _ = HistoriaClinica.objects.get_or_create(paciente=paciente)
+    turno_asociado = request.GET.get('turno_id')
 
     if request.method == 'POST':
         diagnostico = request.POST.get('diagnostico')
@@ -102,8 +114,15 @@ def atencion_historia_clinica_detail(request, hc_id):
             medico=medico,
         )
         
+        if(turno_asociado):
+            turno = get_object_or_404(Turno, id=turno_asociado)
+            turno.atendido()
+            messages.success(request, 'HC actualizada. Siguientes pacientes:')
+            return redirect('atencion_sala_espera')
+
+        
         messages.success(request, 'Nueva entrada agregada exitosamente.')
-        return redirect('atencion_historia_clinica_detail', hc_id=hc_id)
+        return redirect('atencion_historia_clinica_detail', paciente_id=paciente_id)
 
     # Ordenar las entradas de la historia clínica de más nueva a más vieja
     entradas_ordenadas = historia_clinica.entradas.all().order_by('-fecha')  
@@ -114,3 +133,5 @@ def atencion_historia_clinica_detail(request, hc_id):
         'entradas_ordenadas': entradas_ordenadas,
     }
     return render(request, 'atencion/atencion_historia_clinica_detail.html', context)
+
+

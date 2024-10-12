@@ -54,8 +54,10 @@ urlpatterns = [
     #atencion
     path('atencion/', atencion, name='atencion'),
     path('atencion_sala_espera/', atencion_sala_espera, name='atencion_sala_espera'),
+    path('atencion_sala_espera/<int:turno_id>/<str:accion>', atencion_sala_espera, name='atencion_sala_espera'),
+
     path('atencion_historia_clinica/', atencion_historia_clinica, name='atencion_historia_clinica'),
-    path('atencion_historia_clinica/<int:hc_id>/', atencion_historia_clinica_detail, name='atencion_historia_clinica_detail'),
+    path('atencion_historia_clinica/<int:paciente_id>/', atencion_historia_clinica_detail, name='atencion_historia_clinica_detail'),
 
     
     #liquidacion

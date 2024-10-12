@@ -2,7 +2,7 @@
 
 // Función para abrir el Modal de Confirmación de eliminacion
 
-let selectedTurno = null; // Variable global para almacenar el turno seleccionado
+let selectedTurnoId = null; // Variable global para almacenar el turno seleccionado
 let nextURL = null;
 
 
@@ -42,7 +42,6 @@ function modelarInfoTurno(turnoDetalles) {
     
     return turnoInfo; 
 }
-
 
 function openPacienteModal(turnoData, pacientes, urlAccion) {
     const urlFinal = urlAccion.replace('0', turnoData.id);
@@ -106,20 +105,20 @@ function openBlockTurnoModal(turnoId, urlAccion, esBloqueado) {
 function openAcreditacionModal(turnoId, urlAccion) {
     const urlFinal = urlAccion.replace('0', turnoId);
 
-    selectedTurno = turnoId;
+    selectedTurnoId = turnoId;
     nextURL = urlFinal;
     document.getElementById('acreditacionModal').style.display = 'block';
 }
 function handleAcreditacionOption(option) {   
     switch (option) {
         case 'particular':
-            console.log(`Gestionar pago: ${selectedTurno}`);
+            console.log(`Gestionar pago: ${selectedTurnoId}`);
             document.getElementById('acreditacionParticularModalForm').action = nextURL;
             document.getElementById('acreditacionParticularModal').style.display = 'block';
             break;
 
         case 'obra-social':
-            console.log(`Gestionar autorizacion: ${selectedTurno}`);
+            console.log(`Gestionar autorizacion: ${selectedTurnoId}`);
             document.getElementById('acreditacionObraSocialModalForm').action = nextURL;
             document.getElementById('acreditacionObraSocialModal').style.display = 'block';
             break;
@@ -131,29 +130,25 @@ function handleAcreditacionOption(option) {
 
 // Función para abrir el Modal de llamado al consultorio
 function openConsultorioModal(turnoId) {
-    document.getElementById('consultorioTurnoId').textContent = `ID del Turno: ${turnoId}`;
+    selectedTurnoId = turnoId;
     document.getElementById('consultorioModal').style.display = 'block';
 }
 
-function handleLLamadoConsultorioOption(option) {
-    const turnoId = document.getElementById('consultorioTurnoId').textContent.split(': ')[1];
-    
-    // Aquí puedes manejar cada opción como desees
-    switch (option) {
-        case 'llamar':
-            console.log(`Llamar nuevamente el turno ID: ${turnoId}`);
-            break;
-        case 'ausente':
-            console.log(`Marcar como ausente el turno ID: ${turnoId}`);
-            break;
-        case 'atender':
-            console.log(`Comenzar a atender el turno ID: ${turnoId}`);
-            break;
+function handleLLamadoConsultorioOption(option, urlAccion) {
+    if (!selectedTurnoId) {
+        console.error("Error: Turno ID no asignado.");
+        return;
     }
+    // URL final con el turnoId y la acción
+    let urlFinal = urlAccion.replace('0', selectedTurnoId);
+    urlFinal = urlFinal.replace('accion', option);
     
-    // Cerrar el modal después de hacer clic en cualquier botón
-    closeModal('consultorioModal');
+    // Establece la acción del formulario y lo envía
+    const form = document.getElementById('acreditacionObraSocialModalForm');
+    form.action = urlFinal;
+    form.submit();
 }
+
 
 
 

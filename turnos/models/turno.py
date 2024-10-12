@@ -85,5 +85,23 @@ class Turno(models.Model):
         self.estado = 'acreditado'
         self.save()
 
+    def marcar_ausente(self):
+        if self.estado != 'acreditado':
+            raise ValidationError('El turno no está en sala de espera.')
+        self.estado = 'ausente'
+        self.save()
+    
+    def atender(self):
+        if self.estado != 'acreditado':
+            raise ValidationError('El turno no está en sala de espera.')
+        self.estado = 'consultorio'
+        self.save()
+
+    def atendido(self):
+        if self.estado != 'consultorio':
+            raise ValidationError('El turno no está en consultorio.')
+        self.estado = 'atendido'
+        self.save()
+
     def __str__(self):
         return f"Turno con {self.medico} el {self.fecha_hora} - {self.get_estado_display()}"
