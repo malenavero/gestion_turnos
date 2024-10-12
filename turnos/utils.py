@@ -46,3 +46,8 @@ def filtrar_turnos(turnos, query):
         turnos = turnos.filter(fecha_hora__gte=timezone.now())
     return turnos
 
+def gestionar_cobro():
+    print("TURNO COBRADO")
+
+def gestionar_autorizacion():
+    print("TURNO AUTORIZADO")

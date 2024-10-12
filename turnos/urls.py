@@ -47,6 +47,8 @@ urlpatterns = [
     path('turnero_bloquear/<int:turno_id>/', turnero_bloquear, name='turnero_bloquear'),
        
     path('dar_presente/', dar_presente, name='dar_presente'),
+    path('dar_presente/<int:turno_id>/', dar_presente, name='dar_presente'),
+
     
     
     #atencion

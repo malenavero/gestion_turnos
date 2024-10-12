@@ -1,6 +1,7 @@
 # turnos.views.recepcion.recepcion_views.py
 
 from django.forms import ValidationError
+from datetime import date
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -156,7 +157,55 @@ def turnero_bloquear(request, turno_id=None):
     }
     return render(request, 'recepcion/turnero_bloquear.html', context)
 
+
+
 @login_required
-def dar_presente(request):
-    return render(request, 'recepcion/dar_presente.html')
+def dar_presente(request, turno_id=None):
+    medicos = Medico.objects.all().order_by('apellido', 'nombre')
+    pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
+
+    # Obtener filtros de la URL
+    selected_paciente = request.GET.get('paciente')
+    selected_medico = request.GET.get('medico')
+    
+    # Obtener la fecha actual
+    today = date.today() 
+
+    query = {
+        'paciente_id': selected_paciente,
+        'medico_id': selected_medico,
+        'fecha': today
+    }
+
+    # Filtrar turnos ocupados solo para hoy
+    turnos_en_espera = Turno.objects.filter(estado='ocupado', fecha_hora__date=today)
+    turnos_en_espera = filtrar_turnos(turnos_en_espera, query)
+
+    if request.method == 'POST' and turno_id:
+        turno = get_object_or_404(Turno, id=turno_id)
+        # obtener el valor
+        opcionPago = "particular"
+
+        try:
+            turno.cobrar(opcionPago)
+            print("Cobrado")
+            turno.acreditar()
+            print("Arceditado")
+
+            return redirect('dar_presente')
+
+            
+        except ValidationError as e:
+            messages.error(request, str(e))
+
+    context = {
+        'turnos': turnos_en_espera,
+        'pacientes': pacientes,
+        'medicos': medicos,
+        'selected_paciente': selected_paciente,
+        'selected_medico': selected_medico,
+        'selected_date': today,
+        'error': locals().get('error_message', None),  # Mensaje de error si existe
+    }
+    return render(request, 'recepcion/dar_presente.html', context)
 

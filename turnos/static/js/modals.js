@@ -1,6 +1,11 @@
 //turnos/static/js/modals.js
 
 // Función para abrir el Modal de Confirmación de eliminacion
+
+let selectedTurno = null; // Variable global para almacenar el turno seleccionado
+let nextURL = null;
+
+
 function openConfirmacionModal(titulo, mensaje, urlAccion) {
     document.getElementById('modalTitle').textContent = titulo;
     document.getElementById('modalMessage').textContent = mensaje;
@@ -97,6 +102,33 @@ function openBlockTurnoModal(turnoId, urlAccion, esBloqueado) {
     document.getElementById('blockTurnoModal').style.display = 'block';
 }
 
+// Función para abrir el Modal de acreditación
+function openAcreditacionModal(turnoId, urlAccion) {
+    const urlFinal = urlAccion.replace('0', turnoId);
+
+    selectedTurno = turnoId;
+    nextURL = urlFinal;
+    document.getElementById('acreditacionModal').style.display = 'block';
+}
+function handleAcreditacionOption(option) {   
+    switch (option) {
+        case 'particular':
+            console.log(`Gestionar pago: ${selectedTurno}`);
+            document.getElementById('acreditacionParticularModalForm').action = nextURL;
+            document.getElementById('acreditacionParticularModal').style.display = 'block';
+            break;
+
+        case 'obra-social':
+            console.log(`Gestionar autorizacion: ${selectedTurno}`);
+            document.getElementById('acreditacionObraSocialModalForm').action = nextURL;
+            document.getElementById('acreditacionObraSocialModal').style.display = 'block';
+            break;
+    }
+    
+    // Cerrar el modal después de hacer clic en cualquier botón
+    closeModal('acreditacionModal');
+}
+
 // Función para abrir el Modal de llamado al consultorio
 function openConsultorioModal(turnoId) {
     document.getElementById('consultorioTurnoId').textContent = `ID del Turno: ${turnoId}`;
@@ -120,16 +152,35 @@ function handleLLamadoConsultorioOption(option) {
     }
     
     // Cerrar el modal después de hacer clic en cualquier botón
-    closeModal();
+    closeModal('consultorioModal');
 }
 
 
-// Función para cerrar cualquier modal
-function closeModal() {
-    document.getElementById('confirmationModal').style.display = 'none';
-    document.getElementById('pacienteModal').style.display = 'none';
-    document.getElementById('cancelTurnoModal').style.display = 'none';
-    document.getElementById('blockTurnoModal').style.display = 'none';
-    document.getElementById('consultorioModal').style.display = 'none';
 
+// Función para cerrar cualquier modal
+// function closeModal() {
+//     document.getElementById('confirmationModal').style.display = 'none';
+//     document.getElementById('pacienteModal').style.display = 'none';
+//     document.getElementById('cancelTurnoModal').style.display = 'none';
+//     document.getElementById('blockTurnoModal').style.display = 'none';
+//     document.getElementById('consultorioModal').style.display = 'none';
+//     document.getElementById('acreditacionModal').style.display = 'none'; 
+
+// }
+function closeModal(modalId) {
+    if(modalId){
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    } else {
+        closeAllModals()
+    }
+    
+}
+function closeAllModals() {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.style.display = 'none';
+    });
 }

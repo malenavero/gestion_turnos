@@ -59,15 +59,49 @@
             </select>
 
             <button type="submit" class="btn update-btn">Confirmar</button>
-            <button type="button" class="btn cancel-btn" onclick="closeModal()">Cerrar</button>
+            <button type="button" class="btn cancel-btn" onclick="closeModal('pacienteModal')">Cerrar</button>
         </form>
     </div>
 </div>
 
+<!-- Modal de Acreditación -->
+<div id="acreditacionModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('acreditacionModal')">&times;</span>
+        <h2>Opciones para el Pago</h2>
+        <button onclick="handleAcreditacionOption('particular')">Particular</button>
+        <button onclick="handleAcreditacionOption('obra-social')">Obra Social</button>
+    </div>
+</div>
+<!-- Modal de Acreditación Particular -  -->
+<div id="acreditacionParticularModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Aca iria la gestion de cobro particular. Pasar a sala de espera.</h2>
+        <form id="acreditacionParticularModalForm" method="POST">
+            {% csrf_token %}           
+            <button type="submit" class="btn update-btn">Confirmar</button>
+            <button type="button" class="btn cancel-btn" onclick="closeModal('acreditacionParticularModal')">Cerrar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Acreditación Obra SOcial -  -->
+<div id="acreditacionObraSocialModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Aca iria la gestion de autorizar Obra SOcial. Pasar a sala de espera.</h2>
+        <form id="acreditacionObraSocialModalForm" method="POST">
+            {% csrf_token %}           
+            <button type="submit" class="btn update-btn">Confirmar</button>
+            <button type="button" class="btn cancel-btn" onclick="closeModal('acreditacionObraSocialModal')">Cerrar</button>
+        </form>
+    </div>
+</div>
 <!-- Modal de Consultorio -->
 <div id="consultorioModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close" onclick="closeModal('consultorioModal')">&times;</span>
         <h2>Opciones para el Turno</h2>
         <p id="consultorioTurnoId"></p>
         <button onclick="handleLLamadoConsultorioOption('llamar')">Llamar nuevamente</button>

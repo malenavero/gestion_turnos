@@ -6,13 +6,15 @@ from django.utils import timezone
 
 from turnos.models.medico import Medico
 from turnos.models.paciente import Paciente
+from turnos.utils import gestionar_autorizacion, gestionar_cobro
 
 class Turno(models.Model):
     ESTADO_CHOICES = [
         ('disponible', 'Disponible'),
         ('ocupado', 'Ocupado'),
         ('bloqueado', 'Bloqueado'),
-        ('sala-espera', 'En sala de espera'),
+        ('cobrado', 'Cobrado'),
+        ('acreditado', 'En sala de espera'),
         ('consultorio', 'En consultorio'),
         ('atendido', 'Atendido'),
         ('ausente', 'Ausente')
@@ -68,6 +70,24 @@ class Turno(models.Model):
         if self.estado != 'bloqueado':
             raise ValidationError('El turno no está bloqueado.')
         self.estado = 'disponible'
+        self.save()
+
+    def cobrar(self, opcionPago):
+        if self.estado != 'ocupado':
+            raise ValidationError('El turno no está ocupado.')
+        if(opcionPago == "particular"):
+            gestionar_cobro()
+        
+        if(opcionPago == "obra_social"):
+            gestionar_autorizacion()
+        
+        self.estado = 'cobrado'
+        self.save()
+
+    def acreditar(self):
+        if self.estado != 'cobrado':
+            raise ValidationError('El turno no está cobrado.')
+        self.estado = 'acreditado'
         self.save()
 
     def __str__(self):

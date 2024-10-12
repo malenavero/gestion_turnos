@@ -35,14 +35,14 @@ def atencion_sala_espera(request, turno_id=None):
     }
 
     # Filtrar turnos ocupados solo para hoy
-    turnos_en_espera = Turno.objects.filter(estado='sala_espera', fecha_hora__date=today)
+    turnos_en_espera = Turno.objects.filter(estado='acreditado', fecha_hora__date=today)
     turnos_en_espera = filtrar_turnos(turnos_en_espera, query)
 
     if request.method == 'POST' and turno_id:
         turno = get_object_or_404(Turno, id=turno_id)
 
         try:
-            # Aquí debes agregar la lógica para manejar la solicitud POST
+            # logica
             pass
             
         except ValidationError as e:
