@@ -39,17 +39,19 @@ function modelarInfoTurno(turnoDetalles) {
 }
 
 
-function openPacienteModal(turno, pacientes) {
+function openPacienteModal(turnoData, pacientes, urlAccion) {
+    const urlFinal = urlAccion.replace('0', turnoData.id);
+
     const modalContent = document.getElementById('modalContent');
     modalContent.innerHTML = ''; // Limpia contenido previo
 
     // Mostrar información del turno
-    const turnoInfo = modelarInfoTurno(turno);
+    const turnoInfo = modelarInfoTurno(turnoData);
     modalContent.appendChild(turnoInfo);
 
     // Limpiar el selector de pacientes
     const pacienteSelect = document.getElementById('pacienteSelect');
-    pacienteSelect.innerHTML = '<option value="" disabled selected>Seleccione un paciente</option>'; // Opción por defecto
+    pacienteSelect.innerHTML = '<option value="" disabled selected>Seleccione un paciente</option>'; 
 
     // Llenar el selector de pacientes
     pacientes.forEach(paciente => {
@@ -59,11 +61,10 @@ function openPacienteModal(turno, pacientes) {
         pacienteSelect.appendChild(option);
     });
 
-    // Asignar el ID del turno
-    document.getElementById('turnoId').value = turno.id;
-
     // Mostrar el modal
+    document.getElementById('pacienteModalForm').action = urlFinal;
     document.getElementById('pacienteModal').style.display = 'block';
+
 }
 
 // Función para abrir el Modal de Confirmación de Cancelar Turno

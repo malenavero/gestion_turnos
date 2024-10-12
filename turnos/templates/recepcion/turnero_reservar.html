@@ -66,15 +66,19 @@
                 <td>{{ turno.medico.nombre }} {{ turno.medico.apellido }}</td>
                 <td>{{ turno.medico.especialidad }}</td>
                 <td>
-                    <button onclick="openPacienteModal({
-                        id: {{ turno.id }},
-                        fecha_hora: '{{ turno.fecha_hora|date:"Y-m-d H:i" }}',
-                        medico: {
-                            nombre: '{{ turno.medico.nombre }}',
-                            apellido: '{{ turno.medico.apellido }}',
-                            especialidad: '{{ turno.medico.especialidad }}'
-                        }
-                    }, {{ pacientes|safe }})">Seleccionar Paciente</button>
+                    <button onclick="openPacienteModal(
+                        {   
+                            id: {{ turno.id }},
+                            fecha_hora: '{{ turno.fecha_hora|date:"Y-m-d H:i" }}',
+                            medico: {
+                                nombre: '{{ turno.medico.nombre }}',
+                                apellido: '{{ turno.medico.apellido }}',
+                                especialidad: '{{ turno.medico.especialidad }}'
+                            }
+                        },
+                        {{ pacientes|safe }},
+                        '{% url 'turnero_reservar' 0 %}'
+                    )">Seleccionar Paciente</button>
                 </td>                             
             </tr>
             {% empty %}

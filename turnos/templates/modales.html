@@ -34,7 +34,6 @@
         <p id="modalMessage">¿Estás seguro de que deseas realizar esta acción?</p>
         <form id="blockModalForm" method="post">
             {% csrf_token %}
-            <input type="hidden" id="turnoId" name="turno_id" value="">
             <button type="submit" id="blockModalButton">Confirmar</button>
             <button type="button" onclick="closeModal()">Cancelar</button>
         </form>
@@ -52,9 +51,7 @@
         </div>
 
         <form id="pacienteModalForm" method="POST">
-            {% csrf_token %}
-            <input type="hidden" id="turnoId" name="turno_id">
-            
+            {% csrf_token %}           
             <label for="pacienteSelect">Seleccionar Paciente:</label>
             <select id="pacienteSelect" name="paciente_id">
                 <option value="" disabled selected>Seleccione un paciente</option>

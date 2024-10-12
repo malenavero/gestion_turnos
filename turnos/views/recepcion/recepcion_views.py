@@ -17,7 +17,7 @@ def turnero(request):
     return render(request, 'recepcion/turnero.html')
 
 @login_required
-def turnero_reservar(request):
+def turnero_reservar(request, turno_id=None):
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     especialidades = Especialidad.objects.all().order_by('nombre')
     pacientes = list(Paciente.objects.all().order_by('apellido', 'nombre').values('id', 'nombre', 'apellido'))
@@ -38,9 +38,7 @@ def turnero_reservar(request):
     turnos_disponibles = Turno.objects.filter(estado='disponible')
     turnos_disponibles = filtrar_turnos(turnos_disponibles, query)
 
-    if request.method == 'POST':
-        turno_id = request.POST.get('turno_id')
-        print(turno_id, "TURNO ID")
+    if request.method == 'POST'and turno_id:
         paciente_id = request.POST.get('paciente_id')
         turno = get_object_or_404(Turno, id=turno_id)
         paciente = get_object_or_404(Paciente, id=paciente_id)
@@ -48,7 +46,7 @@ def turnero_reservar(request):
         try:
             turno.reservar(paciente)
             messages.success(request, 'Turno agendado con éxito.')
-            return redirect('turnero_reservar')  # Redirigir a la misma página sin filtros
+            return redirect('turnero_reservar')
         except ValidationError as e:
             error_message = str(e)
     
