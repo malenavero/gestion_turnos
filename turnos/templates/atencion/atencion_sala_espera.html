@@ -28,24 +28,7 @@
 </div>
 
 <div class="table-container">
-    {% if messages %}
-        <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}" id="successAlert">
-            <span class="alert-icon">
-                {% if message.tags == 'success' %}
-                    ✅
-                {% elif message.tags == 'error' %}
-                    ❌
-                {% endif %}
-            </span>
-            <div class="alert-content">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-            <button class="success-alert-close-btn" onclick="closeAlert('successAlert')">✖</button>
-        </div>
-    {% endif %}
-    
+    {% include '../alert_messages.html' %}    
     <table>
         <thead>
             <tr>

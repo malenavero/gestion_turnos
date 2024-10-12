@@ -47,8 +47,7 @@ def atencion_sala_espera(request, turno_id=None, accion=None):
 
         try:
             if accion == 'llamar':
-                print(f"Llamando nuevamente al turno {turno_id}")
-                # Lógica para llamar nuevamente
+                messages.info(request, f"Llamando nuevamente al paciente {turno.paciente.nombre} {turno.paciente.apellido}")
             elif accion == 'ausente':
                 turno.marcar_ausente()
                 messages.success(request, 'Turno marcado como ausente.')

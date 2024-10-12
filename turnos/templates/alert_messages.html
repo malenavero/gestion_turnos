@@ -1,0 +1,31 @@
+{# alert_messages.html #}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}" id="alert-{{ forloop.counter }}">
+            <span class="alert-icon">
+                {% if message.tags == 'success' %}
+                    <i class="fas fa-check-circle"></i>
+                {% elif message.tags == 'error' %}
+                    <i class="fas fa-exclamation-circle"></i>
+                {% elif message.tags == 'info' %}
+                    <i class="fas fa-info-circle"></i>
+                {% endif %}
+            </span>
+            <div class="alert-content">
+                <p>{{ message }}</p>
+            </div>
+            <button class="success-alert-close-btn" onclick="closeAlert('alert-{{ forloop.counter }}')">✖</button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+<script>
+    function closeAlert(alertId) {
+        var alertElement = document.getElementById(alertId);
+        if (alertElement) {
+            alertElement.style.display = 'none'; // Cierra la alerta
+        }
+    }
+</script>
+
