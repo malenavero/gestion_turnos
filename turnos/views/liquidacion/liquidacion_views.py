@@ -11,27 +11,31 @@ from weasyprint import HTML
 from turnos.models import  Medico
 from turnos.utils import get_month_name
 
+CURRENT_MES = timezone.localtime().month
+CURRENT_AÑO = timezone.localtime().year
+
+MESES = list(range(1, 13))
+AÑOS = list(range(2020, CURRENT_AÑO +1))
+
+selected_mes = None
+selected_año = None
+selected_medico = None
 
 @login_required
 def liquidacion_honorarios(request):
     # Contenido de filtros
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
-    current_mes = timezone.localtime().month
-    current_año = timezone.localtime().year
-    meses = list(range(1, 13))
-    años = list(range(2020, current_año +1))
 
     if request.GET:
-
         # Obtener los valores seleccionados desde el request
         selected_mes = request.GET.get('mes')
-        selected_mes = int(selected_mes) if selected_mes else current_mes
+        selected_mes = int(selected_mes) if selected_mes else CURRENT_MES
         selected_año = request.GET.get('año')
         selected_medico = request.GET.get('medico')
         # Si no hay mes o año seleccionado, usa el mes y año actuales
         if not selected_mes or not selected_año:
-            selected_mes = current_mes
-            selected_año = current_año
+            selected_mes = CURRENT_MES
+            selected_año = CURRENT_AÑO
 
         selected_mes_name = get_month_name(selected_mes)
         # Listado de médicos a mostrar
@@ -61,15 +65,15 @@ def liquidacion_honorarios(request):
             'selected_mes': selected_mes,
             'selected_mes_name': selected_mes_name,
             'selected_año': selected_año,
-            'meses': meses,
-            'años': años,
+            'meses': MESES,
+            'años': AÑOS,
         }
         return render(request, 'liquidacion/liquidacion_honorarios.html', context)
     
     context = {
         'medicos_selector': medicos,
-        'meses': meses,
-        'años': años,
+         'meses': MESES,
+        'años': AÑOS,
     }
 
     return render(request, 'liquidacion/liquidacion_honorarios.html', context)
@@ -77,7 +81,7 @@ def liquidacion_honorarios(request):
 @login_required
 def generar_pdf(request, medico_id):
     medico = get_object_or_404(Medico, id=medico_id)
-    total_honorarios, atendidos, ausentes = medico.calcular_honorarios()
+    total_honorarios, atendidos, ausentes = medico.calcular_honorarios(mes=selected_mes, año=selected_año)
 
     context = {
         'mes': 'Octubre',
