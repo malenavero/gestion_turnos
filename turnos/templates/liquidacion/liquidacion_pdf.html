@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquidación de Honorarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px; /* Aumenta el margen inferior */
+        }
+        h1 {
+            margin: 0;
+            font-size: 32px; /* Aumenta el tamaño de la tipografía */
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 20px;
+            margin: 5px 0;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        footer {
+            margin-top: 40px; /* Aumenta el margen superior para el pie de página */
+            text-align: center;
+        }
+        .firmas {
+            margin-top: 60px; /* Espacio para las firmas */
+            display: flex;
+            justify-content: space-between; /* Espacia las firmas */
+        }
+        .firma {
+            width: 45%; /* Ajusta el ancho de las secciones de firma */
+            text-align: center;
+            margin-top: 50px; /* Espaciado adicional para las firmas */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SePrise</h1>
+    <h4>Clínica de Alta Complejidad</h4>
+    <h2>Liquidación de Honorarios</h2>
+</header>
+
+<div class="info">
+    <p><strong>Médico:</strong> {{ medico.nombre }} {{ medico.apellido }}</p>
+    <p><strong>Periodo:</strong> {{ mes }} {{ año }}</p>
+    <p><strong>Turnos Atendidos:</strong> {{ turnos_atendidos }}</p>
+    <p><strong>Turnos Ausentes Acreditados:</strong> {{ turnos_ausentes_acreditados }}</p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Valor del Turno</th>
+            <th>Total Honorarios</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>${{ medico.especialidad.valor_turno }}</td>
+            <td>${{ total_honorarios }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="total">
+    <p><strong>Total a Cobrar:</strong> ${{ total_honorarios }}</p>
+</div>
+
+<div class="firmas">
+    <div class="firma">
+        <p>____________________</p>
+        <p>Firma del Responsable</p>
+    </div>
+    <div class="firma">
+        <p>____________________</p>
+        <p>Firma del Profesional</p>
+    </div>
+</div>
+
+<footer>
+    <p>Clínica SePrise</p>
+    <p>Av. Siempre Viva 742</p>
+    <p>Teléfono: 11 123 1234</p>
+</footer>
+
+</body>
+</html>

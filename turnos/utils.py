@@ -51,6 +51,25 @@ def filtrar_turnos(turnos, query):
 
     return turnos
 
+def get_month_name(month_number):
+    months = [
+        '',
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre',
+    ]
+    return months[month_number]
+
+
 def gestionar_cobro():
     print("TURNO COBRADO")
 

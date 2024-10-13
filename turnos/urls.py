@@ -7,7 +7,7 @@ from .views.fabrica.fabrica_views import  *
 from .views.recepcion.recepcion_views import *
 
 from .views.atencion.atencion_views import atencion, atencion_sala_espera, atencion_historia_clinica, atencion_historia_clinica_detail
-from .views.liquidacion.liquidacion_views import liquidacion_honorarios
+from .views.liquidacion.liquidacion_views import liquidacion_honorarios, generar_pdf
 
 urlpatterns = [
     path('main/', panel_principal, name='main'),
@@ -61,5 +61,7 @@ urlpatterns = [
 
     
     #liquidacion
-    path('liquidacion/', liquidacion_honorarios, name='liquidacion')
+    path('liquidacion/', liquidacion_honorarios, name='liquidacion_honorarios'),
+    path('liquidacion/generar', liquidacion_honorarios, name='generar_pdf'),
+    path('liquidacion/pdf/<int:medico_id>/', generar_pdf, name='generar_pdf'),
 ]

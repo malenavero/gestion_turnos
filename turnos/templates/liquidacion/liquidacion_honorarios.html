@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-container">
+    <h1>Liquidación de Honorarios</h1>
+    <div class="filter-form-container">
+        <form method="get" class="filter-form">
+            <label for="medico">Médico:</label>
+            <select name="medico" id="medico">
+                <option value="">-- Seleccionar --</option>
+                {% for medico in medicos_selector %}
+                <option value="{{ medico.id }}" {% if medico.id|stringformat:"s" == selected_medico %}selected{% endif %}>{{ medico }}</option>
+                {% endfor %}
+            </select>
+            <label for="mes">Mes:</label>
+            <select name="mes" id="mes">
+                <option value="">-- Seleccionar Mes --</option>
+                {% for m in meses %}
+                <option value="{{ m }}" {% if m == selected_mes %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+            <label for="año">Año:</label>
+            <select name="año" id="año">
+                <option value="">-- Seleccionar Año --</option>
+                {% for y in años %}
+                <option value="{{ y }}" {% if y == selected_año %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+            {% csrf_token %}
+            <button class="btn update-btn" type="submit">Generar Liquidación</button>         
+        </form>
+    </div>
+    
+    {% if selected_año %}
+        <div class="table-container">
+            <h2>Liquidación Periodo {{ selected_mes_name }} - {{ selected_año }}</h2>
+            {% include '../alert_messages.html' %}        
+
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="centered">Médico</th>
+                        <th rowspan="2" class="centered">Especialidad</th>
+                        <th colspan="2" class="centered">Turnos</th>
+                        <th rowspan="2" class="centered">Valor turno</th>
+                        <th rowspan="2" class="centered">Honorarios</th>
+                        <th rowspan="2" class="centered">PDF</th>
+                    </tr>
+                    <tr>
+                        <th class="centered">Atendidos</th>
+                        <th class="centered">Ausentes AA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for honorario in honorarios_data %}
+                    <tr>
+                        <td>{{ honorario.medico.apellido }} {{ honorario.medico.nombre }}</td>
+                        <td>{{ honorario.medico.especialidad }}</td>
+                        <td class="centered">{{ honorario.turnos_atendidos }}</td>
+                        <td class="centered">{{ honorario.turnos_ausentes_acreditados }}</td>
+                        <td class="centered">${{ honorario.medico.especialidad.valor_turno }}</td>
+                        <td class="centered">${{ honorario.total_honorarios }}</td>
+                        <td class="centered">
+                            <button 
+                                class="btn-icon"
+                                title="Ver detalles"
+                                onclick="window.location.href='{% url 'generar_pdf' honorario.medico.id %}'"
+                                > 
+                                    <i class="fa fa-file-pdf" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">No hay honorarios disponibles.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

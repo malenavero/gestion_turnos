@@ -6,6 +6,11 @@ source env/bin/activate (linux)
 .\env\Scripts\activate (win)
 ```
 
+### Correr requirements.txt
+```bash
+pip install -r requirements.txt
+```
+
 ### Ejecución inicial:
 
 1. Crear migraciones:
@@ -73,6 +78,10 @@ El script se encarga de ejecutar los siguientes pasos:
 ##### Superadmin
 User: *admin*
 Pass: *admin*
+
+##### Jefe Recepción
+User: *jefe-recepcion*
+Pass: *jefe-recepcion*
 
 ##### Recepcionista
 User: *recepcion*

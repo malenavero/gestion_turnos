@@ -106,3 +106,20 @@ class Medico(models.Model):
                 current_date = Medico.getNextDay(current_date)
                 
 
+
+    def calcular_honorarios(self, mes, año):
+        from turnos.models.turno import Turno
+        from django.db.models import Q  
+
+        # Definir el filtro base
+        base_query = Q(medico_id=self.id, fecha_hora__month=mes, fecha_hora__year=año)
+
+        turnos_atendidos = Turno.objects.filter(base_query, estado='atendido')
+        turnos_ausentes_acreditados = Turno.objects.filter(base_query, estado='ausente_acreditado')
+
+        total_honorarios_atendidos = sum(self.especialidad.valor_turno for turno in turnos_atendidos)
+        total_honorarios_ausentes = sum(self.especialidad.valor_turno for turno in turnos_ausentes_acreditados)
+
+        total_honorarios = total_honorarios_atendidos + total_honorarios_ausentes
+
+        return total_honorarios, turnos_atendidos.count(), turnos_ausentes_acreditados.count()
