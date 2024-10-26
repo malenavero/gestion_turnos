@@ -11,7 +11,13 @@
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="back-button"><a href="javascript:history.back()" title="Volver"><i class="fas fa-arrow-left"></i></a></li>
+            {% if request.path != '/turnos/main/' %}
+            <li class="back-button">
+                <a href= "{{ request.session.previous_url|default:'/' }}" title="Volver">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </li>
+            {% endif %}
             <li class="spacer"></li>
             <li><a href="{% url 'main' %}" title="Home"><i class="fas fa-home"></i></a></li>
             {% if user.is_authenticated %}

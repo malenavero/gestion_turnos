@@ -52,6 +52,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+
+    'turnos.middleware.PreviousUrlMiddleware',
 ]
 
 ROOT_URLCONF = 'gestion_turnos.urls'
