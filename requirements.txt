@@ -9,7 +9,7 @@ fonttools==4.54.1
 html5lib==1.1
 pillow==10.4.0
 pycparser==2.22
-pydyf==0.6.0
+pydyf==0.8.0
 pyphen==0.16.0
 python-dateutil==2.9.0.post0
 pytz==2024.2

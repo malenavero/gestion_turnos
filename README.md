@@ -1,9 +1,21 @@
 # Instrucciones generales
 
+
+
+### Crear nuevo ambiente
+```bash
+python -m venv <nombre-env>
+```
+
 ### Activar el ambiente
 ```bash
 source env/bin/activate (linux)
 .\env\Scripts\activate (win)
+```
+
+### Desactivar el ambiente
+```bash
+deactivate
 ```
 
 ### Correr requirements.txt
