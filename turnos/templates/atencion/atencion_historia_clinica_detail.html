@@ -27,7 +27,7 @@
         <ul class="entradas-list">
             {% for entrada in entradas_ordenadas %}
                 <li class="entrada-item">
-                    <strong>{{ entrada.fecha|date:"Y-m-d H:i" }} - {{ entrada.medico.especialidad.nombre }}</strong>
+                    <strong>{{ entrada.fecha|date:"Y-m-d H:i" }} - {{ entrada.medico.especialidad.nombre|capfirst}}</strong>
                     <div class="entrada-details">
                         <p><em>Diagnóstico:</em> {{ entrada.diagnostico }}</p>
                         <p><em>Tratamiento:</em> {{ entrada.tratamiento }}</p>

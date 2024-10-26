@@ -4,7 +4,7 @@
 <h1 class="page-title">Detalles de la Especialidad</h1>
 
 <div class="details-container">
-    <p><strong>Nombre:</strong> {{ especialidad.nombre }}</p>
+    <p><strong>Nombre:</strong> {{ especialidad.nombre|capfirst }}</p>
     <p><strong>Duración de Turno:</strong> {{ especialidad.duracion_turno }} minutos</p>
     <p><strong>Valor de Turno:</strong> ${{ especialidad.valor_turno }}</p>
 

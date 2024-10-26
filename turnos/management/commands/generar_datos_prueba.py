@@ -96,7 +96,7 @@ class Command(BaseCommand):
                 'valor_turno': 10000
             },
             {
-                'nombre': 'salud_mental',
+                'nombre': 'salud mental',
                 'duracion_turno': 30,
                 'valor_turno': 12000
             },

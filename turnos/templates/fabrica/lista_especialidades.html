@@ -29,7 +29,7 @@
             <tbody>
                 {% for especialidad in especialidades %}
                     <tr>
-                        <td>{{ especialidad.nombre }}</td>
+                        <td>{{ especialidad.nombre|capfirst }}</td>
                         <td>${{ especialidad.valor_turno }}</td>
                         <td>{{ especialidad.duracion_turno }} mins</td>
                         <td>
@@ -44,7 +44,7 @@
                             </button>
 
                             <!-- Eliminar especialidad -->
-                            <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
+                            <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar especialidad', '¿Estás seguro de que deseas eliminar la especialidad: {{ especialidad.nombre|capfirst }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>                            
                         </td>

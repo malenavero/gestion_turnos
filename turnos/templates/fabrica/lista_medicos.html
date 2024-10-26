@@ -10,7 +10,7 @@
                 <select name="especialidad" id="especialidad">
                     {% for especialidad in especialidades %}
                         <option value="{{ especialidad.id }}" {% if especialidad.id|stringformat:"s" == selected_especialidad %}selected{% endif %}>
-                            {{ especialidad.nombre }}
+                            {{ especialidad.nombre|capfirst }}
                         </option>
                     {% endfor %}
                 </select>
@@ -49,7 +49,7 @@
                         <tr>
                             <td>{{ medico.nombre }}</td>
                             <td>{{ medico.apellido }}</td>
-                            <td>{{ medico.especialidad }}</td>
+                            <td>{{ medico.especialidad.nombre|capfirst }}</td>
                             <td>
                                 <!-- Ver detalles del medico -->
                                 <button class="btn-icon" title="Ver detalles" onclick="window.location.href='{% url 'ver_medico' medico.pk %}'">
