@@ -547,3 +547,32 @@ input, select, textarea {
 .btn-icon-danger {
     background-color: var(--danger-color);
 }
+
+/* Login Page Container */
+.login-page-container {
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transition: box-shadow 0.3s ease; /* Efecto de transición suave */
+}
+.login-page-container:hover {
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); /* Sombra más intensa al pasar el mouse */
+}
+
+.login-title {
+    font-size: 2.5em; 
+    color: #4CAF50; 
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sub-title {
+    font-size: 1.5em; 
+    color: #333; 
+    text-align: center;
+    margin-bottom: 30px; 
+}

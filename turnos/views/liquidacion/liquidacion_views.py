@@ -29,9 +29,11 @@ def liquidacion_honorarios(request):
     if request.GET:
         # Obtener los valores seleccionados desde el request
         selected_mes = request.GET.get('mes')
-        selected_mes = int(selected_mes) if selected_mes else CURRENT_MES
+        selected_mes = int(selected_mes) if selected_mes else None
         selected_año = request.GET.get('año')
+        
         selected_medico = request.GET.get('medico')
+
         # Si no hay mes o año seleccionado, usa el mes y año actuales
         if not selected_mes or not selected_año:
             selected_mes = CURRENT_MES
@@ -72,7 +74,7 @@ def liquidacion_honorarios(request):
     
     context = {
         'medicos_selector': medicos,
-         'meses': MESES,
+        'meses': MESES,
         'años': AÑOS,
     }
 

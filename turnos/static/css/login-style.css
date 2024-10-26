@@ -1,0 +1,8 @@
+.login-body {
+    background-color: #f0f5f4; /* Color de fondo */
+    background-image: url("../img/stethoscope_809957.png");
+    background-repeat: repeat; /* Repite el icono en ambas direcciones */
+    background-size: 50px; /* Tamaño del icono */
+    background-position: 0 0; 
+    background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
+}
