@@ -64,7 +64,7 @@
                             <button 
                                 class="btn-icon"
                                 title="Ver detalles"
-                                onclick="window.location.href='{% url 'generar_pdf' honorario.medico.id %}'"
+                                onclick="window.location.href='{% url 'generar_pdf' honorario.medico.id %}?mes={{ selected_mes }}&año={{ selected_año }}'"
                                 > 
                                     <i class="fa fa-file-pdf" aria-hidden="true"></i>
                             </button>

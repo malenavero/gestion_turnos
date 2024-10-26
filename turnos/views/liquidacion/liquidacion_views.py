@@ -80,6 +80,11 @@ def liquidacion_honorarios(request):
 
 @login_required
 def generar_pdf(request, medico_id):
+
+    # Obtenemos los valores de mes y año de la solicitud GET
+    selected_mes = int(request.GET.get('mes', CURRENT_MES))
+    selected_año = int(request.GET.get('año', CURRENT_AÑO))
+
     medico = get_object_or_404(Medico, id=medico_id)
     total_honorarios, atendidos, ausentes = medico.calcular_honorarios(mes=selected_mes, año=selected_año)
 
