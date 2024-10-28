@@ -73,18 +73,56 @@
         <button onclick="handleAcreditacionOption('obra-social')">Obra Social</button>
     </div>
 </div>
-<!-- Modal de Acreditación Particular -  -->
+<!-- Modal de Acreditación Particular -->
 <div id="acreditacionParticularModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Aca iria la gestion de cobro particular. Pasar a sala de espera.</h2>
+        <span class="close" onclick="closeModal('acreditacionParticularModal')">&times;</span>
+        <h2>Acreditación de Pago Particular</h2>
         <form id="acreditacionParticularModalForm" method="POST">
-            {% csrf_token %}           
+            {% csrf_token %}
+        <!-- Selección de método de pago -->
+            <label for="paymentMethod">Método de Pago:</label>
+            <select id="paymentMethod" onchange="togglePaymentFields()">
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta">Tarjeta</option>
+            </select>
+
+            <!-- Campos para pago con tarjeta (inicialmente ocultos) -->
+            <div id="tarjetaFields" style="display: none;">
+                <label for="nombreApellido">Nombre y Apellido:</label>
+                <input type="text" id="nombreApellido" name="nombreApellido">
+                <!-- Label para mostrar el tipo de tarjeta detectado -->
+                <label id="cardTypeLabel" style="font-weight: bold; color: #555; margin-top: 5px; display: none;"></label>
+
+                <label for="nroTarjeta">Número de Tarjeta:</label>
+                <input type="text" id="nroTarjeta" name="nroTarjeta" oninput="detectCardType()">
+                
+
+                <label for="fechaVencimiento">Fecha de Vencimiento:</label>
+                <input type="date" id="fechaVencimiento" name="fechaVencimiento" placeholder="MM/AA" value="{{ exp_date }}">
+
+                <label for="codSeguridad">Código de Seguridad:</label>
+                <input type="text" id="codSeguridad" name="codSeguridad" maxlength="4" oninput="maskSecurityCode()">
+
+                <!-- Campo de selección de cuotas solo para tarjetas de crédito -->
+                <div id="cuotasContainer" style="display: none;">
+                    <label for="cuotas">Cantidad de Cuotas:</label>
+                    <select id="cuotas" name="cuotas">
+                        <option value="1">1 cuota</option>
+                        <option value="3">3 cuotas</option>
+                        <option value="6">6 cuotas</option>
+                        <option value="12">12 cuotas</option>
+                    </select>
+                </div>
+            </div>
+
+        <!-- Botones de confirmación y cierre -->        
             <button type="submit" class="btn update-btn">Confirmar</button>
             <button type="button" class="btn cancel-btn" onclick="closeModal('acreditacionParticularModal')">Cerrar</button>
         </form>
     </div>
 </div>
+
 
 <!-- Modal de Acreditación Obra SOcial -  -->
 <div id="acreditacionObraSocialModal" class="modal">
@@ -98,6 +136,8 @@
         </form>
     </div>
 </div>
+
+
 <!-- Modal de Consultorio -->
 <div id="consultorioModal" class="modal">
     <div class="modal-content">

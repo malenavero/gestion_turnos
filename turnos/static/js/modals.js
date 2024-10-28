@@ -101,14 +101,21 @@ function openBlockTurnoModal(turnoId, urlAccion, esBloqueado) {
     document.getElementById('blockTurnoModal').style.display = 'block';
 }
 
-// Función para abrir el Modal de acreditación
+/*
+***
+* FUNCIONES RELACIONADAS A MODAL DE PAGO
+***
+*/
 function openAcreditacionModal(turnoId, urlAccion) {
     const urlFinal = urlAccion.replace('0', turnoId);
 
     selectedTurnoId = turnoId;
     nextURL = urlFinal;
     document.getElementById('acreditacionModal').style.display = 'block';
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('fechaVencimiento').setAttribute('min', today);
 }
+
 function handleAcreditacionOption(option) {   
     switch (option) {
         case 'particular':
@@ -127,6 +134,141 @@ function handleAcreditacionOption(option) {
     // Cerrar el modal después de hacer clic en cualquier botón
     closeModal('acreditacionModal');
 }
+
+// Función para mostrar u ocultar campos según el método de pago seleccionado
+function togglePaymentFields() {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const tarjetaFields = document.getElementById('tarjetaFields');
+    const cardTypeLabel = document.getElementById('cardTypeLabel');
+
+    if (paymentMethod === 'tarjeta') {
+        tarjetaFields.style.display = 'block';
+        // Agregar el atributo required a los campos de tarjeta
+        document.getElementById('nombreApellido').setAttribute('required', 'required');
+        document.getElementById('nroTarjeta').setAttribute('required', 'required');
+        document.getElementById('fechaVencimiento').setAttribute('required', 'required');
+        document.getElementById('codSeguridad').setAttribute('required', 'required');
+    } else {
+        tarjetaFields.style.display = 'none';
+        cardTypeLabel.style.display = 'none'; // Ocultar el tipo de tarjeta si no se usa tarjeta
+        document.getElementById('cuotasContainer').style.display = 'none';
+        
+        // Remover el atributo required de los campos de tarjeta
+        document.getElementById('nombreApellido').removeAttribute('required');
+        document.getElementById('nroTarjeta').removeAttribute('required');
+        document.getElementById('fechaVencimiento').removeAttribute('required');
+        document.getElementById('codSeguridad').removeAttribute('required');
+    }
+}
+
+// Funcion para detectar que tipo de tarjeta es y mostrar
+function detectCardType() {
+    const cardInput = document.getElementById('nroTarjeta');
+    const cardTypeLabel = document.getElementById('cardTypeLabel');
+    const cuotasContainer = document.getElementById('cuotasContainer');
+    let cardNumber = cardInput.value.replace(/\D/g, ''); // Remove non-numeric characters
+
+    // Regular expressions for different card types
+    const VISA = /^4[0-9]{0,15}$/;
+    const MASTERCARD = /^5[1-5][0-9]{0,14}$/;
+    const AMEX = /^3[47][0-9]{0,13}$/;  // 15 digits for Amex, starting with 34 or 37
+    const CABAL = /^(6042|6043|6044|6045|6046|5896)[0-9]{0,10}$/;
+    const NARANJA = /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/;
+
+    // Reset label and visibility of the installment container
+    cardTypeLabel.style.display = 'none';
+    cuotasContainer.style.display = 'none';
+    
+    // Variables for card type and formatting
+    let maxDigits = 16;
+    let formatPattern = '#### #### #### ####';
+
+    // Card type detection logic based on regex
+    if (AMEX.test(cardNumber)) {
+        cardTypeLabel.textContent = "AMEX";
+        maxDigits = 15;
+        formatPattern = '#### ###### #####';
+        cardTypeLabel.style.display = 'block';
+        cuotasContainer.style.display = 'none'; // Hide installments for Amex
+    } else if (VISA.test(cardNumber)) {
+        cardTypeLabel.textContent = "VISA";
+        maxDigits = 16;
+        formatPattern = '#### #### #### ####';
+        cardTypeLabel.style.display = 'block';
+        cuotasContainer.style.display = 'block';
+    } else if (MASTERCARD.test(cardNumber)) {
+        cardTypeLabel.textContent = "MASTERCARD";
+        maxDigits = 16;
+        formatPattern = '#### #### #### ####';
+        cardTypeLabel.style.display = 'block';
+        cuotasContainer.style.display = 'block';
+    } else if (CABAL.test(cardNumber)) {
+        cardTypeLabel.textContent = "CABAL";
+        maxDigits = 16;
+        formatPattern = '#### #### #### ####';
+        cardTypeLabel.style.display = 'block';
+        cuotasContainer.style.display = 'block';
+    } else if (NARANJA.test(cardNumber)) {
+        cardTypeLabel.textContent = "NARANJA";
+        maxDigits = 16;
+        formatPattern = '#### #### #### ####';
+        cardTypeLabel.style.display = 'block';
+        cuotasContainer.style.display = 'block';
+    } else {
+        cardTypeLabel.textContent = ""; // Clear if card type is not detected
+    }
+
+    // Apply color based on card detection
+    if (cardTypeLabel.textContent) {
+        cardInput.classList.remove('input-error');
+        cardInput.classList.add('input-valid');
+    } else {
+        cardInput.classList.remove('input-valid');
+        cardInput.classList.add('input-error');
+    }
+
+
+    // Limit input length based on digits only, without spaces
+    cardNumber = cardNumber.substring(0, maxDigits);
+
+    // Apply formatting as user types
+    cardInput.value = formatCardNumber(cardNumber, formatPattern);
+}
+
+// Funcion para formatear el nro segun el tipo de tarjeta
+function formatCardNumber(number, pattern) {
+    let formatted = '';
+    let index = 0;
+
+    for (const char of pattern) {
+        if (char === '#') {
+            if (index < number.length) {
+                formatted += number[index];
+                index++;
+            } else {
+                break;
+            }
+        } else {
+            formatted += char;
+        }
+    }
+
+    return formatted;
+}
+
+ // Función para ocultar el código de seguridad con asteriscos
+function maskSecurityCode() {
+    const securityCodeInput = document.getElementById('codSeguridad');
+    const value = securityCodeInput.value;
+    
+    // Reemplaza el valor por asteriscos
+    securityCodeInput.value = '*'.repeat(value.length);
+}
+
+function showSuccessPaymentModal() {
+    document.getElementById('successModal').style.display = 'block';
+}
+
 
 // Función para abrir el Modal de llamado al consultorio
 function openConsultorioModal(turnoId) {
@@ -179,3 +321,13 @@ function closeAllModals() {
         modal.style.display = 'none';
     });
 }
+
+
+
+/*
+***
+*EVENTOS
+***
+*/
+
+

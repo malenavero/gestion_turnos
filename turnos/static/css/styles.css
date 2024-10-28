@@ -576,3 +576,17 @@ input, select, textarea {
     text-align: center;
     margin-bottom: 30px; 
 }
+
+/* styles.css */
+input:focus {
+    outline: none; /* Elimina el contorno */
+}
+
+.input-error {
+    border: 2px solid red;
+}
+
+.input-valid {
+    border: 2px solid green;
+}
+

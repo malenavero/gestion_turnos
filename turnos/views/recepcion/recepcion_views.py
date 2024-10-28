@@ -188,13 +188,11 @@ def dar_presente(request, turno_id=None):
 
         try:
             turno.cobrar(opcionPago)
-            print("Cobrado")
             turno.acreditar()
-            print("Arceditado")
+            messages.success(request, 'Cobro realizado con exito. El paciente puede dirigirse a la sala de espera.')
 
             return redirect('dar_presente')
 
-            
         except ValidationError as e:
             messages.error(request, str(e))
 
