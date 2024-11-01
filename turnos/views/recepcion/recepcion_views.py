@@ -2,6 +2,7 @@
 
 from django.forms import ValidationError
 from datetime import date
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -180,10 +181,17 @@ def dar_presente(request, turno_id=None):
     # Filtrar turnos ocupados solo para hoy
     turnos_en_espera = Turno.objects.filter(estado='ocupado', fecha_hora__date=today)
     turnos_en_espera = filtrar_turnos(turnos_en_espera, query)
+    paciente_data = None
 
+    if turno_id:
+        # Obtener el turno seleccionado
+        turno_seleccionado = get_object_or_404(Turno, id=turno_id)
+        # Obtener el paciente asociado al turno
+        paciente_data = turno_seleccionado.paciente
+
+    
     if request.method == 'POST' and turno_id:
         turno = get_object_or_404(Turno, id=turno_id)
-        # obtener el valor
         opcionPago = request.POST.get('opcionPago')
         try:
             if opcionPago == "particular":
@@ -192,7 +200,7 @@ def dar_presente(request, turno_id=None):
                 messages.success(request, 'Cobro particular realizado con éxito. El paciente puede dirigirse a la sala de espera.')
             elif opcionPago == "obra-social":
                 # Aquí podrías necesitar lógica adicional para manejar la obra social
-                gestionar_acreditacion_obra_social(request, turno.paciente.id)
+                gestionar_acreditacion_obra_social(request, paciente_data.id)
                 messages.success(request, 'Acreditación de obra social realizada con éxito. El paciente puede dirigirse a la sala de espera.')
 
             return redirect('dar_presente')
@@ -207,10 +215,25 @@ def dar_presente(request, turno_id=None):
         'selected_paciente': selected_paciente,
         'selected_medico': selected_medico,
         'selected_date': today,
+        'paciente_data': paciente_data,
         'error': locals().get('error_message', None),  # Mensaje de error si existe
     }
     return render(request, 'recepcion/dar_presente.html', context)
 
+@login_required
+def obtener_datos_paciente(request, turno_id):
+    # Obtener el turno usando el ID
+    turno = get_object_or_404(Turno, id=turno_id)
+    paciente = turno.paciente  # Obtener el paciente asociado al turno
+
+    # Retornar los datos del paciente como JSON
+    data = {
+        'obra_social': paciente.obra_social,
+        'credencial': paciente.credencial,
+        'plan': paciente.plan,
+        'telefono': paciente.telefono,
+    }
+    return JsonResponse(data)
 
 @login_required
 def gestionar_acreditacion_obra_social(request, paciente_id):

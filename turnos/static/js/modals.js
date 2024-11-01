@@ -126,14 +126,36 @@ function handleAcreditacionOption(option) {
 
         case 'obra-social':
             console.log(`Gestionar autorizacion: ${selectedTurnoId}`);
-            document.getElementById('acreditacionObraSocialModalForm').action = nextURL;
-            document.getElementById('acreditacionObraSocialModal').style.display = 'block';
+            const url = `/turnos/api/paciente/${selectedTurnoId}/`;    
+            // Realizar una solicitud AJAX para obtener los datos del paciente
+            fetch(url)  
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener datos del paciente');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Rellenar los campos del modal con la información del paciente
+                    document.getElementById('obraSocial').value = data.obra_social || '';
+                    document.getElementById('nroCredencial').value = data.credencial || '';
+                    document.getElementById('plan').value = data.plan || '';
+
+                    // Mostrar el modal
+                    document.getElementById('acreditacionObraSocialModalForm').action = nextURL;
+                    document.getElementById('acreditacionObraSocialModal').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('No se pudieron cargar los datos del paciente. Intenta nuevamente.');
+                });
             break;
     }
     
     // Cerrar el modal después de hacer clic en cualquier botón
     closeModal('acreditacionModal');
 }
+
 
 // Función para mostrar u ocultar campos según el método de pago seleccionado
 function togglePaymentFields() {

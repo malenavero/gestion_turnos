@@ -133,15 +133,15 @@
             <input type="hidden" name="opcionPago" value="obra-social"> <!-- Campo oculto para opción de pago -->
             <div>
                 <label for="obraSocial">Obra Social:</label>
-                <input type="text" id="obraSocial" name="obraSocial" required value="{{ paciente.obra_social }}">
+                <input type="text" id="obraSocial" name="obraSocial" required value="{{ paciente_data.obra_social|default:'' }}">
             </div>
             <div>
                 <label for="nroCredencial">Número de Credencial:</label>
-                <input type="text" id="nroCredencial" name="nroCredencial" required value="{{ paciente.credencial }}">
+                <input type="text" id="nroCredencial" name="nroCredencial" required value="{{ paciente_data.credencial|default:'' }}">
             </div>
             <div>
                 <label for="plan">Plan:</label>
-                <input type="text" id="plan" name="plan" required value="{{ paciente.plan }}">
+                <input type="text" id="plan" name="plan" required value="{{ paciente_data.plan|default:'' }}">
             </div>
             <!-- Botones de confirmación y cierre -->
             <button type="submit" class="btn update-btn">Confirmar</button>
@@ -149,6 +149,7 @@
         </form>
     </div>
 </div>
+
 
 
 <!-- Modal de Consultorio -->
