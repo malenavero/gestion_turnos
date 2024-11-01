@@ -18,6 +18,9 @@ def tarea_inicio_diario():
     # Marcar los turnos del día anterior como 'ausente' si están en 'ocupado'
     Turno.objects.filter(fecha_hora__date=ayer, estado='ocupado').update(estado='ausente')
 
+    # Eliminar turnos que quedaron disponibles antes de hoy
+    Turno.objects.filter(fecha_hora__date__lt=hoy, estado='disponible').delete()
+
     # Generar turnos para el próximo mes
     if hasattr(Medico, 'generar_turnos'):
         Medico.generar_turnos()
