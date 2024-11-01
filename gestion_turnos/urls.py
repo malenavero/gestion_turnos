@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
+from turnos.views.base_views import login_view
 
 urlpatterns = [
     path('', lambda request: redirect('main' if request.user.is_authenticated else 'login')),
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/', login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('turnos/', include('turnos.urls')),
     path('admin/', admin.site.urls)

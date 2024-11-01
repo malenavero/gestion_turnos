@@ -107,8 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = '/login/' 
-LOGIN_REDIRECT_URL = '/turnos/main/' 
+LOGIN_REDIRECT_URL = '/turnos/main/'  # Redirige al usuario a la vista principal después de login
+LOGOUT_REDIRECT_URL = 'login'  # Redirige a la vista de login después de logout
+LOGIN_URL = 'login'  
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
