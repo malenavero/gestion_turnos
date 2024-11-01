@@ -184,12 +184,16 @@ def dar_presente(request, turno_id=None):
     if request.method == 'POST' and turno_id:
         turno = get_object_or_404(Turno, id=turno_id)
         # obtener el valor
-        opcionPago = "particular"
-
+        opcionPago = request.POST.get('opcionPago')
         try:
-            turno.cobrar(opcionPago)
-            turno.acreditar()
-            messages.success(request, 'Cobro realizado con exito. El paciente puede dirigirse a la sala de espera.')
+            if opcionPago == "particular":
+                turno.cobrar("particular")
+                turno.acreditar()
+                messages.success(request, 'Cobro particular realizado con éxito. El paciente puede dirigirse a la sala de espera.')
+            elif opcionPago == "obra-social":
+                # Aquí podrías necesitar lógica adicional para manejar la obra social
+                gestionar_acreditacion_obra_social(request, turno.paciente.id)
+                messages.success(request, 'Acreditación de obra social realizada con éxito. El paciente puede dirigirse a la sala de espera.')
 
             return redirect('dar_presente')
 
@@ -207,3 +211,14 @@ def dar_presente(request, turno_id=None):
     }
     return render(request, 'recepcion/dar_presente.html', context)
 
+
+@login_required
+def gestionar_acreditacion_obra_social(request, paciente_id):
+    paciente = Paciente.objects.get(id=paciente_id)
+    
+    if request.method == 'POST':
+        paciente.obra_social = request.POST.get('obraSocial')
+        paciente.credencial = request.POST.get('nroCredencial')
+        paciente.plan = request.POST.get('plan')
+        paciente.save()  # Guardar los cambios
+        

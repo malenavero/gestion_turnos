@@ -123,14 +123,27 @@
     </div>
 </div>
 
-
-<!-- Modal de Acreditación Obra SOcial -  -->
+<!-- Modal de Acreditación Obra Social -->
 <div id="acreditacionObraSocialModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Aca iria la gestion de autorizar Obra SOcial. Pasar a sala de espera.</h2>
+        <span class="close" onclick="closeModal('acreditacionObraSocialModal')">&times;</span>
+        <h2>Acreditación de Obra Social</h2>
         <form id="acreditacionObraSocialModalForm" method="POST">
-            {% csrf_token %}           
+            {% csrf_token %}
+            <input type="hidden" name="opcionPago" value="obra-social"> <!-- Campo oculto para opción de pago -->
+            <div>
+                <label for="obraSocial">Obra Social:</label>
+                <input type="text" id="obraSocial" name="obraSocial" required value="{{ paciente.obra_social }}">
+            </div>
+            <div>
+                <label for="nroCredencial">Número de Credencial:</label>
+                <input type="text" id="nroCredencial" name="nroCredencial" required value="{{ paciente.credencial }}">
+            </div>
+            <div>
+                <label for="plan">Plan:</label>
+                <input type="text" id="plan" name="plan" required value="{{ paciente.plan }}">
+            </div>
+            <!-- Botones de confirmación y cierre -->
             <button type="submit" class="btn update-btn">Confirmar</button>
             <button type="button" class="btn cancel-btn" onclick="closeModal('acreditacionObraSocialModal')">Cerrar</button>
         </form>

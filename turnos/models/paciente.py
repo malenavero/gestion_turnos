@@ -7,6 +7,7 @@ class Paciente(models.Model):
     dni = models.CharField(max_length=8, unique=True)
     obra_social = models.CharField(max_length=100, null=True, blank=True)
     credencial = models.CharField(max_length=100, null=True, blank=True)
+    plan = models.CharField(max_length=100, null=True, blank=True)
     telefono = models.CharField(max_length=20)
     email = models.EmailField()
     
