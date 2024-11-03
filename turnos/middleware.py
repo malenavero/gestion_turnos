@@ -21,7 +21,7 @@ class PreviousUrlMiddleware:
         elif current_view in ["turnero_bloquear", "turnero_cancelar", "turnero_reservar"]:
             request.session['previous_url'] = reverse('turnero')
 
-        elif current_view in ["lista_pacientes", "lista_especialidad", "lista_medicos"]:
+        elif current_view in ["lista_pacientes", "lista_especialidades", "lista_medicos"]:
             request.session['previous_url'] = reverse('fabrica')
         
         elif current_view in ["recepcion", "atencion", "liquidacion_honorarios", "fabrica"]:
