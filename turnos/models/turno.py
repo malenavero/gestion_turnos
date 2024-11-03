@@ -69,14 +69,14 @@ class Turno(models.Model):
         self.estado = 'disponible'
         self.save()
 
-    def cobrar(self, opcionPago):
+    def cobrar(self, opcion_pago, data_autorizacion=None):
         if self.estado != 'ocupado':
             raise ValidationError('El turno no está ocupado.')
-        if(opcionPago == "particular"):
+        if(opcion_pago == "particular"):
             gestionar_cobro()
         
-        if(opcionPago == "obra_social"):
-            gestionar_autorizacion()
+        if(opcion_pago == "obra-social"):
+            gestionar_autorizacion(data_autorizacion)
         
         self.estado = 'cobrado'
         self.save()

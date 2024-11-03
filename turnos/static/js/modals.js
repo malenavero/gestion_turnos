@@ -157,31 +157,17 @@ function handleAcreditacionOption(option) {
 }
 
 
-// Función para mostrar u ocultar campos según el método de pago seleccionado
 function togglePaymentFields() {
     const paymentMethod = document.getElementById('paymentMethod').value;
     const tarjetaFields = document.getElementById('tarjetaFields');
-    const cardTypeLabel = document.getElementById('cardTypeLabel');
-
+    
     if (paymentMethod === 'tarjeta') {
         tarjetaFields.style.display = 'block';
-        // Agregar el atributo required a los campos de tarjeta
-        document.getElementById('nombreApellido').setAttribute('required', 'required');
-        document.getElementById('nroTarjeta').setAttribute('required', 'required');
-        document.getElementById('fechaVencimiento').setAttribute('required', 'required');
-        document.getElementById('codSeguridad').setAttribute('required', 'required');
     } else {
         tarjetaFields.style.display = 'none';
-        cardTypeLabel.style.display = 'none'; // Ocultar el tipo de tarjeta si no se usa tarjeta
-        document.getElementById('cuotasContainer').style.display = 'none';
-        
-        // Remover el atributo required de los campos de tarjeta
-        document.getElementById('nombreApellido').removeAttribute('required');
-        document.getElementById('nroTarjeta').removeAttribute('required');
-        document.getElementById('fechaVencimiento').removeAttribute('required');
-        document.getElementById('codSeguridad').removeAttribute('required');
     }
 }
+
 
 // Funcion para detectar que tipo de tarjeta es y mostrar
 function detectCardType() {

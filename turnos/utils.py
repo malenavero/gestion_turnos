@@ -5,6 +5,9 @@ from datetime import datetime, time
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 
+from turnos.models.paciente import Paciente
+
+
 def create_user(username, password, email, is_staff, is_superuser, group_name):
     # Primero verificamos si el usuario ya existe
     user = User.objects.filter(username=username).first()
@@ -73,5 +76,15 @@ def get_month_name(month_number):
 def gestionar_cobro():
     print("TURNO COBRADO")
 
-def gestionar_autorizacion():
-    print("TURNO AUTORIZADO")
+def gestionar_autorizacion(data_autorizacion):
+    paciente_id = data_autorizacion['paciente_id']
+    request = data_autorizacion['request']
+
+
+    paciente = Paciente.objects.get(id=paciente_id)
+    
+    if request.method == 'POST':
+        paciente.obra_social = request.POST.get('obraSocial')
+        paciente.credencial = request.POST.get('nroCredencial')
+        paciente.plan = request.POST.get('plan')
+        paciente.save()  # Guardar los cambios

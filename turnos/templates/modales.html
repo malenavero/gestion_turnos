@@ -80,6 +80,7 @@
         <h2>Acreditación de Pago Particular</h2>
         <form id="acreditacionParticularModalForm" method="POST">
             {% csrf_token %}
+            <input type="hidden" name="opcionPago" value="particular"> <!-- Campo oculto para opción de pago -->
         <!-- Selección de método de pago -->
             <label for="paymentMethod">Método de Pago:</label>
             <select id="paymentMethod" onchange="togglePaymentFields()">

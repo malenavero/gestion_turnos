@@ -162,51 +162,28 @@ def turnero_bloquear(request, turno_id=None):
 
 @login_required
 def dar_presente(request, turno_id=None):
+    # Código de configuración inicial
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
-
-    # Obtener filtros de la URL
+    today = date.today()
+    
     selected_paciente = request.GET.get('paciente')
     selected_medico = request.GET.get('medico')
-    
-    # Obtener la fecha actual
-    today = date.today() 
 
-    query = {
+    # Filtrar turnos ocupados
+    turnos_en_espera = filtrar_turnos(Turno.objects.filter(estado='ocupado', fecha_hora__date=today), {
         'paciente_id': selected_paciente,
         'medico_id': selected_medico,
         'fecha': today
-    }
+    })
 
-    # Filtrar turnos ocupados solo para hoy
-    turnos_en_espera = Turno.objects.filter(estado='ocupado', fecha_hora__date=today)
-    turnos_en_espera = filtrar_turnos(turnos_en_espera, query)
     paciente_data = None
-
     if turno_id:
-        # Obtener el turno seleccionado
         turno_seleccionado = get_object_or_404(Turno, id=turno_id)
-        # Obtener el paciente asociado al turno
         paciente_data = turno_seleccionado.paciente
 
-    
     if request.method == 'POST' and turno_id:
-        turno = get_object_or_404(Turno, id=turno_id)
-        opcionPago = request.POST.get('opcionPago')
-        try:
-            if opcionPago == "particular":
-                turno.cobrar("particular")
-                turno.acreditar()
-                messages.success(request, 'Cobro particular realizado con éxito. El paciente puede dirigirse a la sala de espera.')
-            elif opcionPago == "obra-social":
-                # Aquí podrías necesitar lógica adicional para manejar la obra social
-                gestionar_acreditacion_obra_social(request, paciente_data.id)
-                messages.success(request, 'Acreditación de obra social realizada con éxito. El paciente puede dirigirse a la sala de espera.')
-
-            return redirect('dar_presente')
-
-        except ValidationError as e:
-            messages.error(request, str(e))
+        return procesar_pago(request, turno_id, paciente_data)
 
     context = {
         'turnos': turnos_en_espera,
@@ -216,9 +193,32 @@ def dar_presente(request, turno_id=None):
         'selected_medico': selected_medico,
         'selected_date': today,
         'paciente_data': paciente_data,
-        'error': locals().get('error_message', None),  # Mensaje de error si existe
+        'error': locals().get('error_message', None),
     }
     return render(request, 'recepcion/dar_presente.html', context)
+
+def procesar_pago(request, turno_id, paciente_data):
+    turno = get_object_or_404(Turno, id=turno_id)
+    opcion_pago = request.POST.get('opcionPago')
+    
+    try:
+        if opcion_pago == "particular":
+            # Cobro particular
+            turno.cobrar("particular")
+            turno.acreditar()
+            messages.success(request, 'Cobro particular realizado con éxito. El paciente puede dirigirse a la sala de espera.')
+        elif opcion_pago == "obra-social":
+            paciente_id = paciente_data.id
+            data_autorizacion = {"request": request, "paciente_id": paciente_id}
+            turno.cobrar("obra-social", data_autorizacion)
+            turno.acreditar()
+            messages.success(request, 'Acreditación de obra social realizada con éxito. El paciente puede dirigirse a la sala de espera.')
+        
+        return redirect('dar_presente')
+
+    except ValidationError as e:
+        messages.error(request, str(e))
+
 
 @login_required
 def obtener_datos_paciente(request, turno_id):
@@ -235,13 +235,5 @@ def obtener_datos_paciente(request, turno_id):
     }
     return JsonResponse(data)
 
-@login_required
-def gestionar_acreditacion_obra_social(request, paciente_id):
-    paciente = Paciente.objects.get(id=paciente_id)
-    
-    if request.method == 'POST':
-        paciente.obra_social = request.POST.get('obraSocial')
-        paciente.credencial = request.POST.get('nroCredencial')
-        paciente.plan = request.POST.get('plan')
-        paciente.save()  # Guardar los cambios
+
         
