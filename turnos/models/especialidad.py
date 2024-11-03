@@ -14,8 +14,7 @@ class Especialidad(models.Model):
         verbose_name_plural = "Especialidades"
 
     def __str__(self):
-        return self.nombre
-       
+        return self.nombre.capitalize()       
     
     def delete(self, *args, **kwargs):
         # Validar que no haya médicos asociados a esta especialidad
