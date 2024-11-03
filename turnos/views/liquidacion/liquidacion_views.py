@@ -22,6 +22,8 @@ AÑOS = list(range(2020, CURRENT_AÑO +1))
 selected_mes = None
 selected_año = None
 selected_medico = None
+selected_mes_name = None
+
 
 @login_required
 def liquidacion_honorarios(request):
@@ -87,15 +89,17 @@ def liquidacion_honorarios(request):
 def generar_pdf(request, medico_id):
 
     # Obtenemos los valores de mes y año de la solicitud GET
-    selected_mes = int(request.GET.get('mes', CURRENT_MES))
-    selected_año = int(request.GET.get('año', CURRENT_AÑO))
+    selected_mes = int(request.GET.get('mes'))
+    selected_año = int(request.GET.get('año'))
+    selected_mes_name = get_month_name(selected_mes)
+
 
     medico = get_object_or_404(Medico, id=medico_id)
     total_honorarios, atendidos, ausentes = medico.calcular_honorarios(mes=selected_mes, año=selected_año)
 
     context = {
-        'mes': 'Octubre',
-        'año': 2024,
+        'mes': selected_mes_name,
+        'año': selected_año,
         'medico': medico,
         'turnos_atendidos': atendidos,
         'turnos_ausentes_acreditados': ausentes,
