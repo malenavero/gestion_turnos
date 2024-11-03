@@ -24,14 +24,7 @@
         </div>
     </div>
 
-
-
-    {% if error_message %}
-    <div class="error-message" id="errorMessage">
-        <button class="close-btn" onclick="closeErrorMessage()">&times;</button>
-        <p id="errorText">{{error_message}}</p>
-    </div>
-    {% endif %}
+    {% include '../alert_messages.html' %}    
 
     {% if medicos %}
         <div class="table-container">

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from turnos.forms.fabrica.forms import EspecialidadForm, PacienteForm, MedicoForm
 from turnos.models import Especialidad, Medico, Paciente, Turno
+from django.contrib import messages
 
 @login_required
 def fabrica(request):
@@ -22,7 +23,8 @@ def crear_especialidad(request):
         form = EspecialidadForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('fabrica')
+            messages.success(request, 'Especialidad creada con éxito.')
+            return redirect('lista_especialidades')
     else:
         form = EspecialidadForm()
     return render(request, 'fabrica/crear_especialidad.html', {'form': form})
@@ -42,6 +44,7 @@ def editar_especialidad(request, pk):
         form = EspecialidadForm(request.POST, instance=especialidad)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Especialidad modificada con éxito.')
             return redirect('lista_especialidades')
     else:
         form = EspecialidadForm(instance=especialidad)
@@ -55,11 +58,12 @@ def eliminar_especialidad(request, pk):
     if request.method == "POST":
         try:
             especialidad.delete()
+            messages.success(request, 'Especialidad eliminada con éxito.')
             return redirect('lista_especialidades')
         except ValidationError as e:
+            messages.error(request, str(e))
             return render(request, 'fabrica/lista_especialidades.html', {
                 'especialidades': Especialidad.objects.all().order_by('nombre'),
-                'error_message': str(e)
             })
 
 
@@ -75,7 +79,8 @@ def crear_paciente(request):
         form = PacienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('fabrica')
+            messages.success(request, 'Paciente creado con éxito.')
+            return redirect('lista_pacientes')
     else:
         form = PacienteForm()
     return render(request, 'fabrica/crear_paciente.html', {'form': form})
@@ -96,7 +101,6 @@ def lista_pacientes(request):
     }
     return render(request, 'fabrica/lista_pacientes.html', context)
 
-
 @login_required
 def editar_paciente(request, pk):
     paciente = get_object_or_404(Paciente, pk=pk)
@@ -104,6 +108,7 @@ def editar_paciente(request, pk):
         form = PacienteForm(request.POST, instance=paciente)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Paciente modificado con éxito.')
             return redirect('lista_pacientes')
     else:
         form = PacienteForm(instance=paciente)
@@ -116,11 +121,12 @@ def eliminar_paciente(request, pk):
     if request.method == "POST":    
         try:
             paciente.delete()
+            messages.success(request, 'Paciente eliminado con éxito.')
             return redirect('lista_pacientes')
         except ValidationError as e:
+            messages.error(request, str(e))
             return render(request, 'fabrica/lista_pacientes.html', {
-                'pacientes': Paciente.objects.all().order_by('apellido', 'nombre'),
-                'error_message': str(e)
+                'pacientes': Paciente.objects.all().order_by('apellido', 'nombre')
             })
 
 
@@ -135,7 +141,8 @@ def crear_medico(request):
         form = MedicoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('fabrica')
+            messages.success(request, 'Medico creado con éxito.')
+            return redirect('lista_medicos')
     else:
         form = MedicoForm()
     return render(request, 'fabrica/crear_medico.html', {'form': form})
@@ -180,8 +187,6 @@ def editar_medico(request, pk):
         'disable_especialidad': disable_especialidad,
     })
 
-
-
 @login_required
 def eliminar_medico(request, pk):
     medico = get_object_or_404(Medico, pk=pk)
@@ -189,12 +194,12 @@ def eliminar_medico(request, pk):
     if request.method == "POST":
         try:
             medico.delete()
-            return redirect('lista_medicos')
+            messages.success(request, 'Medico eliminado con éxito.')
+            return redirect('lista_medicos')        
         except ValidationError as e:
-            # Mostrar el error en la lista de médicos si ocurre un problema de validación
+            messages.error(request,  str(e))
             return render(request, 'fabrica/lista_medicos.html', {
-                'medicos': Medico.objects.all().order_by('apellido', 'nombre'),
-                'error_message': str(e)
+                'medicos': Medico.objects.all().order_by('apellido', 'nombre')
             })
 
 
