@@ -3,6 +3,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
 from django.utils import timezone
 from turnos.models import Turno, Medico
 from datetime import timedelta
@@ -49,6 +51,6 @@ def login_view(request):
             return redirect('main')
         else:
             error = "Credenciales incorrectas"
-            return render(request, 'login.html', {'error': error})
+            messages.error(request, str(error))
     
     return render(request, 'login.html')
