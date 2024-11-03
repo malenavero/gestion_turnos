@@ -50,7 +50,7 @@
                         </button>
 
                         <!-- Eliminar paciente -->
-                        <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar Paciente', '¿Estás seguro de que deseas eliminar el paciente {{ paciente.nombre }} {{ paciente.nombre }}?', '{% url 'eliminar_paciente' paciente.pk %}')">
+                        <button class="btn-icon btn-icon-danger" title="Eliminar"  onclick="openConfirmacionModal('Eliminar Paciente', '¿Estás seguro de que deseas eliminar el paciente {{ paciente.nombre }} {{ paciente.apellido }}?', '{% url 'eliminar_paciente' paciente.pk %}')">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>                       
                     </td>
