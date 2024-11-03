@@ -26,25 +26,18 @@ class PacienteForm(forms.ModelForm):
         ]
 
 class MedicoForm(forms.ModelForm):
+    especialidad = forms.ModelChoiceField(queryset=Especialidad.objects.all(), empty_label="Seleccione Especialidad")
+
     class Meta:
         model = Medico
         fields = [
-            'nombre',
-            'apellido',
-            'dni',
-            'matricula',
-            'especialidad',
-            'telefono',
-            'email',
-            'domicilio_calle',
-            'domicilio_numero',
-            'codigo_postal',
-            'provincia',
-            'pais',
+            'nombre', 'apellido', 'dni', 'matricula', 'especialidad', 'telefono', 
+            'email', 'domicilio_calle', 'domicilio_numero', 'codigo_postal', 
+            'provincia', 'pais',
         ]
-    
-    especialidad = forms.ModelChoiceField(queryset=Especialidad.objects.all(), empty_label="Seleccione Especialidad")
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, disable_especialidad=False, **kwargs):
         super().__init__(*args, **kwargs)
+        if disable_especialidad:
+            self.fields['especialidad'].widget.attrs['readonly'] = 'readonly'
         self.fields['especialidad'].widget.attrs.update({'class': 'form-control'})

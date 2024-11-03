@@ -159,15 +159,21 @@ def lista_medicos(request):
 @login_required
 def editar_medico(request, pk):
     medico = get_object_or_404(Medico, pk=pk)
-    form = MedicoForm(instance=medico)
-
     disable_especialidad = Turno.objects.filter(medico=medico).exclude(estado='disponible').exists()
-
+    
     if request.method == 'POST':
-        form = MedicoForm(request.POST, instance=medico)
+        # Si `disable_especialidad` es True, agrega la data a la request
+        post_data = request.POST.copy()
+        if disable_especialidad:
+            post_data['especialidad'] = medico.especialidad_id
+        form = MedicoForm(post_data, instance=medico, disable_especialidad=disable_especialidad)
+        
         if form.is_valid():
             form.save()
-            return redirect('fabrica')
+            messages.success(request, 'Medico modificado con éxito.')
+            return redirect('lista_medicos')
+    else:
+        form = MedicoForm(instance=medico, disable_especialidad=disable_especialidad)
 
     return render(request, 'fabrica/editar_medico.html', {
         'form': form,
