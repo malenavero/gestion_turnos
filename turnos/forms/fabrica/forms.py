@@ -6,6 +6,9 @@ class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidad
         fields = ['nombre', 'duracion_turno', 'valor_turno']
+        labels = {
+            'duracion_turno': 'Duración turno (minutos)',
+        }
 
 class PacienteForm(forms.ModelForm):
     class Meta:
