@@ -11,13 +11,15 @@
     <p><strong>Email:</strong> {{ medico.email }}</p>
 
     <div class="action-buttons">
-        <a class="btn edit-btn" href="{% url 'editar_medico' medico.pk %}" title="Editar">
+        <button class="btn edit-btn" title="Editar" onclick="window.location.href='{% url 'editar_medico' medico.pk %}'">
             <i class="fa fa-pencil" aria-hidden="true"></i> Editar
-        </a>
-        <a class="btn delete-btn" href="{% url 'eliminar_medico' medico.pk %}" title="Eliminar">
+        </button>
+        <button class="btn delete-btn" title="Eliminar"  onclick="openConfirmacionModal('Eliminar medico', '¿Estás seguro de que deseas eliminar el medico {{ medico.nombre }} {{ medico.apellido }}?', '{% url 'eliminar_medico' medico.pk %}')">
             <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
-        </a>
-        <a class="btn back-btn" href="{% url 'lista_medicos' %}">← Volver a la lista</a>
+        </button>
+        <button class="btn back-btn" onclick="window.location.href='{% url 'lista_medicos'%}'">
+            <i class="fa fa-trash" aria-hidden="true"></i> ← Volver a la lista
+        </button>
     </div>
 </div>
 {% endblock %}

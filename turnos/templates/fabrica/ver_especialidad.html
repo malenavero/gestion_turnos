@@ -9,13 +9,15 @@
     <p><strong>Valor de Turno:</strong> ${{ especialidad.valor_turno }}</p>
 
     <div class="action-buttons">
-        <a class="btn edit-btn" href="{% url 'editar_especialidad' especialidad.pk %}" title="Editar">
+        <button class="btn edit-btn" title="Editar" onclick="window.location.href='{% url 'editar_especialidad' especialidad.pk %}'">
             <i class="fa fa-pencil" aria-hidden="true"></i> Editar
-        </a>
-        <a class="btn delete-btn" href="{% url 'eliminar_especialidad' especialidad.pk %}" title="Eliminar">
+        </button>
+        <button class="btn delete-btn" title="Eliminar"  onclick="openConfirmacionModal('Eliminar especialidad', '¿Estás seguro de que deseas eliminar la especialidad {{ especialidad.nombre }}?', '{% url 'eliminar_especialidad' especialidad.pk %}')">
             <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
-        </a>
-        <a class="btn back-btn" href="{% url 'lista_especialidades' %}">← Volver a la lista</a>
+        </button>
+        <button class="btn back-btn" onclick="window.location.href='{% url 'lista_especialidades'%}'">
+            <i class="fa fa-trash" aria-hidden="true"></i> ← Volver a la lista
+        </button>
     </div>
 </div>
 {% endblock %}
