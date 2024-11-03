@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from turnos.models import Especialidad, Medico, Paciente, Turno
+from turnos.models import  Medico, Paciente, Turno
 from turnos.models.historia_clinica import EntradaHistoria, HistoriaClinica
 from turnos.utils import filtrar_turnos
 

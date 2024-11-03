@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404,  render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.contrib import messages
+
 
 from django.contrib.auth.decorators import login_required
 from weasyprint import HTML
@@ -70,6 +72,7 @@ def liquidacion_honorarios(request):
             'meses': MESES,
             'años': AÑOS,
         }
+        messages.success(request, 'Liquidación emitida exitosamente.')
         return render(request, 'liquidacion/liquidacion_honorarios.html', context)
     
     context = {
