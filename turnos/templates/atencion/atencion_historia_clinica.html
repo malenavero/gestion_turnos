@@ -35,13 +35,13 @@
                     <td>
 
                         <!-- Ver detalles del paciente -->
-                        <button class="btn-icon" onclick="window.location.href='{% url 'ver_paciente' paciente.pk %}'">
+                        <button class="btn-icon" title="Ver detalles del paciente" onclick="window.location.href='{% url 'ver_paciente' paciente.pk %}'">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </button>
                       
                         
                         <!-- Ver historia clínica del paciente -->
-                        <button class="btn-icon" onclick="window.location.href='{% url 'atencion_historia_clinica_detail' paciente.pk %}'">
+                        <button class="btn-icon" title="Ver HC - Agregar nueva entrada" onclick="window.location.href='{% url 'atencion_historia_clinica_detail' paciente.pk %}'">
                             <i class=" fa fa-file-medical" aria-hidden="true"></i>
                         </button>
 
