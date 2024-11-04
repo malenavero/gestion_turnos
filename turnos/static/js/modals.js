@@ -71,6 +71,21 @@ function openPacienteModal(turnoData, pacientes, urlAccion) {
 
 }
 
+function validateSelection() {
+    const pacienteSelect = document.getElementById('pacienteSelect');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Verificar si no hay un paciente seleccionado
+    if (!pacienteSelect.value) {
+        errorMessage.style.display = 'block';
+        return false; // Evitar el envío del formulario
+    }
+
+    errorMessage.style.display = 'none';
+    return true; // Permitir el envío del formulario si todo es correcto
+}
+
+
 // Función para abrir el Modal de Confirmación de Cancelar Turno
 function openCancelTurnoModal(turnoId, urlAccion) {
     const urlFinal = urlAccion.replace('0', turnoId);

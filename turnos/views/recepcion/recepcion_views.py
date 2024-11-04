@@ -42,6 +42,9 @@ def turnero_reservar(request, turno_id=None):
 
     if request.method == 'POST'and turno_id:
         paciente_id = request.POST.get('paciente_id')
+        if not paciente_id:
+            messages.error(request, 'Por favor, selecciona un paciente para reservar el turno.')
+            return redirect('turnero_reservar')
         turno = get_object_or_404(Turno, id=turno_id)
         paciente = get_object_or_404(Paciente, id=paciente_id)
 
@@ -51,6 +54,8 @@ def turnero_reservar(request, turno_id=None):
             return redirect('turnero_reservar')
         except ValidationError as e:
             error_message = str(e)
+            messages.error(request, error_message)
+
     
     # Contexto para la renderización
     context = {

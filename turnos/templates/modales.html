@@ -50,19 +50,20 @@
             <!-- Información del turno se mostrará aquí -->
         </div>
 
-        <form id="pacienteModalForm" method="POST">
+        <form id="pacienteModalForm" method="POST" onsubmit="return validateSelection()">
             {% csrf_token %}           
             <label for="pacienteSelect">Seleccionar Paciente:</label>
-            <select id="pacienteSelect" name="paciente_id">
+            <select id="pacienteSelect" name="paciente_id" onchange="return validateSelection()">
                 <option value="" disabled selected>Seleccione un paciente</option>
                 <!-- Opciones de pacientes se llenan dinámicamente -->
             </select>
-
-            <button type="submit" class="btn update-btn">Confirmar</button>
+            <div id="errorMessage" style="color: red; display: none;">Por favor, selecciona un paciente para continuar.</div>
+            <button type="submit" class="btn update-btn" id="confirmButton">Confirmar</button>
             <button type="button" class="btn cancel-btn" onclick="closeModal('pacienteModal')">Cerrar</button>
         </form>
     </div>
 </div>
+
 
 <!-- Modal de Acreditación -->
 <div id="acreditacionModal" class="modal">
