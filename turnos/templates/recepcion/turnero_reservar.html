@@ -6,7 +6,7 @@
 <div class="filter-form-container">
     <form method="get" class="filter-form">
         <label for="medico">Médico:</label>
-        <select name="medico" id="medico">
+        <select name="medico" id="medico" onchange="toggleEspecialidad()">
             <option value="">-- Seleccionar --</option>
             {% for medico in medicos %}
             <option value="{{ medico.id }}" {% if medico.id|stringformat:"s" == selected_medico %}selected{% endif %}>{{ medico }}</option>
@@ -14,7 +14,7 @@
         </select>
     
         <label for="especialidad">Especialidad:</label>
-        <select name="especialidad" id="especialidad">
+        <select name="especialidad" id="especialidad" onchange="toggleMedico()">
             <option value="">-- Seleccionar --</option>
             {% for especialidad in especialidades %}
             <option value="{{ especialidad.id }}" {% if especialidad.id|stringformat:"s" == selected_especialidad %}selected{% endif %}>{{ especialidad }}</option>
