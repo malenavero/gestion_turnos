@@ -23,6 +23,9 @@ class PreviousUrlMiddleware:
 
         elif current_view in ["lista_pacientes", "lista_especialidades", "lista_medicos"]:
             request.session['previous_url'] = reverse('fabrica')
+        
+        elif current_view in ["atencion_historia_clinica", "atencion_sala_espera"]:
+            request.session['previous_url'] = reverse('atencion')
             
         elif current_view in ["atencion_historia_clinica_detail"]:
             request.session['previous_url'] = reverse('atencion_historia_clinica')
