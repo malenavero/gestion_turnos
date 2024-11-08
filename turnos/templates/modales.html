@@ -133,18 +133,37 @@
         <form id="acreditacionObraSocialModalForm" method="POST">
             {% csrf_token %}
             <input type="hidden" name="opcionPago" value="obra-social"> <!-- Campo oculto para opción de pago -->
-            <div>
-                <label for="obraSocial">Obra Social:</label>
-                <input type="text" id="obraSocial" name="obraSocial" required value="{{ paciente_data.obra_social|default:'' }}">
-            </div>
-            <div>
-                <label for="nroCredencial">Número de Credencial:</label>
-                <input type="text" id="nroCredencial" name="nroCredencial" required value="{{ paciente_data.credencial|default:'' }}">
-            </div>
-            <div>
-                <label for="plan">Plan:</label>
-                <input type="text" id="plan" name="plan" required value="{{ paciente_data.plan|default:'' }}">
-            </div>
+                <!-- Selector para Obra Social -->
+                <div>
+                    <label for="obraSocial">Obra Social:</label>
+                    <select id="obraSocial" name="obra_social" required onchange="updatePlanes()">
+                        <option value="">Seleccione una Obra Social</option>
+                        {% for obra in obras_sociales %}
+                            <option value="{{ obra.id }}" {% if paciente_data.obra_social == obra.id %}selected{% endif %}>
+                                {{ obra.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+    
+                <!-- Selector para Plan -->
+                <div>
+                    <label for="plan">Plan:</label>
+                    <select id="plan" name="plan" required>
+                        <option value="">Seleccione un Plan</option>
+                        {% for plan in paciente_data.obra_social.planes %}
+                        <option value="{{ plan }}" {% if paciente_data.plan == plan %}selected{% endif %}>
+                            {{ plan }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </div>
+    
+                <!-- Número de Credencial -->
+                <div>
+                    <label for="nroCredencial">Número de Credencial:</label>
+                    <input type="text" id="nroCredencial" name="nro_credencial" required value="{{ paciente_data.credencial|default:'' }}">
+                </div>
             <!-- Botones de confirmación y cierre -->
             <button type="submit" class="btn update-btn">Confirmar</button>
             <button type="button" class="btn cancel-btn" onclick="closeModal('acreditacionObraSocialModal')">Cerrar</button>

@@ -49,6 +49,7 @@ urlpatterns = [
     path('dar_presente/', dar_presente, name='dar_presente'),
     path('dar_presente/<int:turno_id>/', dar_presente, name='dar_presente'),
     path('api/paciente/<int:turno_id>/', obtener_datos_paciente, name='obtener_datos_paciente'),
+    path('obras-sociales/<int:obra_social_id>/planes/', obtener_planes, name='obtener_planes'),
     
     #atencion
     path('atencion/', atencion, name='atencion'),

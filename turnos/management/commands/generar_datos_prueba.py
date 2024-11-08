@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
 from turnos.models import Medico, Paciente, Especialidad
+from turnos.models.obra_social import ObraSocial
 from turnos.utils import create_user
 from faker import Faker
 import random
@@ -19,6 +20,7 @@ class Command(BaseCommand):
         self.create_especialidades()
         self.create_medicos()
         self.create_pacientes(10)
+        self.create_obras_sociales()
         self.stdout.write(self.style.SUCCESS('Datos de prueba generados exitosamente.'))
 
     def create_groups(self):
@@ -186,4 +188,48 @@ class Command(BaseCommand):
             )
         self.stdout.write(self.style.SUCCESS(f'Pacientes creados exitosamente'))
 
+    def create_obras_sociales(self):
 
+        obras_sociales = [
+            {
+                'nombre': 'Salud Coop',
+                'planes': ['Global', 'Joven', 'Premium']
+            },
+            {
+                'nombre': 'SaludAr',
+                'planes': ['Basico', 'Plus', 'Integral']
+            },
+            {
+                'nombre': 'MediPaga',
+                'planes': ['Standard', 'Avanzado', 'Elite']
+            },
+            {
+                'nombre': 'Vida Sana',
+                'planes': ['Esencial', 'Completo', 'Familiar']
+            },
+            {
+                'nombre': 'Salud Total',
+                'planes': ['Bronce', 'Plata', 'Oro']
+            },
+            {
+                'nombre': 'Protección Médica',
+                'planes': ['Starter', 'Intermedio', 'Full']
+            },
+            {
+                'nombre': 'Med Plus',
+                'planes': ['Basico', 'Superior', 'VIP']
+            },
+            {
+                'nombre': 'Bienestar Salud',
+                'planes': ['Individual', 'Pareja', 'Familiar']
+            }
+        ]
+
+
+        for obra_social in obras_sociales:
+                ObraSocial.objects.get_or_create(
+                    nombre=obra_social['nombre'],
+                    defaults={'planes': obra_social['planes']}
+                )
+
+        self.stdout.write(self.style.SUCCESS('Obras sociales creadas correctamente.'))

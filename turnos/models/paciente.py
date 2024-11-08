@@ -5,7 +5,7 @@ class Paciente(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     dni = models.CharField(max_length=8, unique=True)
-    obra_social = models.CharField(max_length=100, null=True, blank=True)
+    obra_social = models.ForeignKey('ObraSocial', on_delete=models.SET_NULL, null=True, blank=True)
     credencial = models.CharField(max_length=100, null=True, blank=True)
     plan = models.CharField(max_length=100, null=True, blank=True)
     telefono = models.CharField(max_length=20)

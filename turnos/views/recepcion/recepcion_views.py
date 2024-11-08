@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 
 from turnos.models import Especialidad, Medico, Paciente, Turno
+from turnos.models.obra_social import ObraSocial
 from turnos.utils import filtrar_turnos
 from turnos.decorators import group_required
 
@@ -168,6 +169,8 @@ def dar_presente(request, turno_id=None):
     # Código de configuración inicial
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
+    obras_sociales = ObraSocial.objects.all().order_by('nombre')
+
     today = date.today()
     
     selected_paciente = request.GET.get('paciente')
@@ -196,6 +199,7 @@ def dar_presente(request, turno_id=None):
         'selected_medico': selected_medico,
         'selected_date': today,
         'paciente_data': paciente_data,
+        'obras_sociales': obras_sociales,
         'error': locals().get('error_message', None),
     }
     return render(request, 'recepcion/dar_presente.html', context)
@@ -231,12 +235,17 @@ def obtener_datos_paciente(request, turno_id):
 
     # Retornar los datos del paciente como JSON
     data = {
-        'obra_social': paciente.obra_social,
+        'obra_social': paciente.obra_social.id if paciente.obra_social else None,
         'credencial': paciente.credencial,
         'plan': paciente.plan,
         'telefono': paciente.telefono,
+        'planes': paciente.obra_social.planes if paciente.obra_social else None,
     }
     return JsonResponse(data)
 
+@group_required("Jefatura Recepcion", "Recepcionistas")
+def obtener_planes(request, obra_social_id):
+    obra_social = ObraSocial.objects.get(id=obra_social_id)
+    return JsonResponse({'planes': obra_social.planes})
 
         

@@ -2,7 +2,7 @@
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib import admin
-from .models import Paciente, Medico, Turno, Especialidad, HistoriaClinica, EntradaHistoria
+from .models import Paciente, Medico, Turno, Especialidad, HistoriaClinica, EntradaHistoria, ObraSocial
 
 
 @admin.register(Paciente)
@@ -51,6 +51,8 @@ class EspecialidadAdmin(admin.ModelAdmin):
     search_fields = ('nombre',)
 
 admin.site.register(HistoriaClinica)
+admin.site.register(ObraSocial)
+
 
 # Custom filter for date range
 from django.utils.translation import gettext_lazy as _

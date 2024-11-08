@@ -121,7 +121,7 @@ function openBlockTurnoModal(turnoId, urlAccion, esBloqueado) {
 * FUNCIONES RELACIONADAS A MODAL DE PAGO
 ***
 */
-function openAcreditacionModal(turnoId, urlAccion) {
+function openAcreditacionModal(turnoId, urlAccion, obras_sociales) {
     const urlFinal = urlAccion.replace('0', turnoId);
 
     selectedTurnoId = turnoId;
@@ -152,9 +152,34 @@ function handleAcreditacionOption(option) {
                 })
                 .then(data => {
                     // Rellenar los campos del modal con la información del paciente
-                    document.getElementById('obraSocial').value = data.obra_social || '';
-                    document.getElementById('nroCredencial').value = data.credencial || '';
-                    document.getElementById('plan').value = data.plan || '';
+                    console.log("Datos recibidos del paciente:", data);  // Esto ayudará a verificar los datos recibidos
+                    // Rellenar los campos del modal con la información del paciente
+                    const obraSocialSelect = document.getElementById('obraSocial');
+                    const planSelect = document.getElementById('plan');
+                
+                    // Establecer el valor de obra social
+                    if (obraSocialSelect) {
+                        obraSocialSelect.value = data.obra_social || "";  
+                    }
+                
+                    // Establecer el valor de plan
+                    if (data.planes && Array.isArray(data.planes)) {
+                        // Rellenar las opciones de plan
+                        data.planes.forEach(plan => {
+                            const option = document.createElement('option');
+                            option.value = plan;
+                            option.textContent = plan;
+                            planSelect.appendChild(option);
+                        });
+    
+                        // Si ya hay un plan seleccionado, asegurarse de marcarlo
+                        if (data.plan && data.planes.includes(data.plan)) {
+                            planSelect.value = data.plan;
+                        }
+                    } 
+                
+                    // Rellenar el campo nroCredencial que es un input de texto
+                    document.getElementById('nroCredencial').value = data.credencial;
 
                     // Mostrar el modal
                     document.getElementById('acreditacionObraSocialModalForm').action = nextURL;
@@ -169,6 +194,36 @@ function handleAcreditacionOption(option) {
     
     // Cerrar el modal después de hacer clic en cualquier botón
     closeModal('acreditacionModal');
+}
+
+function updatePlanes() {
+    const obraSocialId = document.getElementById('obraSocial').value;
+    const planSelect = document.getElementById('plan');
+    planSelect.innerHTML = '<option value="">Seleccione un Plan</option>'; // Limpiar antes de agregar nuevos planes
+
+    if (obraSocialId) {
+        const url = `/turnos/obras-sociales/${obraSocialId}/planes/`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.planes && Array.isArray(data.planes)) {
+                    data.planes.forEach(plan => {
+                        const option = document.createElement('option');
+                        option.value = plan;
+                        option.textContent = plan;
+                        planSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('No se encontraron planes para esta obra social.');
+                    alert('No se encontraron planes disponibles para la obra social seleccionada.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al obtener los planes de la obra social.');
+            });
+    }
 }
 
 

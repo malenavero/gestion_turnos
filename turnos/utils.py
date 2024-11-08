@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 
 from turnos.models.paciente import Paciente
+from turnos.models.obra_social import ObraSocial
 
 
 def create_user(first_name, last_name, password, is_staff, is_superuser, group_name):
@@ -93,7 +94,8 @@ def gestionar_autorizacion(data_autorizacion):
     paciente = Paciente.objects.get(id=paciente_id)
     
     if request.method == 'POST':
-        paciente.obra_social = request.POST.get('obraSocial')
-        paciente.credencial = request.POST.get('nroCredencial')
+        obra_social_id = request.POST.get('obra_social')
+        paciente.obra_social = ObraSocial.objects.get(id=obra_social_id)
+        paciente.credencial = request.POST.get('nro_credencial')
         paciente.plan = request.POST.get('plan')
-        paciente.save()  # Guardar los cambios
+        paciente.save() 
