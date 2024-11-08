@@ -52,6 +52,14 @@
     margin-right: auto; /* Alinea la flecha a la izquierda */
 }
 
+.user-info {
+    color: white; /* Color de texto blanco */
+    font-size: 14px; /* Tamaño del texto */
+    font-weight: bold; /* Resalta el texto */
+    margin-right: 20px; /* Espaciado entre otros elementos de la barra */
+}
+
+
 /* Main Body */
 body {
     font-family: var(--font-family); 
