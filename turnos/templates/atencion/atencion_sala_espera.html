@@ -8,23 +8,32 @@
 <div class="filter-form-container">
     <form method="get" class="filter-form">
         <label for="medico">Médico:</label>
-        <select name="medico" id="medico">
-            <option value="">-- Seleccionar --</option>
-            {% for medico in medicos %}
-            <option value="{{ medico.id }}" {% if medico.id|stringformat:"s" == selected_medico %}selected{% endif %}>{{ medico }}</option>
-            {% endfor %}
+        <select name="medico" id="medico" {% if is_medico %} disabled {% endif %}>
+            {% if is_medico %}
+                <option value="{{ medico_asociado.id }}" selected>{{ medico_asociado.nombre }} {{ medico_asociado.apellido }}</option>
+            {% else %}
+                <option value="">-- Seleccionar --</option>
+                {% for medico in medicos %}
+                    <option value="{{ medico.id }}" {% if medico.id|stringformat:"s" == selected_medico %}selected{% endif %}>
+                        {{ medico }}
+                    </option>
+                {% endfor %}
+            {% endif %}
         </select>
     
         <label for="paciente">Paciente:</label>
         <select name="paciente" id="paciente">
             <option value="">-- Seleccionar --</option>
             {% for paciente in pacientes %}
-            <option value="{{ paciente.id }}" {% if paciente.id|stringformat:"s" == selected_paciente %}selected{% endif %}>{{ paciente }}</option>
+                <option value="{{ paciente.id }}" {% if paciente.id|stringformat:"s" == selected_paciente %}selected{% endif %}>
+                    {{ paciente }}
+                </option>
             {% endfor %}
         </select>
-    
+        
         <button type="submit">Filtrar</button>
     </form>
+    
 </div>
 
 <div class="table-container">

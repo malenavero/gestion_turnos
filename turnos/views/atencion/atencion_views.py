@@ -20,13 +20,18 @@ def atencion(request):
 
 @group_required("Jefatura Recepcion", "Recepcionistas", "Medicos")
 def atencion_sala_espera(request, turno_id=None, accion=None):
+    user = request.user
+    is_medico = user.groups.filter(name="Medicos").exists()
+
+    # Si el usuario es un médico, obtiene el objeto Medico relacionado
+    medico_asociado = Medico.objects.filter(user=user).first() if is_medico else None
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
 
     # Obtener filtros de la URL
     selected_paciente = request.GET.get('paciente')
-    selected_medico = request.GET.get('medico')
-    
+    selected_medico = medico_asociado.id if is_medico else request.GET.get('medico')
+
     # Obtener la fecha actual
     today = date.today()
 
@@ -65,6 +70,8 @@ def atencion_sala_espera(request, turno_id=None, accion=None):
         'selected_paciente': selected_paciente,
         'selected_medico': selected_medico,
         'selected_date': today,
+        'is_medico': is_medico,
+        'medico_asociado': medico_asociado,
         'error': locals().get('error_message', None),  # Mensaje de error si existe
     }
     return render(request, 'atencion/atencion_sala_espera.html', context)
