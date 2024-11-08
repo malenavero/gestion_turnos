@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404,  render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.templatetags.static import static
 from django.contrib import messages
 from weasyprint import HTML
 
@@ -85,7 +86,7 @@ def liquidacion_honorarios(request):
 
 @group_required("Jefatura Recepcion")
 def generar_pdf(request, medico_id):
-
+    logo_url = request.build_absolute_uri(static('img/logo.png'))
     # Obtenemos los valores de mes y año de la solicitud GET
     selected_mes = int(request.GET.get('mes'))
     selected_año = int(request.GET.get('año'))
@@ -102,6 +103,7 @@ def generar_pdf(request, medico_id):
         'turnos_atendidos': atendidos,
         'turnos_ausentes_acreditados': ausentes,
         'total_honorarios': total_honorarios,
+        'logo_url': logo_url,
     }
 
     # Renderiza el HTML del PDF
