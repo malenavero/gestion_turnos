@@ -4,21 +4,21 @@ from django.forms import ValidationError
 from datetime import date
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from turnos.models import Especialidad, Medico, Paciente, Turno
 from turnos.utils import filtrar_turnos
+from turnos.decorators import group_required
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def recepcion(request):
     return render(request, 'recepcion/recepcion.html')
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def turnero(request):
     return render(request, 'recepcion/turnero.html')
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def turnero_reservar(request, turno_id=None):
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     especialidades = Especialidad.objects.all().order_by('nombre')
@@ -71,7 +71,7 @@ def turnero_reservar(request, turno_id=None):
     
     return render(request, 'recepcion/turnero_reservar.html', context)
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def turnero_cancelar(request, turno_id=None):
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
@@ -112,7 +112,7 @@ def turnero_cancelar(request, turno_id=None):
     }
     return render(request, 'recepcion/turnero_cancelar.html', context)
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def turnero_bloquear(request, turno_id=None):   
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
 
@@ -163,9 +163,7 @@ def turnero_bloquear(request, turno_id=None):
     }
     return render(request, 'recepcion/turnero_bloquear.html', context)
 
-
-
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def dar_presente(request, turno_id=None):
     # Código de configuración inicial
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
@@ -202,6 +200,7 @@ def dar_presente(request, turno_id=None):
     }
     return render(request, 'recepcion/dar_presente.html', context)
 
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def procesar_pago(request, turno_id, paciente_data):
     turno = get_object_or_404(Turno, id=turno_id)
     opcion_pago = request.POST.get('opcionPago')
@@ -224,8 +223,7 @@ def procesar_pago(request, turno_id, paciente_data):
     except ValidationError as e:
         messages.error(request, str(e))
 
-
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def obtener_datos_paciente(request, turno_id):
     # Obtener el turno usando el ID
     turno = get_object_or_404(Turno, id=turno_id)

@@ -35,7 +35,6 @@ def create_user(username, password, email, is_staff, is_superuser, group_name):
     
     print(f"Usuario creado: {username}")
 
-
 def filtrar_turnos(turnos, query):
 
     if 'especialidad_id' in query and query['especialidad_id']:
@@ -71,7 +70,6 @@ def get_month_name(month_number):
         'Diciembre',
     ]
     return months[month_number]
-
 
 def gestionar_cobro():
     print("TURNO COBRADO")

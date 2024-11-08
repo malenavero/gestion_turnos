@@ -5,13 +5,11 @@ from django.shortcuts import get_object_or_404,  render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.contrib import messages
-
-
-from django.contrib.auth.decorators import login_required
 from weasyprint import HTML
 
 from turnos.models import  Medico
 from turnos.utils import get_month_name
+from turnos.decorators import group_required
 
 CURRENT_MES = timezone.localtime().month
 CURRENT_AÑO = timezone.localtime().year
@@ -25,7 +23,7 @@ selected_medico = None
 selected_mes_name = None
 
 
-@login_required
+@group_required("Jefatura Recepcion")
 def liquidacion_honorarios(request):
     # Contenido de filtros
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
@@ -85,7 +83,7 @@ def liquidacion_honorarios(request):
 
     return render(request, 'liquidacion/liquidacion_honorarios.html', context)
 
-@login_required
+@group_required("Jefatura Recepcion")
 def generar_pdf(request, medico_id):
 
     # Obtenemos los valores de mes y año de la solicitud GET

@@ -26,8 +26,9 @@ class Command(BaseCommand):
         jefatura_recepcion_group, _ = Group.objects.get_or_create(name='Jefatura Recepcion')
         recepcionistas_group, _ = Group.objects.get_or_create(name='Recepcionistas')
         medicos_group, _ = Group.objects.get_or_create(name='Medicos')
+        admin_group, _ = Group.objects.get_or_create(name='Admin')
 
-        # Definimos los permisos
+        # Definimos los permisos (esto aplica a backoffice solamente -  en la UI se maneja desde las vistas)
         jefatura_recepcion_permissions = [
             'view_session',
             'view_medico',
@@ -56,7 +57,18 @@ class Command(BaseCommand):
             'view_turno',
             'view_especialidad'
         ]
-        medico_permissions = ['view_turno']
+        medico_permissions = [          
+            'view_paciente',
+            'view_turno',
+            'add_historiaclinica',
+            'change_historiaclinica',
+            'delete_historiaclinica',
+            'view_historiaclinica',
+            'add_entradahistoria',
+            'change_entradahistoria',
+            'delete_entradahistoria',
+            'view_entradahistoria',
+        ]
 
         # Asignamos permisos
 
@@ -76,7 +88,7 @@ class Command(BaseCommand):
 
     def create_users(self):
         # Crear superusuario
-        create_user('admin', 'admin', '', True, True, None)
+        create_user('admin', 'admin', '', True, True, 'Administrador')
 
         # Crear usuario jefe recepcion
         create_user('jefe-recepcion', 'jefe-recepcion', 'jefe-recepcion@seprice.com', True, False, 'Jefatura Recepcion')

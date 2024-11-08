@@ -2,22 +2,22 @@
 
 from django.forms import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from turnos.forms.fabrica.forms import EspecialidadForm, PacienteForm, MedicoForm
 from turnos.models import Especialidad, Medico, Paciente, Turno
 from django.contrib import messages
+from turnos.decorators import group_required
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def fabrica(request):
     return render(request, 'fabrica/fabrica.html')
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def ver_especialidad(request, pk):
     especialidad = get_object_or_404(Especialidad, pk=pk)
     return render(request, 'fabrica/ver_especialidad.html', {'especialidad': especialidad})
 
-@login_required
+@group_required("Jefatura Recepcion")
 def crear_especialidad(request):
     if request.method == "POST":
         form = EspecialidadForm(request.POST)
@@ -29,7 +29,7 @@ def crear_especialidad(request):
         form = EspecialidadForm()
     return render(request, 'fabrica/crear_especialidad.html', {'form': form})
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def lista_especialidades(request):
     especialidades = Especialidad.objects.all().order_by('nombre')
 
@@ -37,7 +37,7 @@ def lista_especialidades(request):
         'especialidades': especialidades
     })
 
-@login_required
+@group_required("Jefatura Recepcion")
 def editar_especialidad(request, pk):
     especialidad = get_object_or_404(Especialidad, pk=pk)
     if request.method == 'POST':
@@ -51,7 +51,7 @@ def editar_especialidad(request, pk):
 
     return render(request, 'fabrica/editar_especialidad.html', {'form': form})
 
-@login_required
+@group_required("Jefatura Recepcion")
 def eliminar_especialidad(request, pk):
     especialidad = get_object_or_404(Especialidad, pk=pk)
 
@@ -68,12 +68,12 @@ def eliminar_especialidad(request, pk):
 
 
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def ver_paciente(request, pk):
     paciente = get_object_or_404(Paciente, pk=pk)
     return render(request, 'fabrica/ver_paciente.html', {'paciente': paciente})
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def crear_paciente(request):
     if request.method == "POST":
         form = PacienteForm(request.POST)
@@ -85,7 +85,7 @@ def crear_paciente(request):
         form = PacienteForm()
     return render(request, 'fabrica/crear_paciente.html', {'form': form})
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def lista_pacientes(request):
     query = request.GET.get('query', '') 
     # Filtra los pacientes por nombre o apellido
@@ -101,7 +101,7 @@ def lista_pacientes(request):
     }
     return render(request, 'fabrica/lista_pacientes.html', context)
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def editar_paciente(request, pk):
     paciente = get_object_or_404(Paciente, pk=pk)
     if request.method == 'POST':
@@ -115,7 +115,7 @@ def editar_paciente(request, pk):
 
     return render(request, 'fabrica/editar_paciente.html', {'form': form})
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def eliminar_paciente(request, pk):
     paciente = get_object_or_404(Paciente, pk=pk)
     if request.method == "POST":    
@@ -130,12 +130,12 @@ def eliminar_paciente(request, pk):
             })
 
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def ver_medico(request, pk):
     medico = get_object_or_404(Medico, pk=pk)
     return render(request, 'fabrica/ver_medico.html', {'medico': medico})
 
-@login_required
+@group_required("Jefatura Recepcion")
 def crear_medico(request):
     if request.method == "POST":
         form = MedicoForm(request.POST)
@@ -147,7 +147,7 @@ def crear_medico(request):
         form = MedicoForm()
     return render(request, 'fabrica/crear_medico.html', {'form': form})
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas")
 def lista_medicos(request):
     especialidades = Especialidad.objects.all()
     selected_especialidad = request.GET.get('especialidad')
@@ -163,7 +163,7 @@ def lista_medicos(request):
         'selected_especialidad': selected_especialidad
     })
 
-@login_required
+@group_required("Jefatura Recepcion")
 def editar_medico(request, pk):
     medico = get_object_or_404(Medico, pk=pk)
     disable_especialidad = Turno.objects.filter(medico=medico).exclude(estado='disponible').exists()
@@ -187,7 +187,7 @@ def editar_medico(request, pk):
         'disable_especialidad': disable_especialidad,
     })
 
-@login_required
+@group_required("Jefatura Recepcion")
 def eliminar_medico(request, pk):
     medico = get_object_or_404(Medico, pk=pk)
 

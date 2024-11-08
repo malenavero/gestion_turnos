@@ -5,21 +5,20 @@ from django.forms import ValidationError
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from turnos.models import  Medico, Paciente, Turno
 from turnos.models.historia_clinica import EntradaHistoria, HistoriaClinica
 from turnos.utils import filtrar_turnos
+from turnos.decorators import group_required
 
 
 
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas", "Medicos")
 def atencion(request):
     return render(request, 'atencion/atencion.html')
 
-
-@login_required
+@group_required("Jefatura Recepcion", "Recepcionistas", "Medicos")
 def atencion_sala_espera(request, turno_id=None, accion=None):
     medicos = Medico.objects.all().order_by('apellido', 'nombre')
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
@@ -70,8 +69,7 @@ def atencion_sala_espera(request, turno_id=None, accion=None):
     }
     return render(request, 'atencion/atencion_sala_espera.html', context)
 
-
-@login_required
+@group_required("Medicos")
 def atencion_historia_clinica(request):
     pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
     pacientes_lista = pacientes
@@ -88,7 +86,7 @@ def atencion_historia_clinica(request):
     }
     return render(request, 'atencion/atencion_historia_clinica.html', context)
 
-@login_required
+@group_required("Medicos")
 def atencion_historia_clinica_detail(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     historia_clinica, _ = HistoriaClinica.objects.get_or_create(paciente=paciente)
