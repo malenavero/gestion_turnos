@@ -88,13 +88,13 @@ class Command(BaseCommand):
 
     def create_users(self):
         # Crear superusuario
-        create_user('admin', 'admin', '', True, True, 'Admin')
+        create_user('admin', 'admin', '', True, True, 'Admin', first_name='Admin', last_name='Admin')
 
         # Crear usuario jefe recepcion
-        create_user('jefe-recepcion', 'jefe-recepcion', 'jefe-recepcion@seprice.com', True, False, 'Jefatura Recepcion')
+        create_user('jefe-recepcion', 'jefe-recepcion', 'jefe-recepcion@seprice.com', True, False, 'Jefatura Recepcion', first_name='Miriam', last_name='Bianchi')
    
         # Crear usuario recepcionista
-        create_user('recepcion', 'recepcion', 'recepcion@seprice.com', True, False, 'Recepcionistas')
+        create_user('recepcion', 'recepcion', 'recepcion@seprice.com', True, False, 'Recepcionistas', first_name='Roberto', last_name='Smith')
 
         # Los usuarios de médicos se crean cuando se crea el medico
 

@@ -57,12 +57,12 @@ class Medico(models.Model):
             email = f"{username}@seprice.com"
             password = 'medico'
 
-            user = create_user(username, password, email, True, False, 'Medicos')
-            self.user = user
-            self.email = email  # Asignar el email creado al campo de correo del médico
-            self.save(update_fields=['user', 'email'])
+        user = create_user(username, password, True, False, 'Medicos', first_name, last_name)
+        self.user = user
+        self.email = email  # Asignar el email creado al campo de correo del médico
+        self.save(update_fields=['user', 'email'])
 
-            self.save(update_fields=['user'])
+        self.save(update_fields=['user'])
 
     @staticmethod
     def getNextDay(current_date):
