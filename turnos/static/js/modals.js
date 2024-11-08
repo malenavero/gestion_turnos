@@ -152,8 +152,6 @@ function handleAcreditacionOption(option) {
                 })
                 .then(data => {
                     // Rellenar los campos del modal con la información del paciente
-                    console.log("Datos recibidos del paciente:", data);  // Esto ayudará a verificar los datos recibidos
-                    // Rellenar los campos del modal con la información del paciente
                     const obraSocialSelect = document.getElementById('obraSocial');
                     const planSelect = document.getElementById('plan');
                 
