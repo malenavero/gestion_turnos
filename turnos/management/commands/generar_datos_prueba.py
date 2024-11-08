@@ -88,7 +88,7 @@ class Command(BaseCommand):
 
     def create_users(self):
         # Crear superusuario
-        create_user('admin', 'admin', '', True, True, 'Administrador')
+        create_user('admin', 'admin', '', True, True, 'Admin')
 
         # Crear usuario jefe recepcion
         create_user('jefe-recepcion', 'jefe-recepcion', 'jefe-recepcion@seprice.com', True, False, 'Jefatura Recepcion')
