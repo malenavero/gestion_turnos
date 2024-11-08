@@ -23,7 +23,7 @@
             <li class="spacer"></li>
             {% if user.is_authenticated %}
             <li class="user-info">
-                {{ user.username }} 
+                {{ user.first_name }} {{ user.last_name }} 
                 {% with user.groups.first as user_group %}
                     ({% if user_group %}{{ user_group.name }}{% else %}Sin Grupo{% endif %})
                 {% endwith %}
