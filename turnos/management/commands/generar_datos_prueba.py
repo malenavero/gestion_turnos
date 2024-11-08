@@ -88,12 +88,11 @@ class Command(BaseCommand):
 
     def create_users(self):
         # Crear superusuario
-        create_user('admin', 'admin', True, True, 'Admin', first_name='Admin', last_name='Admin')
+        create_user('Admin', 'Admin', 'admin', True, True, 'Admin')
         # Crear usuario jefe recepcion
-        create_user('jefe-recepcion', 'jefe-recepcion', True, False, 'Jefatura Recepcion', first_name='Miriam', last_name='Bianchi')
-   
+        create_user('Miriam', 'Bianchi', 'jefe-recepcion', True, False, 'Jefatura Recepcion')
         # Crear usuario recepcionista
-        create_user('recepcion', 'recepcion', True, False, 'Recepcionistas', first_name='Roberto', last_name='Smith')
+        create_user('Roberto', 'Smith', 'recepcion', True, False, 'Recepcionistas')
 
         # Los usuarios de médicos se crean cuando se crea el medico
 
@@ -147,7 +146,6 @@ class Command(BaseCommand):
                     matricula=str(random.randint(10000, 99999)),
                     especialidad=especialidad,
                     telefono=f'123456789{i}',
-                    email=f'medico{i}@example.com',
                     domicilio_calle='Calle Falsa',
                     domicilio_numero=str(random.randint(1, 100)),
                     codigo_postal=str(random.randint(1000, 9999)),
@@ -158,8 +156,8 @@ class Command(BaseCommand):
 
         # crear medico inicial de prueba
         Medico.objects.create(
-                    nombre="Medico",
-                    apellido="Test",
+                    nombre="Ricardo",
+                    apellido="Espinosa",
                     dni=str(random.randint(3000000, 90000000)),
                     matricula=str(random.randint(10000, 99999)),
                     especialidad=self.especialidades[0],

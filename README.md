@@ -88,21 +88,20 @@ El script se encarga de ejecutar los siguientes pasos:
 ### Usuarios para pruebas:
 
 ##### Superadmin
-User: *admin*
+User: *admin.admin*
 Pass: *admin*
 
 ##### Jefe Recepción
-User: *jefe-recepcion*
+User: *miriam.bianchi*
 Pass: *jefe-recepcion*
 
 ##### Recepcionista
-User: *recepcion*
+User: *roberto.smith*
 Pass: *recepcion*
 
 ##### Médico
-User: *medico.test*
+User: *ricardo.espinosa*
 Pass: *medico*
-
 
 
 ### Consideraciones:

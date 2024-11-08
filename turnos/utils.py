@@ -8,8 +8,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from turnos.models.paciente import Paciente
 
 
-def create_user(username, password, is_staff, is_superuser, group_name, first_name='', last_name=''):
+def create_user(first_name, last_name, password, is_staff, is_superuser, group_name):
     # Primero verificamos si el usuario ya existe
+    nombre = first_name.split()[0].lower()
+    apellido = last_name.split()[0].lower()
+    username = f"{nombre}.{apellido}"
     user = User.objects.filter(username=username).first()
     
     if user:
@@ -17,15 +20,15 @@ def create_user(username, password, is_staff, is_superuser, group_name, first_na
         return
 
     # Generamos el email a partir del nombre y apellido
-    email = f"{first_name.lower()}.{last_name.lower()}@seprice.com"
+    email = f"{nombre}.{apellido}@seprice.com"
 
     # Creamos el usuario
     user = User.objects.create_user(
         username=username,
         email=email,
         password=password,
-        first_name=first_name,  # Añadimos el primer nombre
-        last_name=last_name     # Añadimos el apellido
+        first_name=first_name,  
+        last_name=last_name  
     )
     
     user.is_staff = is_staff
@@ -40,6 +43,7 @@ def create_user(username, password, is_staff, is_superuser, group_name, first_na
             print(f"El grupo '{group_name}' no existe.")
     
     print(f"Usuario creado: {username}")
+    return user
 
 
 def filtrar_turnos(turnos, query):

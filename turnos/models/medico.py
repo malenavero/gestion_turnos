@@ -46,23 +46,16 @@ class Medico(models.Model):
         if is_new:
             print(f"Especialidad del médico: {self.especialidad} {self.especialidad.pk}")
 
+
+            # Generamos un user en el grupo medicos
+            user = create_user(self.nombre, self.apellido, 'medico', True, False, 'Medicos', )
+            if user is None:
+                raise ValueError("User creation failed, returned None.")
+            self.user = user
+            self.email = user.email
+            self.save(update_fields=['user', 'email'])
             # Creamos turnos para el próximo mes
             self.generar_turnos(self)
-
-            # Generamos un user en el grupo medicos con su primer nombre y apellido
-            first_name = self.nombre.split()[0].lower()
-            last_name = self.apellido.split()[0].lower()
-
-            username = f"{first_name}.{last_name}"
-            email = f"{username}@seprice.com"
-            password = 'medico'
-
-            user = create_user(username, password, True, False, 'Medicos', first_name, last_name)
-            self.user = user
-            self.email = email  # Asignar el email creado al campo de correo del médico
-            self.save(update_fields=['user', 'email'])
-
-        self.save(update_fields=['user'])
 
     @staticmethod
     def getNextDay(current_date):
