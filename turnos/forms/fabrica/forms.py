@@ -34,8 +34,7 @@ class MedicoForm(forms.ModelForm):
     class Meta:
         model = Medico
         fields = [
-            'nombre', 'apellido', 'dni', 'matricula', 'especialidad', 'telefono', 
-            'email', 'domicilio_calle', 'domicilio_numero', 'codigo_postal', 
+            'nombre', 'apellido', 'dni', 'matricula', 'especialidad', 'telefono', 'domicilio_calle', 'domicilio_numero', 'codigo_postal', 
             'provincia', 'pais',
         ]
 
