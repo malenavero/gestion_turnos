@@ -2,9 +2,23 @@
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib import admin
-from .models import Paciente, Medico, Turno, Especialidad, HistoriaClinica, EntradaHistoria, ObraSocial
+from .models import Paciente, Medico, Turno, Especialidad, HistoriaClinica,  ObraSocial
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth import get_user_model
+User = get_user_model()
+class CustomUserAdmin(UserAdmin):
+    # Cambia list_display para que muestre first_name y last_name en la lista de usuarios
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2', 'first_name', 'last_name'),
+        }),
+    )
 
-
+# Registra el usuario con la nueva configuración
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'apellido', 'dni')
