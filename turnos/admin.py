@@ -51,8 +51,11 @@ class EspecialidadAdmin(admin.ModelAdmin):
     search_fields = ('nombre',)
 
 admin.site.register(HistoriaClinica)
-admin.site.register(ObraSocial)
 
+@admin.register(ObraSocial)
+class ObraSocialdAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'planes')
+    search_fields = ('nombre',)
 
 # Custom filter for date range
 from django.utils.translation import gettext_lazy as _
