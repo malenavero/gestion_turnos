@@ -1,7 +1,35 @@
-# Instrucciones generales
+# Instrucciones para levantar el proyecto por primera vez
+
+1. Crear un ambiente:
+    ```bash
+    python -m venv <nombre-env>
+    ```
+2. Levantar el ambiente:
+    ```bash
+    source <nombre-env>/bin/activate (linux)
+    .\<nombre-env>\Scripts\activate (win)
+    ```
+3. Instalar dependencias:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4. Ejecutar script inicial:
+    ```bash
+    python manage.py reset_db
+    ```
+
+5. Ejecutar el proyecto:
+    ```bash
+    python manage.py runserver
+    ```
+
+6. Abrir backoffice(opcional):
+    ```bash
+    /admin
+    ```
 
 
-
+# Comandos generales
 ### Crear nuevo ambiente
 ```bash
 python -m venv <nombre-env>
@@ -23,7 +51,7 @@ deactivate
 pip install -r requirements.txt
 ```
 
-### Ejecución inicial:
+### Ejecución:
 
 1. Crear migraciones:
     ```bash
@@ -71,7 +99,7 @@ pip install -r requirements.txt
 ### Resetear base de datos:
 Puede ejecutarse el siguiente comando:
 ```bash
-    python reset_db.py
+    python manage.py reset_db
 ```
 El script se encarga de ejecutar los siguientes pasos:
 1. Borrar las migraciones (SALVO __ INIT __.py)
