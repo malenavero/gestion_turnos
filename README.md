@@ -18,18 +18,41 @@
     python manage.py reset_db
     ```
 
-5. Ejecutar el proyecto:
+5. Levantar el proyecto:
     ```bash
     python manage.py runserver
     ```
 
-6. Abrir backoffice(opcional):
+6. Abrir la url:
     ```bash
-    /admin
+    En este caso: http://127.0.0.1:8000/
     ```
+    ![alt text](image-1.png)
+
+### Usuarios para pruebas:
+
+##### Superadmin
+User: *admin.admin*
+Pass: *admin*
+
+##### Jefe Recepción
+User: *miriam.bianchi*
+Pass: *jefe-recepcion*
+
+##### Recepcionista
+User: *roberto.smith*
+Pass: *recepcion*
+
+##### Médico
+User: *ricardo.espinosa*
+Pass: *medico*
 
 
-# Comandos generales
+### Consideraciones:
+- Cuando se crea un médico se le crean automaticamente los turnos para los siguientes 30 días en el espacio de 8 a 17hrs. 
+- Cuando se crea un médico se le crea un user con la pass "medico" y el user nombre.apellido
+---
+# Otros comandos
 ### Crear nuevo ambiente
 ```bash
 python -m venv <nombre-env>
@@ -46,7 +69,7 @@ source env/bin/activate (linux)
 deactivate
 ```
 
-### Correr requirements.txt
+### Instalar dependencias
 ```bash
 pip install -r requirements.txt
 ```
@@ -77,24 +100,6 @@ pip install -r requirements.txt
     /admin
     ```
 
----
-
-### Pasos para levantar después de algún cambio en algún modelo:
-
-1. Crear migraciones:
-    ```bash
-    python manage.py makemigrations
-    ```
-
-2. Correr migraciones:
-    ```bash
-    python manage.py migrate
-    ```
-
-3. Ejecutar el proyecto:
-    ```bash
-    python manage.py runserver
-    ```
 
 ### Resetear base de datos:
 Puede ejecutarse el siguiente comando:
@@ -113,25 +118,3 @@ El script se encarga de ejecutar los siguientes pasos:
 *¡Importante!* No olvidar actualizar la DB en el gestor que se esté utilizando
 
 
-### Usuarios para pruebas:
-
-##### Superadmin
-User: *admin.admin*
-Pass: *admin*
-
-##### Jefe Recepción
-User: *miriam.bianchi*
-Pass: *jefe-recepcion*
-
-##### Recepcionista
-User: *roberto.smith*
-Pass: *recepcion*
-
-##### Médico
-User: *ricardo.espinosa*
-Pass: *medico*
-
-
-### Consideraciones:
-- Cuando se crea un médico se le crean automaticamente los turnos para los siguientes 30 días en el espacio de 8 a 17hrs. 
-- Cuando se crea un médico se le crea un user con la pass "medico" y el user nombre.apellido
